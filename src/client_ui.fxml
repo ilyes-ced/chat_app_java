@@ -43,7 +43,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
    <left>
       <AnchorPane prefHeight="400.0" prefWidth="200.0" style="-fx-background-color: #474b7b;" BorderPane.alignment="CENTER">
          <children>
@@ -75,7 +75,7 @@
          <bottom>
             <BorderPane prefHeight="50.0" prefWidth="448.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
                <right>
-                  <Button mnemonicParsing="false" style="-fx-background-color: transparent;" text="icon" BorderPane.alignment="CENTER" />
+                  <Button fx:id="send_message" mnemonicParsing="false" onAction="#clicked" style="-fx-background-color: #2f2d52;" text="icon" textFill="WHITE" BorderPane.alignment="CENTER" />
                </right>
                <center>
                   <TextField promptText="send message . . ." style="-fx-background-color: transparent;" BorderPane.alignment="CENTER">
