@@ -5,11 +5,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class Main extends Application {
+public class Server extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("ui_test.fxml"));
+        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("server_ui.fxml"));
         primaryStage.setTitle("Registration Form FXML Application");
         primaryStage.setScene(new Scene(root, 800, 500));
         primaryStage.show();
