@@ -39,6 +39,7 @@ public class Server extends Application {
                     try (DataInputStream dis = new DataInputStream(client.getInputStream())) {
                         while(true){
                             String message=dis.readUTF();
+                            System.out.print("reciever : "+message+"///////////////////////");
                             synchronized (doss) {
                                 for (DataOutputStream dos : doss)
                                     dos.writeUTF(message);

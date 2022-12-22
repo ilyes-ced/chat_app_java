@@ -1,4 +1,5 @@
 import javafx.event.ActionEvent;
+import javafx.scene.input.KeyEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Button;
@@ -31,7 +32,7 @@ public class Controller  {
             }).start();
             dos.writeUTF("has joined the conversation");
         }catch (Exception ex) {
-                    ex.printStackTrace();
+            ex.printStackTrace();
         }
     }
    @FXML
@@ -42,9 +43,27 @@ public class Controller  {
 
     @FXML
     void clicked(ActionEvent event) {
-        System.out.print("hellefsfsefsefoe");
         System.out.print(message_content.getText());
+        try{
+            dos.writeUTF(message_content.getText());
+        }catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+
+    @FXML
+    void enter_message(KeyEvent event) {
+        if(event.getCode().toString().equals("ENTER")){
+            System.out.print("test \n");
+            try{
+                dos.writeUTF(message_content.getText());
+            }catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
     }
 
 }
+
 

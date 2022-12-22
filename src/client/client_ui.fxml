@@ -78,7 +78,7 @@
                   <Button fx:id="send_message" mnemonicParsing="false" onAction="#clicked" style="-fx-background-color: #2f2d52;" text="icon" textFill="WHITE" BorderPane.alignment="CENTER" />
                </right>
                <center>
-                  <TextField fx:id="message_content" promptText="send message . . ." style="-fx-background-color: transparent;" BorderPane.alignment="CENTER">
+                  <TextField fx:id="message_content" onKeyPressed="#enter_message" promptText="send message . . ." style="-fx-background-color: transparent;" BorderPane.alignment="CENTER">
                      <BorderPane.margin>
                         <Insets right="50.0" />
                      </BorderPane.margin>
