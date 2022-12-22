@@ -4,7 +4,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Button;
-
+import javafx.application.Platform;
 import java.io.*;
 import java.net.*;
 
@@ -25,7 +25,14 @@ public class Controller  {
                     try {
                         while (true){
                             System.out.println(dis.readUTF());
-                            add_messages.getChildren().add(new Button(dis.readUTF()));
+                            //add_messages.getChildren().add(new Button(dis.readUTF()));
+                            
+                            Platform.runLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    add_messages.getChildren().add(new Button("fezfzefe"));
+                                }
+                            });
                         }
                     } catch (Exception ex) {
                         ex.printStackTrace();
