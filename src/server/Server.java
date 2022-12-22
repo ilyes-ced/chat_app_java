@@ -25,7 +25,7 @@ public class Server extends Application {
     }
     //test test
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         launch(args);
         ServerSocket server = new ServerSocket(5555);
         List<DataOutputStream> doss = new ArrayList<>();
