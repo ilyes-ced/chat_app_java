@@ -1,6 +1,7 @@
-import javafx.event.ActionEvent;
-import javafx.scene.input.KeyEvent;
 import javafx.fxml.FXML;
+import javafx.event.ActionEvent;
+import javafx.scene.layout.VBox;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Button;
 
@@ -22,9 +23,10 @@ public class Controller  {
             new Thread(new Runnable() {
                 public void run() {
                     try {
-                        while (true)                            
+                        while (true){
                             System.out.println(dis.readUTF());
-                            // here we inject the ui elements
+                            add_messages.getChildren().add(new Button(dis.readUTF()));
+                        }
                     } catch (Exception ex) {
                         ex.printStackTrace();
                     }
@@ -40,6 +42,9 @@ public class Controller  {
 
     @FXML
     private Button send_message;
+
+    @FXML
+    private VBox add_messages;
 
     @FXML
     void clicked(ActionEvent event) throws IOException {
