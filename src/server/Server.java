@@ -26,11 +26,15 @@ public class Server extends Application {
     //test test
 
     public static void main(String[] args) throws Exception {
+        System.out.print("//////starting ui////////////// \n");
         launch(args);
+        System.out.print("//////starting server////////////// \n");
+
         ServerSocket server = new ServerSocket(5555);
         List<DataOutputStream> doss = new ArrayList<>();
         while (true) {
             Socket client = server.accept();
+            System.out.print("//////user connected////////////// \n");
             synchronized(doss) {
                 doss.add(new DataOutputStream(client.getOutputStream()));
             }

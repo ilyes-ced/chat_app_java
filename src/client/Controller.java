@@ -42,6 +42,23 @@ public class Controller  {
     private Button send_message;
 
     @FXML
+    void clicked(ActionEvent event) throws IOException {
+        dos.writeUTF(message_content.getText());
+    }
+
+
+    @FXML
+    void enter_message(KeyEvent event) throws IOException {
+        if(event.getCode().toString().equals("ENTER")){
+            dos.writeUTF(message_content.getText());
+        }
+    }
+
+}
+
+
+/**
+    @FXML
     void clicked(ActionEvent event) {
         System.out.print(message_content.getText());
         try{
@@ -63,7 +80,4 @@ public class Controller  {
             }
         }
     }
-
-}
-
-
+ */
