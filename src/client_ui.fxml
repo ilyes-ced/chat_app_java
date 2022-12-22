@@ -93,10 +93,10 @@
             <BorderPane prefHeight="50.0" prefWidth="448.0" style="-fx-background-color: #474b7b;" BorderPane.alignment="CENTER" />
          </top>
          <center>
-            <ScrollPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #dcdef7;" BorderPane.alignment="CENTER">
-              <content>
-                <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="121.0" prefWidth="379.0" style="-fx-background-color: #dcdef7;" />
-              </content>
+            <ScrollPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+               <content>
+                  <AnchorPane prefHeight="298.0" prefWidth="398.0" style="-fx-background-color: red;" />
+               </content>
             </ScrollPane>
          </center>
       </BorderPane>

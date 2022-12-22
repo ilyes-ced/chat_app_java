@@ -9,7 +9,7 @@ public class Controller  {
 
     @FXML
     void clicked(ActionEvent event) {
-        System.out.print('hello');
+        System.out.print("helloe");
     }
 
 }
