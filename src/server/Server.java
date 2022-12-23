@@ -61,6 +61,17 @@ public class Server extends Application {
 
 
 /*
+            Sql_connection db = new Sql_connection();
+            String[] params = {email.getText(), password.getText()};
+            ResultSet result = db.select_query("SELECT  * from users where email=? and password=?", params);
+            while (result.next()) {
+                System.out.println(result.getString("username"));
+            }
+            db.closeConnection();
+*/
+
+
+/*
 
 
 

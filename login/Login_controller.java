@@ -4,9 +4,14 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import java.net.*;
+import java.io.*;
 import java.sql.*;
+import java.util.*;
+
 
 public class Login_controller {
+    
     @FXML
     private CheckBox remember_input;
 
@@ -31,13 +36,17 @@ public class Login_controller {
     @FXML
     void submit_form(ActionEvent event) {
        try{
-            Sql_connection db = new Sql_connection();
-            String[] params = {email.getText(), password.getText()};
-            ResultSet result = db.select_query("SELECT  * from users where email=? and password=?", params);
-            while (result.next()) {
-                System.out.println(result.getString("username"));
-            }
-            db.closeConnection();
+            Socket socket = new Socket("localhost", 5555);
+            DataInputStream dis= new DataInputStream(socket.getInputStream());
+            ObjectOutputStream dos= new ObjectOutputStream(socket.getOutputStream());
+
+
+            Map<String, String> data = new HashMap<String, String>();
+            data.put("method", "login");
+            data.put("email", "fdemo");
+            data.put("password", "fdemo");
+            dos.writeUTF(new JSONObject(data));
+
         } catch (Exception ex) {
             ex.printStackTrace();
         }
