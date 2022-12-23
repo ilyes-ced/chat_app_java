@@ -1,0 +1,56 @@
+CREATE TABLE users(
+    id int not null AUTO_INCREMENT,
+    name VARCHAR(255),
+    surname VARCHAR(255),
+    username VARCHAR(255),
+    email VARCHAR(255),
+    password VARCHAR(255),
+    phone_number VARCHAR(255),
+    address VARCHAR(255),
+    profile_image VARCHAR(255),
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+    PRIMARY KEY (id)
+);
+
+
+CREATE TABLE groups(
+    id int not null AUTO_INCREMENT,
+    name VARCHAR(255),
+    owner int not null,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+    PRIMARY KEY (id)
+    FOREIGN KEY (owner) REFERENCES users(id)
+)
+
+
+
+
+
+CREATE TABLE groups_members(
+    group int NOT NULL,
+    member int NOT NULL,
+    
+    PRIMARY KEY (channel, member),
+    FOREIGN KEY (channel) REFERENCES groups(id),
+    FOREIGN KEY (member) REFERENCES users(id)
+)
+
+
+
+
+
+
+CREATE TABLE messages(
+    id int NOT NULL AUTO_INCREMENT,
+    sender int NOT NULL,
+    group int NOT NULL,
+    message VARCHAR(255),
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    FOREIGN KEY (sender) REFERENCES users(id),
+    FOREIGN KEY (group) REFERENCES groups(id)
+);
