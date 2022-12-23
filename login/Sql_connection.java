@@ -1,4 +1,70 @@
+import java.sql.*;
 
+
+public class Sql_connection {
+
+    // Database Variables
+    private final String database_name = "java";
+    private final String database_port = "3306";
+    private final String database_username = "root";
+    private final String database_password = "11062001";
+    private Connection connect;
+    private PreparedStatement sql_statement;
+
+    // Connect to Database
+    //public void Sql_connection() throws SQLException, ClassNotFoundException {
+        //
+    //}
+
+    public ResultSet select_query(String givenStatement) throws SQLException, ClassNotFoundException{
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        this.connect = DriverManager.getConnection("jdbc:mysql://localhost:"+this.database_port+"/"+this.database_name, this.database_username, this.database_password);
+        this.sql_statement = this.connect.prepareStatement(givenStatement);
+        ResultSet result = sql_statement.executeQuery();
+        return result;
+    }
+
+
+        public ResultSet update_query(String givenStatement, String[] params) throws SQLException, ClassNotFoundException{
+        
+         for (int i = 0; i < params.length; i++) {
+            System.out.println(params[i]);
+        }
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        this.connect = DriverManager.getConnection("jdbc:mysql://localhost:"+this.database_port+"/"+this.database_name, this.database_username, this.database_password);
+        this.sql_statement = this.connect.prepareStatement(givenStatement);
+        ResultSet result = sql_statement.executeQuery();
+        return result;
+    }
+
+    public void closeConnection() throws SQLException{
+        connect.close();
+    }
+
+    //private void set_sql_statement(String givenStatement) {
+    //    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    //}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
 import java.sql.*;
 
 
@@ -23,7 +89,7 @@ public class Sql_connection  {
         return null;
     }
 }
-
+*/
 /*
 Class.forName("com.mysql.cj.jdbc.Driver");
 Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/java","root","11062001");

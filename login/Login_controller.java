@@ -27,10 +27,18 @@ public class Login_controller {
 
     @FXML
     void submit_form(ActionEvent event) {
-        System.out.print( password.getText() );
-        Sql_connection db = new Sql_connection();
-        Connection query = db.connect();
-        query.executeQuery("SELECT VERSION()");
+       try{
+            Sql_connection db = new Sql_connection();
+            ResultSet result = db.select_query("SELECT  * from users",);
+            while (result.next()) {
+                System.out.println(result.getString("username"));
+            }
+            db.closeConnection();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+
     }
 
 }

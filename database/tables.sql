@@ -15,29 +15,29 @@ CREATE TABLE users(
 );
 
 
-CREATE TABLE groups(
+CREATE TABLE chat_groups(
     id int not null AUTO_INCREMENT,
     name VARCHAR(255),
     owner int not null,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 
-    PRIMARY KEY (id)
+    PRIMARY KEY (id),
     FOREIGN KEY (owner) REFERENCES users(id)
-)
+);
 
 
 
 
 
 CREATE TABLE groups_members(
-    group int NOT NULL,
+    chat_group int NOT NULL,
     member int NOT NULL,
     
-    PRIMARY KEY (channel, member),
-    FOREIGN KEY (channel) REFERENCES groups(id),
+    PRIMARY KEY (chat_group, member),
+    FOREIGN KEY (chat_group) REFERENCES chat_groups(id),
     FOREIGN KEY (member) REFERENCES users(id)
-)
+);
 
 
 
@@ -47,10 +47,10 @@ CREATE TABLE groups_members(
 CREATE TABLE messages(
     id int NOT NULL AUTO_INCREMENT,
     sender int NOT NULL,
-    group int NOT NULL,
+    chat_group int NOT NULL,
     message VARCHAR(255),
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (id),
     FOREIGN KEY (sender) REFERENCES users(id),
-    FOREIGN KEY (group) REFERENCES groups(id)
+    FOREIGN KEY (chat_group) REFERENCES chat_groups(id)
 );
