@@ -9,13 +9,18 @@ import javafx.stage.Stage;
 
 import java.io.*;
 import java.net.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 
 
 public class Server extends Application {
-
+    private Socket client;
+    private ServerSocket server;
+    private ObjectInputStream dis;
+    List<DataOutputStream> doss ;
+    
+    
+    
     @Override
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("server_ui.fxml"));
@@ -25,16 +30,30 @@ public class Server extends Application {
     }
     //test test
 
-    public static void main(String[] args) throws Exception {
+    public void main(String[] args) throws Exception {
         System.out.print("//////starting ui////////////// \n");
         launch(args);
         System.out.print("//////starting server////////////// \n");
 
-        ServerSocket server = new ServerSocket(5555);
-        List<DataOutputStream> doss = new ArrayList<>();
+        this.server = new ServerSocket(5555);
+        this.doss = new ArrayList<>();
         while (true) {
-            Socket client = server.accept();
+            this.client = server.accept();
             System.out.print("//////user connected////////////// \n");
+            this.dis = new ObjectInputStream(client.getInputStream());
+            final Map<String, String> message_object = (Map)dis.readObject();
+            System.out.print("//////"+message_object.get("method")+"////////////// \n");
+
+            if(message_object.get("method") == "start_chat"){
+                start_new_thread();
+            }else if(message_object.get("method") == "start_chat"){
+                System.out.print("//////login attempt////////////// \n");
+            }
+        }
+    }
+
+
+    public void start_new_thread() throws IOException{
             synchronized(doss) {
                 doss.add(new DataOutputStream(client.getOutputStream()));
             }
@@ -54,8 +73,8 @@ public class Server extends Application {
                     }
                 }
             }).start();
-        }
     }
+    
 }
 
 

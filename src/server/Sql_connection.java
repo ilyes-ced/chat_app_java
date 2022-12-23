@@ -25,9 +25,9 @@ public class Sql_connection {
     }
 
 
-        public ResultSet update_query(String givenStatement, String[] params) throws SQLException, ClassNotFoundException{
+    public ResultSet update_query(String givenStatement, String[] params) throws SQLException, ClassNotFoundException{
         
-         for (int i = 0; i < params.length; i++) {
+        for (int i = 0; i < params.length; i++) {
             System.out.println(params[i]);
         }
         Class.forName("com.mysql.cj.jdbc.Driver");

@@ -43,9 +43,13 @@ public class Login_controller {
 
             Map<String, String> data = new HashMap<String, String>();
             data.put("method", "login");
-            data.put("email", "fdemo");
-            data.put("password", "fdemo");
-            dos.writeUTF(new JSONObject(data));
+            data.put("email", email.getText());
+            data.put("password", password.getText());
+
+
+            dos.writeObject(data);
+            //String str = data.toString();
+            //dos.writeUTF(str);
 
         } catch (Exception ex) {
             ex.printStackTrace();
