@@ -8,8 +8,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Login_controller">
    <center>
       <VBox prefHeight="200.0" prefWidth="100.0" spacing="30.0" BorderPane.alignment="CENTER">
          <children>
@@ -17,8 +16,8 @@
             <PasswordField fx:id="password" />
             <HBox prefHeight="100.0" prefWidth="200.0" spacing="50.0">
                <children>
-                  <Button mnemonicParsing="false" onAction="#cancel_login" text="cancel" />
-                  <Button mnemonicParsing="false" onAction="#submit_login" text="submit" />
+                  <Button fx:id="cancel_button" mnemonicParsing="false" onAction="#cancel_form" text="cancel" />
+                  <Button fx:id="submit_button" mnemonicParsing="false" onAction="#submit_form" text="submit" />
                </children>
                <padding>
                   <Insets bottom="50.0" left="120.0" right="50.0" top="50.0" />
