@@ -32,7 +32,8 @@ public class Login_controller {
     void submit_form(ActionEvent event) {
        try{
             Sql_connection db = new Sql_connection();
-            ResultSet result = db.select_query("SELECT  * from users");
+            String[] params = {email.getText(), password.getText()};
+            ResultSet result = db.select_query("SELECT  * from users where email=? and password=?", params);
             while (result.next()) {
                 System.out.println(result.getString("username"));
             }
