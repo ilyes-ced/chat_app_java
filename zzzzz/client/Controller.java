@@ -14,8 +14,8 @@ import javafx.scene.Node;
 
 public class Controller  {
 	private Socket clientSocket;
-	private BufferedReader serverToClientReader;
-	private PrintWriter clientToServerWriter;
+	private BufferedReader read_message;
+	private PrintWriter write_message;
 	private String name = "starter name";
     private Scene login;
 
@@ -23,41 +23,47 @@ public class Controller  {
 
 
     public void initialize() {
-    	clientSocket = new Socket('localhosr', 5000);
-		serverToClientReader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-		clientToServerWriter = new PrintWriter(clientSocket.getOutputStream(), true);
+    	clientSocket = new Socket('localhost', 5000);
+		read_message = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+		write_message = new PrintWriter(clientSocket.getOutputStream(), true);
 		chatLog = FXCollections.observableArrayList();
 		this.name = name;
-		clientToServerWriter.println(name);
+		write_message.println(name);
 
+        Thread clientThread = new Thread(
+            public void run() {
+                while (true) {
+			        try {
+			        	final String inputFromServer = read_message.readLine();
+			        	Platform.runLater(new Runnable() {
+			        		public void run() {
+                                //add it to ui
+			        			System.out.print(inputFromServer);
+			        		}
+			        	});
+			        } catch (SocketException e) {
+			        	Platform.runLater(new Runnable() {
+			        		public void run() {
+                                //add to ui err
+			        			System.out.print("Error in server");
+			        		}
+			        	});
+			        	break;
+			        } catch (IOException e) {
+			        	e.printStackTrace();
+			        }
+		        }
+            }
 
-		while (true) {
-			try {
-				final String inputFromServer = serverToClientReader.readLine();
-				Platform.runLater(new Runnable() {
-					public void run() {
-                        //add it to ui
-						System.out.print(inputFromServer);
-					}
-				});
-			} catch (SocketException e) {
-				Platform.runLater(new Runnable() {
-					public void run() {
-                        //add to ui err
-						System.out.print("Error in server");
-					}
-
-				});
-				break;
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
+        );
+		clientThread.setDaemon(true);
+		clientThread.start();
+		
     
     }
 
     public void send_message_to_server(String input) {
-		clientToServerWriter.println(name + " : " + input);
+		write_message.println(name + " : " + input);
 	}
 
 
@@ -91,9 +97,9 @@ public class Controller  {
     @FXML
     void enter_message(KeyEvent event) throws IOException {
         if(event.getCode().toString().equals("ENTER")){
-            
-            Stage primaryStage = (Stage)((Node)event.getSource()).getScene().getWindow();
-            primaryStage.setScene(login);
+            send_message_to_server("hello this is fixed test string ");
+            //Stage primaryStage = (Stage)((Node)event.getSource()).getScene().getWindow();
+            //primaryStage.setScene(login);
         }
     }
 

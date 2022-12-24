@@ -12,24 +12,42 @@ public class Controller  {
 
     private int port = 5555;
 	private ServerSocket socket;
-	private ArrayList<Socket> clients;
+	private ArrayList<Socket> clients =  new ArrayList<Socket>();
 	private ArrayList<Client_thread> client_threads;
     static Controller myControllerHandle;
 
     public void initialize() {
         try{
             
-            ServerSocket server = new ServerSocket(5555);
-            Server server = new Server(port);
-			Thread serverThread = (new Thread(server));
-			serverThread.setName("Server Thread");
-			serverThread.setDaemon(true);
-			serverThread.start();
-			threads.add(serverThread);
-			/* Change the view of the primary stage */
-			primaryStage.hide();
-			primaryStage.setScene(makeServerUI(server));
-			primaryStage.show();
+            ServerSocket server = new ServerSocket(5000);
+            new Thread(
+	            public void run() {
+	            	try {
+	            		while (true) {
+	            			final Socket clientSocket = socket.accept();
+	            			clients.add(clientSocket);
+	            			Platform.runLater(new Runnable() {
+	            				@Override
+	            				public void run() {
+                                    System.out.print("Client "+ clientSocket.getRemoteSocketAddress()+ " connected");
+	            					//edit ui
+                                    //serverLog.add("Client "+ clientSocket.getRemoteSocketAddress()+ " connected");
+	            				}
+	            			});
+	            			ClientThread clientThreadHolderClass = new ClientThread(clientSocket, this);
+	            			Thread clientThread = new Thread(clientThreadHolderClass);
+	            			clientThreads.add(clientThreadHolderClass);
+	            			clientThread.setDaemon(true);
+	            			clientThread.start();
+	            			ServerApplication.threads.add(clientThread);
+	            		}
+	            	} catch (IOException e) {
+	            		e.printStackTrace();
+	            	}
+            
+	            }
+            ).start();
+            
         }catch (Exception ex) {
             ex.printStackTrace();
         }
