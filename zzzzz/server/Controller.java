@@ -1,8 +1,10 @@
 import javafx.fxml.FXML;
 import javafx.event.ActionEvent;
 import javafx.scene.layout.VBox;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Label;
 import javafx.scene.control.Button;
 import javafx.application.Platform;
 import java.io.*;
@@ -22,14 +24,24 @@ public class Controller  {
 	private BufferedReader incomingMessageReader;
 	private PrintWriter outgoingMessageWriter;
 
-    public void initialize() {
+    public void initialize(URL url, ResourceBundle rb) {
+        System.out.print("start init");
         try{
-            ServerSocket server = new ServerSocket(5000);
+            try {
+                ServerSocket server = new ServerSocket(5000);
+            } catch (IOException e) {
+		    	e.printStackTrace();
+		    }
+            System.out.print("ceated server init");
+            
             new Thread( new Runnable() {
                 public void run() {
 	                try {
 	                	while (true) {
+                            scroll_pane_inside.getChildren().add(new Label("started server"));
 	                		final Socket clientSocket = socket.accept();
+                            scroll_pane_inside.getChildren().add(new Label("connected to server"));
+                            
 	                		clients.add(clientSocket);
 			                incomingMessageReader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 			                outgoingMessageWriter = new PrintWriter(clientSocket.getOutputStream(), true);
@@ -86,6 +98,10 @@ public class Controller  {
 
     @FXML
     private VBox add_messages;
+
+    @FXML
+    private VBox scroll_pane_inside;
+
 
     @FXML
     void clicked(ActionEvent event) throws IOException {
