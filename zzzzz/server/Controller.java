@@ -23,25 +23,34 @@ public class Controller  {
     static Controller myControllerHandle;
 	private BufferedReader incomingMessageReader;
 	private PrintWriter outgoingMessageWriter;
+    private ServerSocket server ;
 
-    public void initialize(URL url, ResourceBundle rb) {
+
+
+
+    public void initialize(){
         System.out.print("start init");
         try{
             try {
-                ServerSocket server = new ServerSocket(5000);
+                server = new ServerSocket(5000);
             } catch (IOException e) {
 		    	e.printStackTrace();
 		    }
-            System.out.print("ceated server init");
+            System.out.print("ceated server init \n");
             
             new Thread( new Runnable() {
                 public void run() {
 	                try {
 	                	while (true) {
-                            scroll_pane_inside.getChildren().add(new Label("started server"));
-	                		final Socket clientSocket = socket.accept();
-                            scroll_pane_inside.getChildren().add(new Label("connected to server"));
-                            
+                            //scroll_pane_inside.getChildren().add(new Label("started server"));
+	                		final Socket clientSocket = server.accept();
+
+                            Platform.runLater(new Runnable() {
+	                			@Override
+	                			public void run() {
+                                    scroll_pane_inside.getChildren().add(new Label("connected to server"));
+	                			}
+	                		});
 	                		clients.add(clientSocket);
 			                incomingMessageReader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 			                outgoingMessageWriter = new PrintWriter(clientSocket.getOutputStream(), true);
@@ -57,10 +66,14 @@ public class Controller  {
                             new Thread( new Runnable() {
                                 public void run() {
                                     try {
-		                            	String message_to_server;
 		                            	while (true) {
-		                            		message_to_server = incomingMessageReader.readLine();
-                                            System.out.print("client sent : "+message_to_server);
+		                            		String message_to_server = incomingMessageReader.readLine();
+                                            Platform.runLater(new Runnable() {
+	                		                	@Override
+	                		                	public void run() {
+                                                    scroll_pane_inside.getChildren().add(new Label("client sent : "+message_to_server));
+                                                }
+	                		                });
 		                                    for (Socket client : clients) {
                                                 outgoingMessageWriter.println(message_to_server);
 		                                    }
@@ -90,6 +103,10 @@ public class Controller  {
             ex.printStackTrace();
         }
     }
+
+
+
+
    @FXML
     private TextField message_content;
 

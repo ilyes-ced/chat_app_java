@@ -4,6 +4,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Button;
+import javafx.scene.input.KeyEvent;
 import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -104,10 +105,16 @@ public class Controller  {
     //}
 
     @FXML
-    void submit_event(ActionEvent event) {
+    void submit_event_click(ActionEvent event) {
         send_message_to_server("hello this is fixed test string ");
     }
 
-}
+       @FXML
+    void submit_event(KeyEvent event) {
+        if(event.getCode().toString().equals("ENTER")){
+            send_message_to_server("hello this is fixed test string clicked entyer ");
+        }
+    }
 
+}
 

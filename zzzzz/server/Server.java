@@ -20,9 +20,12 @@ public class Server extends Application {
         Parent root = loader.load();
         Controller controller = (Controller) loader.getController();
 
+
         primaryStage.setTitle("Registration Form FXML Application");
         primaryStage.setScene(new Scene(root, 800, 500));
         primaryStage.show();
+
+        
     }
     
 
