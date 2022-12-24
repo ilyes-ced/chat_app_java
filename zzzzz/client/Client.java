@@ -36,7 +36,7 @@ public class Client extends Application {
         //primaryStage.show();
 
         primaryStage.setTitle("Switching scenes");
-        primaryStage.setScene(main_scene);
+        primaryStage.setScene(login_scene);
         primaryStage.show();
     }
     

@@ -31,35 +31,35 @@ public class Controller  {
 	                	while (true) {
 	                		final Socket clientSocket = socket.accept();
 	                		clients.add(clientSocket);
-			                    incomingMessageReader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-			                    outgoingMessageWriter = new PrintWriter(clientSocket.getOutputStream(), true);
-	                		    Platform.runLater(new Runnable() {
-	                		    	@Override
-	                		    	public void run() {
-                                            System.out.print("Client "+ clientSocket.getRemoteSocketAddress()+ " connected");
-	                		    		//edit ui
-                                            //serverLog.add("Client "+ clientSocket.getRemoteSocketAddress()+ " connected");
-	                		    	}
-	                		    });
+			                incomingMessageReader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+			                outgoingMessageWriter = new PrintWriter(clientSocket.getOutputStream(), true);
+	                		Platform.runLater(new Runnable() {
+	                			@Override
+	                			public void run() {
+                                        System.out.print("Client "+ clientSocket.getRemoteSocketAddress()+ " connected");
+	                				//edit ui
+                                        //serverLog.add("Client "+ clientSocket.getRemoteSocketAddress()+ " connected");
+	                			}
+	                		});
 
-                                new Thread( new Runnable() {
-                                    public void run() {
-                                        try {
-		                                	String message_to_server;
-		                                	while (true) {
-		                                		message_to_server = incomingMessageReader.readLine();
-                                                System.out.print("client sent : "+message_to_server);
-		                                        for (Socket client : clients) {
-                                                    outgoingMessageWriter.println(message_to_server);
-		                                        }
-		                                	}
-		                                } catch (SocketException e) {
-		                                	//baseServer.clientDisconnected(this);
-		                                } catch (IOException e) {
-		                                	e.printStackTrace();
-		                                }
-                                    }
-                                }).start();
+                            new Thread( new Runnable() {
+                                public void run() {
+                                    try {
+		                            	String message_to_server;
+		                            	while (true) {
+		                            		message_to_server = incomingMessageReader.readLine();
+                                            System.out.print("client sent : "+message_to_server);
+		                                    for (Socket client : clients) {
+                                                outgoingMessageWriter.println(message_to_server);
+		                                    }
+		                            	}
+		                            } catch (SocketException e) {
+		                            	//baseServer.clientDisconnected(this);
+		                            } catch (IOException e) {
+		                            	e.printStackTrace();
+		                            }
+                                }
+                            }).start();
 	                		//ClientThread clientThreadHolderClass = new ClientThread(clientSocket, this);
 	                		//Thread clientThread = new Thread(clientThreadHolderClass);
 	                		//clientThreads.add(clientThreadHolderClass);
