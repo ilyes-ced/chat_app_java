@@ -11,9 +11,55 @@ import java.io.*;
 import java.net.*;
 import javafx.scene.Node;
 
-public class Controller  {
 
+public class Controller  {
+	private Socket clientSocket;
+	private BufferedReader serverToClientReader;
+	private PrintWriter clientToServerWriter;
+	private String name = "starter name";
     private Scene login;
+
+
+
+
+    public void initialize() {
+    	clientSocket = new Socket('localhosr', 5000);
+		serverToClientReader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+		clientToServerWriter = new PrintWriter(clientSocket.getOutputStream(), true);
+		chatLog = FXCollections.observableArrayList();
+		this.name = name;
+		clientToServerWriter.println(name);
+
+
+		while (true) {
+			try {
+				final String inputFromServer = serverToClientReader.readLine();
+				Platform.runLater(new Runnable() {
+					public void run() {
+                        //add it to ui
+						System.out.print(inputFromServer);
+					}
+				});
+			} catch (SocketException e) {
+				Platform.runLater(new Runnable() {
+					public void run() {
+                        //add to ui err
+						System.out.print("Error in server");
+					}
+
+				});
+				break;
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+    
+    }
+
+    public void send_message_to_server(String input) {
+		clientToServerWriter.println(name + " : " + input);
+	}
+
 
     public void set_login_scene(Scene scene){
         login = scene;

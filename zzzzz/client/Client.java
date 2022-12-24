@@ -19,22 +19,17 @@ public class Client extends Application {
         Parent main_pane = main_page_loader.load();
         Scene main_scene = new Scene(main_pane, 800, 500);
 
-
+        
         FXMLLoader login_page_loader = new FXMLLoader(getClass().getResource("login.fxml"));
         Parent login_pane = login_page_loader.load();
         Scene login_scene = new Scene(login_pane, 800, 500);
 
 
-
-        //FXMLLoader loader = new FXMLLoader(getClass().getResource("login.fxml"));
-        //Parent root = loader.load();
-        //primaryStage.setScene(new Scene(root));
-
-
         Login_controller login_controller = (Login_controller) login_page_loader.getController();
         login_controller.set_main_scene(main_scene);
         Controller main_controller = (Controller) main_page_loader.getController();
-        main_controller.set_login_scene(login_scene);
+        //fix for logout
+        //main_controller.set_login_scene(login_scene);
 
         
         //primaryStage.setTitle("Registration Form FXML Application");
