@@ -18,8 +18,8 @@ public class Server extends Application {
     public void start(Stage primaryStage) throws Exception{
         FXMLLoader loader = new FXMLLoader(getClass().getResource("server_ui.fxml"));
         Parent root = loader.load();
-        myControllerHandle = (Controller)loader.getController();
-        
+        Controller controller = (Controller) loader.getController();
+
         primaryStage.setTitle("Registration Form FXML Application");
         primaryStage.setScene(new Scene(root, 800, 500));
         primaryStage.show();

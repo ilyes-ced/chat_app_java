@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 import java.io.*;
 import java.net.*;
 import javafx.scene.Node;
-
+import javafx.scene.layout.AnchorPane;
 
 public class Controller  {
 	private Socket clientSocket;
@@ -23,41 +23,46 @@ public class Controller  {
 
 
     public void initialize() {
-    	clientSocket = new Socket('localhost', 5000);
-		read_message = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-		write_message = new PrintWriter(clientSocket.getOutputStream(), true);
-		chatLog = FXCollections.observableArrayList();
-		this.name = name;
-		write_message.println(name);
+        try{
+            clientSocket = new Socket("localhost", 5000);
+		    read_message = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+		    write_message = new PrintWriter(clientSocket.getOutputStream(), true);
+		    //chatLog = FXCollections.observableArrayList();
+		    this.name = name;
+		    write_message.println(name);
 
-        Thread clientThread = new Thread(
-            public void run() {
-                while (true) {
-			        try {
-			        	final String inputFromServer = read_message.readLine();
-			        	Platform.runLater(new Runnable() {
-			        		public void run() {
-                                //add it to ui
-			        			System.out.print(inputFromServer);
-			        		}
-			        	});
-			        } catch (SocketException e) {
-			        	Platform.runLater(new Runnable() {
-			        		public void run() {
-                                //add to ui err
-			        			System.out.print("Error in server");
-			        		}
-			        	});
-			        	break;
-			        } catch (IOException e) {
-			        	e.printStackTrace();
-			        }
-		        }
-            }
+            Thread clientThread = new Thread( new Runnable() {
+                public void run() {
+                    while (true) {
+		    	        try {
+		    	        	final String inputFromServer = read_message.readLine();
+		    	        	Platform.runLater(new Runnable() {
+		    	        		public void run() {
+                                    //add it to ui
+		    	        			System.out.print(inputFromServer);
+		    	        		}
+		    	        	});
+		    	        } catch (SocketException e) {
+		    	        	Platform.runLater(new Runnable() {
+		    	        		public void run() {
+                                    //add to ui err
+		    	        			System.out.print("Error in server");
+		    	        		}
+		    	        	});
+		    	        	break;
+		    	        } catch (IOException e) {
+		    	        	e.printStackTrace();
+		    	        }
+		            }
+                }
 
-        );
-		clientThread.setDaemon(true);
-		clientThread.start();
+            });
+		    clientThread.setDaemon(true);
+		    clientThread.start();
+        }catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
 		
     
     }
@@ -73,13 +78,6 @@ public class Controller  {
 
  
 
-    public void initialize() {
-        try{
-            
-        }catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
    @FXML
     private TextField message_content;
 
@@ -88,20 +86,28 @@ public class Controller  {
 
     @FXML
     private VBox add_messages;
+    
+    @FXML
+    private AnchorPane scroll_pane_inside;
 
     @FXML
-    void clicked(ActionEvent event) throws IOException {
-    }
+    private Button submit_message;
 
+ 
+
+    //@FXML
+    //void submit_event(ActionEvent event) throws IOException {
+    //    send_message_to_server("hello this is fixed test string ");
+    //    //Stage primaryStage = (Stage)((Node)event.getSource()).getScene().getWindow();
+    //    //primaryStage.setScene(login);
+    //    
+    //}
 
     @FXML
-    void enter_message(KeyEvent event) throws IOException {
-        if(event.getCode().toString().equals("ENTER")){
-            send_message_to_server("hello this is fixed test string ");
-            //Stage primaryStage = (Stage)((Node)event.getSource()).getScene().getWindow();
-            //primaryStage.setScene(login);
-        }
+    void submit_event(ActionEvent event) {
+        send_message_to_server("hello this is fixed test string ");
     }
 
 }
+
 
