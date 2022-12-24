@@ -17,7 +17,7 @@ public class Client extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         //Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("client_ui.fxml"));
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("client_ui.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("new_client_ui.fxml"));
         Parent root = loader.load();
         myControllerHandle = (Controller)loader.getController();
         

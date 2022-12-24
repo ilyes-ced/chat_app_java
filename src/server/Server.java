@@ -15,10 +15,7 @@ import java.util.*;
 public class Server extends Application {
     static Controller myControllerHandle;
 
-    private Socket client;
-    private ServerSocket server;
-    private ObjectInputStream dis2;
-    private List<DataOutputStream> doss ;
+    
 
 
 
@@ -42,14 +39,15 @@ public class Server extends Application {
         launch(args);
         
 
-        server = new ServerSocket(5555);
-        doss = new ArrayList<>();
+        ServerSocket server = new ServerSocket(5555);
+        List<DataOutputStream> doss = new ArrayList<>();
         while (true) {
-            client = server.accept();
-            dis2 = new ObjectInputStream(client.getInputStream());
+            Socket client = server.accept();
+            ObjectInputStream dis2 = new ObjectInputStream(client.getInputStream());
             final Map<String, String> message_object = (Map)dis2.readObject();
             if(message_object.get("method") == "start_chat"){
-                start_new_thread();
+                Server server_class = new Server();
+                server_class.start_new_thread();
             }else if(message_object.get("method") == "start_chat"){
                 System.out.print("//////login attempt////////////// \n");
             }
