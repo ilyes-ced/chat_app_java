@@ -10,7 +10,6 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
    <top>
       <AnchorPane prefHeight="40.0" prefWidth="600.0" style="-fx-background-color: #6715eb;" BorderPane.alignment="CENTER" />
@@ -34,10 +33,14 @@
                   <HBox prefHeight="40.0" prefWidth="430.0" style="-fx-border-color: transparent transparent gray transparent;" BorderPane.alignment="CENTER" />
                </top>
                <center>
-                  <ScrollPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: red;" BorderPane.alignment="CENTER">
-                     <content>
-                        <AnchorPane fx:id="scroll_pane_inside" minHeight="-Infinity" minWidth="-Infinity" style="-fx-background-color: black;" />
-                     </content>
+                  <ScrollPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0">
+                           <children>
+                              <VBox fx:id="scroll_pane_inside" layoutX="90.0" layoutY="14.0" prefHeight="222.0" prefWidth="120.0" />
+                           </children>
+                        </AnchorPane>
+                    </content>
                   </ScrollPane>
                </center>
             </BorderPane>

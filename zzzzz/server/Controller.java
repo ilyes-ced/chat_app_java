@@ -19,6 +19,8 @@ public class Controller  {
     private int port = 5555;
 	private ServerSocket socket;
 	private ArrayList<Socket> clients =  new ArrayList<Socket>();
+    List<PrintWriter> outputs = new ArrayList<>();
+
 	//private ArrayList<Client_thread> client_threads;
     static Controller myControllerHandle;
 	private BufferedReader incomingMessageReader;
@@ -54,12 +56,13 @@ public class Controller  {
 	                		clients.add(clientSocket);
 			                incomingMessageReader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 			                outgoingMessageWriter = new PrintWriter(clientSocket.getOutputStream(), true);
+                            synchronized(outputs) {
+                                outputs.add(outgoingMessageWriter);
+                            }
 	                		Platform.runLater(new Runnable() {
 	                			@Override
 	                			public void run() {
-                                        System.out.print("Client "+ clientSocket.getRemoteSocketAddress()+ " connected");
-	                				//edit ui
-                                        //serverLog.add("Client "+ clientSocket.getRemoteSocketAddress()+ " connected");
+                                    System.out.print("Client "+ clientSocket.getRemoteSocketAddress()+ " connected");
 	                			}
 	                		});
 
@@ -71,12 +74,15 @@ public class Controller  {
                                             Platform.runLater(new Runnable() {
 	                		                	@Override
 	                		                	public void run() {
-                                                    scroll_pane_inside.getChildren().add(new Label("client sent : "+message_to_server));
+                                                    scroll_pane_inside.getChildren().add(new Label("client "+clientSocket.getRemoteSocketAddress()+" sent : "+message_to_server));
                                                 }
 	                		                });
-		                                    for (Socket client : clients) {
-                                                outgoingMessageWriter.println(message_to_server);
-		                                    }
+                                            
+                                            synchronized (outputs) {
+		                                        for (PrintWriter output : outputs) {
+                                                    output.println(message_to_server);
+		                                        }
+                                            }
 		                            	}
 		                            } catch (SocketException e) {
 		                            	//baseServer.clientDisconnected(this);

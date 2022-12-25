@@ -89,7 +89,8 @@ public class Controller  {
     private VBox add_messages;
     
     @FXML
-    private AnchorPane scroll_pane_inside;
+    //private AnchorPane scroll_pane_inside;
+    private VBox scroll_pane_inside;
 
     @FXML
     private Button submit_message;
@@ -106,13 +107,13 @@ public class Controller  {
 
     @FXML
     void submit_event_click(ActionEvent event) {
-        send_message_to_server("hello this is fixed test string ");
+        send_message_to_server(message_content.getText());
     }
 
        @FXML
     void submit_event(KeyEvent event) {
         if(event.getCode().toString().equals("ENTER")){
-            send_message_to_server("hello this is fixed test string clicked entyer ");
+            send_message_to_server(message_content.getText());
         }
     }
 
