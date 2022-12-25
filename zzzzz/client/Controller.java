@@ -58,7 +58,7 @@ public class Controller  {
                 }
 
             });
-		    clientThread.setDaemon(true);
+		    //clientThread.setDaemon(true);
 		    clientThread.start();
         }catch (Exception ex) {
             ex.printStackTrace();

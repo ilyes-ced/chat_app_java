@@ -71,6 +71,7 @@ public class Controller  {
                                     try {
 		                            	while (true) {
 		                            		String message_to_server = incomingMessageReader.readLine();
+                                            System.out.println("Number of active threads from the given thread: " + Thread.activeCount()+"\n");
                                             Platform.runLater(new Runnable() {
 	                		                	@Override
 	                		                	public void run() {
