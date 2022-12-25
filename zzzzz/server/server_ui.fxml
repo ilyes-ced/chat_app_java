@@ -33,7 +33,11 @@
                   <HBox prefHeight="40.0" prefWidth="430.0" style="-fx-border-color: transparent transparent gray transparent;" BorderPane.alignment="CENTER" />
                </top>
                <center>
-                  <VBox fx:id="scroll_pane_inside" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER" />
+                  <ScrollPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                     <content>
+                        <VBox fx:id="scroll_pane_inside" prefHeight="200.0" prefWidth="182.0" />
+                     </content>
+                  </ScrollPane>
                </center>
             </BorderPane>
          </center>
