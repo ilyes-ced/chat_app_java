@@ -56,12 +56,33 @@ public class Controller  {
             new Thread( new Runnable() {
                 public void run() {
                     while(true){
-	                	final Socket clientSocket = login_server.accept();
-                        new DataOutputStream(clientSocket.getOutputStream())
-                        DataInputStream input = new DataInputStream(clientSocket.getInputStream())
+                        try{
+                            System.out.println("started login thread \n");
+                            final Socket clientSocket = login_server.accept();
+                            System.out.println("accepted login thread \n");
+                            
+                            new DataOutputStream(clientSocket.getOutputStream());
+                            DataInputStream input = new DataInputStream(clientSocket.getInputStream());
+                            String email = input.readUTF();
+                            String password = input.readUTF();
+                            
+                            try{
+                                Sql_connection db = new Sql_connection();
+                                String[] params = {email, password};
+                                ResultSet result = db.select_query("SELECT  * from users where email=? and password=?", params);
+                                while (result.next()) {
+                                    System.out.println(result.getString("username"));
+                                }
+                                db.closeConnection();
+                            } catch (Exception ex) {
+                                ex.printStackTrace();
+                            }
+                        }catch( IOException e ){
+                            e.printStackTrace();
+                        }
                     }
                 }
-            });
+            }).start();
 
             
             new Thread( new Runnable() {

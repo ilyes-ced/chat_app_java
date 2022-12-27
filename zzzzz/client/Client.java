@@ -17,15 +17,15 @@ public class Client extends Application {
     public void start(Stage primaryStage) throws Exception{
         FXMLLoader main_page_loader = new FXMLLoader(getClass().getResource("new_client_ui.fxml"));
         Parent main_pane = main_page_loader.load();
-        Scene main_scene = new Scene(main_pane, 800, 500);
+        Scene main_scene = new Scene(main_pane, 1200, 800);
 
         FXMLLoader login_page_loader = new FXMLLoader(getClass().getResource("login.fxml"));
         Parent login_pane = login_page_loader.load();
-        Scene login_scene = new Scene(login_pane, 800, 500);
+        Scene login_scene = new Scene(login_pane, 1200, 800);
 
         FXMLLoader register_page_loader = new FXMLLoader(getClass().getResource("register.fxml"));
         Parent register_pane = register_page_loader.load();
-        Scene register_scene = new Scene(register_pane, 800, 500);
+        Scene register_scene = new Scene(register_pane, 1200, 800);
 
 
         Login_controller login_controller = (Login_controller) login_page_loader.getController();

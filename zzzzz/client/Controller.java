@@ -77,7 +77,7 @@ public class Controller  {
 
  
 
-   @FXML
+    @FXML
     private TextField message_content;
 
     @FXML
