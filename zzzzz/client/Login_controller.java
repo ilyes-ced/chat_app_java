@@ -12,11 +12,18 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.Node;
 
-public class Login_controller {
-
-
+public class Login_controller  {
     private Scene main;
     private Scene register;
+
+
+
+
+    public void initialize() {
+        
+    }
+
+
 
     public void set_main_scene(Scene scene){
         main = scene;
@@ -45,17 +52,6 @@ public class Login_controller {
     void register_form(ActionEvent event) {       
         System.out.println("username");
         try{
-            //try{
-            //    Sql_connection db = new Sql_connection();
-            //    String[] params = {email.getText(), password.getText()};
-            //    ResultSet result = db.select_query("SELECT  * from users", params);
-            //    while (result.next()) {
-            //        System.out.println(result.getString("username"));
-            //    }
-            //    db.closeConnection();
-            //} catch (Exception ex) {
-            //    ex.printStackTrace();
-            //}
             Stage primaryStage = (Stage)((Node)event.getSource()).getScene().getWindow();
             primaryStage.setScene(register);
         } catch (Exception ex) {

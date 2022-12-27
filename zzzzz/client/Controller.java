@@ -63,9 +63,6 @@ public class Controller  {
         }catch (Exception ex) {
             ex.printStackTrace();
         }
-
-		
-    
     }
 
     public void send_message_to_server(String input) throws IOException {

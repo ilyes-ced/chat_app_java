@@ -25,20 +25,44 @@ public class Controller  {
     static Controller myControllerHandle;
 	//private DataInputStream incomingMessageReader;
 	private DataOutputStream outgoingMessageWriter;
-    private ServerSocket server ;
+    private ServerSocket server;
+    private ServerSocket login_server;
+    private ServerSocket register_server;
 
 
 
 
     public void initialize(){
-        System.out.print("start init");
         try{
             try {
                 server = new ServerSocket(5000);
             } catch (IOException e) {
 		    	e.printStackTrace();
 		    }
-            System.out.print("ceated server init \n");
+
+            try {
+                login_server = new ServerSocket(6000);
+            } catch (IOException e) {
+		    	e.printStackTrace();
+		    }
+
+            try {
+                register_server = new ServerSocket(7000);
+            } catch (IOException e) {
+		    	e.printStackTrace();
+		    }
+
+
+            new Thread( new Runnable() {
+                public void run() {
+                    while(true){
+	                	final Socket clientSocket = login_server.accept();
+                        new DataOutputStream(clientSocket.getOutputStream())
+                        DataInputStream input = new DataInputStream(clientSocket.getInputStream())
+                    }
+                }
+            });
+
             
             new Thread( new Runnable() {
                 public void run() {
