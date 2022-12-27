@@ -16,9 +16,14 @@ public class Login_controller {
 
 
     private Scene main;
+    private Scene register;
 
     public void set_main_scene(Scene scene){
         main = scene;
+    }
+
+    public void set_register_scene(Scene scene){
+        register = scene;
     }
     
     @FXML
@@ -37,9 +42,25 @@ public class Login_controller {
     private Button submit_button;
 
     @FXML
-    void cancel_form(ActionEvent event) {
-        System.out.print( email.getText() );
-        
+    void register_form(ActionEvent event) {       
+        System.out.println("username");
+        try{
+            //try{
+            //    Sql_connection db = new Sql_connection();
+            //    String[] params = {email.getText(), password.getText()};
+            //    ResultSet result = db.select_query("SELECT  * from users", params);
+            //    while (result.next()) {
+            //        System.out.println(result.getString("username"));
+            //    }
+            //    db.closeConnection();
+            //} catch (Exception ex) {
+            //    ex.printStackTrace();
+            //}
+            Stage primaryStage = (Stage)((Node)event.getSource()).getScene().getWindow();
+            primaryStage.setScene(register);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     @FXML
@@ -50,8 +71,7 @@ public class Login_controller {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-
-
     }
+    
 
 }

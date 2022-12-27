@@ -19,12 +19,12 @@ public class Controller  {
     private int port = 5555;
 	private ServerSocket socket;
 	private ArrayList<Socket> clients =  new ArrayList<Socket>();
-    List<PrintWriter> outputs = new ArrayList<>();
+    List<DataOutputStream> outputs = new ArrayList<>();
 
 	//private ArrayList<Client_thread> client_threads;
     static Controller myControllerHandle;
-	private BufferedReader incomingMessageReader;
-	private PrintWriter outgoingMessageWriter;
+	//private DataInputStream incomingMessageReader;
+	private DataOutputStream outgoingMessageWriter;
     private ServerSocket server ;
 
 
@@ -50,27 +50,22 @@ public class Controller  {
                             Platform.runLater(new Runnable() {
 	                			@Override
 	                			public void run() {
-                                    scroll_pane_inside.getChildren().add(new Label("connected to server"));
+                                    scroll_pane_inside.getChildren().add(new Label("Client "+ clientSocket.getRemoteSocketAddress()+ " connected"));
 	                			}
 	                		});
-	                		clients.add(clientSocket);
-			                incomingMessageReader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-			                outgoingMessageWriter = new PrintWriter(clientSocket.getOutputStream(), true);
+	                		//clients.add(clientSocket);
+			                //incomingMessageReader = new DataInputStream(clientSocket.getInputStream());
+			                //outgoingMessageWriter = new DataOutputStream(clientSocket.getOutputStream());
                             synchronized(outputs) {
-                                outputs.add(outgoingMessageWriter);
+                                outputs.add(new DataOutputStream(clientSocket.getOutputStream()));
                             }
-	                		Platform.runLater(new Runnable() {
-	                			@Override
-	                			public void run() {
-                                    System.out.print("Client "+ clientSocket.getRemoteSocketAddress()+ " connected");
-	                			}
-	                		});
+	                
 
                             new Thread( new Runnable() {
                                 public void run() {
-                                    try {
+                                    try (DataInputStream incomingMessageReader = new DataInputStream(clientSocket.getInputStream())) {
 		                            	while (true) {
-		                            		String message_to_server = incomingMessageReader.readLine();
+		                            		String message_to_server = incomingMessageReader.readUTF();
                                             System.out.println("Number of active threads from the given thread: " + Thread.activeCount()+"\n");
                                             Platform.runLater(new Runnable() {
 	                		                	@Override
@@ -80,8 +75,8 @@ public class Controller  {
 	                		                });
                                             
                                             synchronized (outputs) {
-		                                        for (PrintWriter output : outputs) {
-                                                    output.println(message_to_server);
+		                                        for (DataOutputStream output : outputs) {
+                                                    output.writeUTF(message_to_server);
 		                                        }
                                             }
 		                            	}

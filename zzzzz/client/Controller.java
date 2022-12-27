@@ -15,8 +15,8 @@ import javafx.scene.layout.AnchorPane;
 
 public class Controller  {
 	private Socket clientSocket;
-	private BufferedReader read_message;
-	private PrintWriter write_message;
+	private DataInputStream read_message;
+	private DataOutputStream write_message;
 	private String name = "starter name";
     private Scene login;
 
@@ -25,18 +25,18 @@ public class Controller  {
 
     public void initialize() {
         try{
-            clientSocket = new Socket("localhost", 5000);
-		    read_message = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-		    write_message = new PrintWriter(clientSocket.getOutputStream(), true);
+            this.clientSocket = new Socket("localhost", 5000);
+		    this.read_message = new DataInputStream(clientSocket.getInputStream());
+		    this.write_message = new DataOutputStream(clientSocket.getOutputStream());
 		    //chatLog = FXCollections.observableArrayList();
 		    this.name = name;
-		    write_message.println(name);
+		    this.write_message.writeUTF(name);
 
             Thread clientThread = new Thread( new Runnable() {
                 public void run() {
                     while (true) {
 		    	        try {
-		    	        	final String inputFromServer = read_message.readLine();
+		    	        	final String inputFromServer = read_message.readUTF();
 		    	        	Platform.runLater(new Runnable() {
 		    	        		public void run() {
                                     //add it to ui
@@ -68,8 +68,9 @@ public class Controller  {
     
     }
 
-    public void send_message_to_server(String input) {
-		write_message.println(name + " : " + input);
+    public void send_message_to_server(String input) throws IOException {
+        System.out.print("sent messafe \n");
+		write_message.writeUTF(name + " : " + input);
 	}
 
 
@@ -106,12 +107,12 @@ public class Controller  {
     //}
 
     @FXML
-    void submit_event_click(ActionEvent event) {
+    void submit_event_click(ActionEvent event) throws IOException {
         send_message_to_server(message_content.getText());
     }
 
        @FXML
-    void submit_event(KeyEvent event) {
+    void submit_event(KeyEvent event) throws IOException {
         if(event.getCode().toString().equals("ENTER")){
             send_message_to_server(message_content.getText());
         }
