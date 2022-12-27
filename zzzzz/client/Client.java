@@ -43,7 +43,7 @@ public class Client extends Application {
         //primaryStage.setTitle("Registration Form FXML Application");
         //primaryStage.show();
 
-        primaryStage.setTitle("Switching scenes");
+        primaryStage.setTitle("java chat group application");
         primaryStage.setScene(login_scene);
         primaryStage.show();
     }

@@ -122,8 +122,6 @@ public class Controller  {
                                     if(result.getString("password").equals(password)){
                                         is_auth = true;
                                         login_output.writeUTF("success");
-                                        //scroll_pane_inside.getChildren().add(new Label("started server"));
-
                                         Platform.runLater(new Runnable() {
 	                		            	@Override
 	                		            	public void run() {
@@ -133,18 +131,10 @@ public class Controller  {
                                         synchronized(outputs) {
                                             outputs.add(new DataOutputStream(clientSocket.getOutputStream()));
                                         }
-                                    
-                                        
                                         new Thread( new Runnable() {
                                             public void run() {
                                                 try (DataInputStream incomingMessageReader = new DataInputStream(clientSocket.getInputStream())) {
 		                                        	while (true) {
-                                                        synchronized (outputs) {
-		                                                    for (DataOutputStream output : outputs) {
-                                                                output.writeUTF("message_to_server");
-		                                                    }
-                                                        }
-                                                        System.out.println("test \n");
 		                                        		String message_to_server = incomingMessageReader.readUTF();
                                                         System.out.println("Number of active threads from the given thread: " + Thread.activeCount()+"\n");
                                                         Platform.runLater(new Runnable() {
@@ -161,6 +151,7 @@ public class Controller  {
                                                         }
 		                                        	}
 		                                        } catch (SocketException e) {
+		                                        	e.printStackTrace();
 		                                        	//baseServer.clientDisconnected(this);
 		                                        } catch (IOException e) {
 		                                        	e.printStackTrace();
@@ -197,13 +188,13 @@ public class Controller  {
 	        //        try {
 	        //        	while (true) {
             //                //scroll_pane_inside.getChildren().add(new Label("started server"));
-	        //        		final Socket clientSocket = server.accept();
+	        //        		  final Socket clientSocket = server.accept();
             //                Platform.runLater(new Runnable() {
 	        //        			@Override
 	        //        			public void run() {
             //                        scroll_pane_inside.getChildren().add(new Label("Client "+ clientSocket.getRemoteSocketAddress()+ " connected"));
 	        //        			}
-	        //        		});
+	        //        		  });
             //                synchronized(outputs) {
             //                    outputs.add(new DataOutputStream(clientSocket.getOutputStream()));
             //                }
