@@ -21,16 +21,13 @@ public class Login_controller  {
     private Scene main;
     private Scene register;
 	private Socket login_client_socket;
-	private DataInputStream read_message;
-	private DataOutputStream write_message;
 
 
 
 
     public void initialize() throws IOException {
-        this.login_client_socket = new Socket("localhost", 6000);
-        this.read_message = new DataInputStream(login_client_socket.getInputStream());
-        this.write_message = new DataOutputStream(login_client_socket.getOutputStream());
+
+
     }
     
     public void set_main_scene(Scene scene){
@@ -107,14 +104,65 @@ public class Login_controller  {
     @FXML
     void submit_login(ActionEvent event) throws IOException {
         if (!login_email.getText().trim().isEmpty() && !login_password.getText().trim().isEmpty()) {
+            login_error_message.setText("");
+            Socket client_socket = new Socket("localhost", 6000);
+            DataInputStream read_message = new DataInputStream(client_socket.getInputStream());
+            DataOutputStream write_message = new DataOutputStream(client_socket.getOutputStream());
+            System.out.println("sendt");
             write_message.writeUTF(login_email.getText());
             write_message.writeUTF(login_password.getText());
+            System.out.println("test \n");
+            String response = read_message.readUTF();
+            System.out.println("test \n");
+            System.out.println(response);
+            if(response.equals("success")){
+                Stage primaryStage = (Stage)((Node)event.getSource()).getScene().getWindow();
+                primaryStage.setScene(main);
+            }else if(response.equals("password_error")){
+                login_error_message.setText("wrong password");
+            }else if(response.equals("email_error")){
+                login_error_message.setText("this account does not exist");
+            }else if(response.equals("connection_error")){
+                login_error_message.setText("network erro please check your connection");
+            }
+       }else{
+            login_error_message.setText("email and password required");
        }
     }
 
     @FXML
-    void submit_register(ActionEvent event) {
+    void submit_register(ActionEvent event) throws IOException  {
+        if (!register_username.getText().trim().isEmpty() && !register_email.getText().trim().isEmpty() && !register_password.getText().trim().isEmpty()) {
+            register_error_message.setText("");
+            register_error_message.setStyle("-fx-text-fill: red;");
+            Socket client_socket = new Socket("localhost", 7000);
+            DataInputStream read_message = new DataInputStream(client_socket.getInputStream());
+            DataOutputStream write_message = new DataOutputStream(client_socket.getOutputStream());
+            System.out.println("sendt");
+            write_message.writeUTF(register_username.getText());
+            write_message.writeUTF(register_email.getText());
+            write_message.writeUTF(register_password.getText());
+            
+            
 
+            System.out.println("test \n");
+            String response = read_message.readUTF();
+            System.out.println("test \n");
+            System.out.println(response);
+            if(response.equals("success")){
+                //Stage primaryStage = (Stage)((Node)event.getSource()).getScene().getWindow();
+                register_error_message.setStyle("-fx-text-fill: green;");
+                register_error_message.setText("registration successful, you can login now");
+            }else if(response.equals("password_error")){
+                register_error_message.setText("wrong password");
+            }else if(response.equals("email_error")){
+                register_error_message.setText("this account does not exist");
+            }else if(response.equals("connection_error")){
+                register_error_message.setText("network erro please check your connection");
+            }
+        }else{
+            register_error_message.setText("username, email and password required");
+       }
     }
 
 

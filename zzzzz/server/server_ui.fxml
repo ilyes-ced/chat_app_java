@@ -35,7 +35,7 @@
                <center>
                   <ScrollPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                      <content>
-                        <VBox fx:id="scroll_pane_inside" prefHeight="200.0" prefWidth="182.0" />
+                        <VBox fx:id="scroll_pane_inside" prefHeight="200.0" prefWidth="398.0" />
                      </content>
                   </ScrollPane>
                </center>

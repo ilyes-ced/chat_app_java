@@ -12,30 +12,41 @@ public class Sql_connection {
     private PreparedStatement sql_statement;
 
     
-    //public void connect() throws SQLException, ClassNotFoundException {
-        //
+    public Connection connect() throws SQLException, ClassNotFoundException {
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        this.connect = DriverManager.getConnection("jdbc:mysql://localhost:"+this.database_port+"/"+this.database_name, this.database_username, this.database_password);
+        return connect;
+    }
+
+    //public ResultSet select_query(String givenStatement, String[] params) throws SQLException, ClassNotFoundException{
+    //    Class.forName("com.mysql.cj.jdbc.Driver");
+    //    this.connect = DriverManager.getConnection("jdbc:mysql://localhost:"+this.database_port+"/"+this.database_name, this.database_username, this.database_password);
+    //    this.sql_statement = this.connect.prepareStatement(givenStatement);
+    //    ResultSet result = sql_statement.executeQuery();
+    //    return result;
     //}
+    //    //ps = con.prepareStatement("update books set year=? where title=?");
+    //    //ps.setInt(1, 2022);
+    //    //ps.setString (2,"Hamlet");
+    //    //ps.executeUpdate();
 
-    public ResultSet select_query(String givenStatement, String[] params) throws SQLException, ClassNotFoundException{
-        Class.forName("com.mysql.cj.jdbc.Driver");
-        this.connect = DriverManager.getConnection("jdbc:mysql://localhost:"+this.database_port+"/"+this.database_name, this.database_username, this.database_password);
-        this.sql_statement = this.connect.prepareStatement(givenStatement);
-        ResultSet result = sql_statement.executeQuery();
-        return result;
-    }
-
-
-        public ResultSet update_query(String givenStatement, String[] params) throws SQLException, ClassNotFoundException{
-        
-         for (int i = 0; i < params.length; i++) {
-            System.out.println(params[i]);
-        }
-        Class.forName("com.mysql.cj.jdbc.Driver");
-        this.connect = DriverManager.getConnection("jdbc:mysql://localhost:"+this.database_port+"/"+this.database_name, this.database_username, this.database_password);
-        this.sql_statement = this.connect.prepareStatement(givenStatement);
-        ResultSet result = sql_statement.executeQuery();
-        return result;
-    }
+    //public ResultSet update_query(String statment, String[] params, String[] types) throws SQLException, ClassNotFoundException{
+    //    PreparedStatement query = connect.prepareStatement(statment);
+    //    for (int i = 0; i < params.length; i++) {
+    //        if(types[i] == "string"){
+    //            query.setString(i, params[i]);
+    //        }else if(types[i] == "int"){
+    //            query.setString(i, params[i]);
+    //        }
+    //        System.out.println(params[i]);
+    //    }
+    //    query.executeUpdate();
+    //    Class.forName("com.mysql.cj.jdbc.Driver");
+    //    this.connect = DriverManager.getConnection("jdbc:mysql://localhost:"+this.database_port+"/"+this.database_name, this.database_username, this.database_password);
+    //    this.sql_statement = this.connect.prepareStatement(statment);
+    //    ResultSet result = sql_statement.executeQuery();
+    //    return result;
+    //}
 
     public void closeConnection() throws SQLException{
         connect.close();
