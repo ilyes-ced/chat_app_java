@@ -142,21 +142,13 @@ public class Login_controller  {
             write_message.writeUTF(register_username.getText());
             write_message.writeUTF(register_email.getText());
             write_message.writeUTF(register_password.getText());
-            
-            
-
-            System.out.println("test \n");
             String response = read_message.readUTF();
-            System.out.println("test \n");
             System.out.println(response);
             if(response.equals("success")){
-                //Stage primaryStage = (Stage)((Node)event.getSource()).getScene().getWindow();
                 register_error_message.setStyle("-fx-text-fill: green;");
                 register_error_message.setText("registration successful, you can login now");
-            }else if(response.equals("password_error")){
-                register_error_message.setText("wrong password");
-            }else if(response.equals("email_error")){
-                register_error_message.setText("this account does not exist");
+            }else if(response.equals("account_duplicate")){
+                register_error_message.setText("account already exists");
             }else if(response.equals("connection_error")){
                 register_error_message.setText("network erro please check your connection");
             }

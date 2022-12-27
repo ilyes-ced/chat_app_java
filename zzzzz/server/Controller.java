@@ -80,6 +80,8 @@ public class Controller  {
                                     query.setString(3, password);
                                     System.out.println("accoutn created \n");
                                     register_output.writeUTF("success");
+                                }else{
+                                    register_output.writeUTF("account_duplicate");
                                 }
                                 db.closeConnection();
                             } catch (Exception ex) {
@@ -132,11 +134,16 @@ public class Controller  {
                                             outputs.add(new DataOutputStream(clientSocket.getOutputStream()));
                                         }
                                     
-                                    
+                                        
                                         new Thread( new Runnable() {
                                             public void run() {
                                                 try (DataInputStream incomingMessageReader = new DataInputStream(clientSocket.getInputStream())) {
 		                                        	while (true) {
+                                                        synchronized (outputs) {
+		                                                    for (DataOutputStream output : outputs) {
+                                                                output.writeUTF("message_to_server");
+		                                                    }
+                                                        }
                                                         System.out.println("test \n");
 		                                        		String message_to_server = incomingMessageReader.readUTF();
                                                         System.out.println("Number of active threads from the given thread: " + Thread.activeCount()+"\n");
@@ -146,7 +153,6 @@ public class Controller  {
                                                                 scroll_pane_inside.getChildren().add(new Label("client "+clientSocket.getRemoteSocketAddress()+" sent : "+message_to_server));
                                                             }
 	                		                            });
-
                                                         System.out.println("test \n");
                                                         synchronized (outputs) {
 		                                                    for (DataOutputStream output : outputs) {

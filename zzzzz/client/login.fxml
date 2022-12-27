@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
@@ -25,20 +26,20 @@
                   </Label>
                   <HBox alignment="CENTER" prefHeight="154.0" prefWidth="400.0" spacing="20.0">
                      <children>
-                        <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-radius: 100;">
+                        <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent; -fx-border-color: black; -fx-border-radius: 100; -fx-border-width: 2;">
                            <graphic>
-                              <SVGPath content="M40,60 C42,48 44,30 25,32" />
+                              <SVGPath content="M12.981 6.677c.006.122.008.243.008.366a7.991 7.991 0 0 1-8.046 8.047 8.01 8.01 0 0 1-4.335-1.271 5.805 5.805 0 0 0 .675.04 5.68 5.68 0 0 0 3.513-1.21 2.832 2.832 0 0 1-2.642-1.965 2.813 2.813 0 0 0 .531.051 2.865 2.865 0 0 0 .746-.1 2.831 2.831 0 0 1-2.269-2.772v-.037a2.805 2.805 0 0 0 1.281.354 2.828 2.828 0 0 1-.874-3.775 8.024 8.024 0 0 0 5.828 2.954 2.83 2.83 0 0 1 2.755-3.472 2.826 2.826 0 0 1 2.064.893 5.654 5.654 0 0 0 1.796-.686 2.835 2.835 0 0 1-1.244 1.564 5.642 5.642 0 0 0 1.624-.445 5.735 5.735 0 0 1-1.41 1.464z" scaleX="2.0" scaleY="2.0" />
                            </graphic>
                         </Button>
-                        <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-radius: 100; -fx-background-image: M90.62 147.24H88.87C88.68 139.97 88.44 129.53 88.31 120.85L99.97 120.62L102.19 107.62L88.25 108.62C88.5 97.9998 90.47 95.9998 97.37 95.9998C99.53 95.9998 101.75 95.9998 103.22 95.9998V82.4798C99.3782 81.9721 95.5049 81.7415 91.63 81.7898C77.43 81.7898 73 90.6598 73 108.25V109.59L65.83 110.08L65.73 121.28L72.97 121.14C72.97 130.38 72.89 140.14 72.86 146.98C66.75 146.85 60.72 146.72 55.86 146.72C37.55 146.72 32.58 135.89 32.58 122.12C32.58 108.35 32.85 93.1198 32.85 87.8998C32.85 72.4298 39.7 63.8398 56.68 63.8398C62.96 63.8398 86.58 63.7798 94.62 63.7798C110.07 63.7798 117.48 70.1598 117.48 88.8398C117.48 93.4498 117.14 102.08 117.14 126.01C117.11 141.06 110 147.24 90.62 147.24Z;">
+                        <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent; -fx-border-color: black; -fx-border-radius: 100; -fx-border-width: 2;">
                            <graphic>
-                              <SVGPath content="M90.62 147.24H88.87C88.68 139.97 88.44 129.53 88.31 120.85L99.97 120.62L102.19 107.62L88.25 108.62C88.5 97.9998 90.47 95.9998 97.37 95.9998C99.53 95.9998 101.75 95.9998 103.22 95.9998V82.4798C99.3782 81.9721 95.5049 81.7415 91.63 81.7898C77.43 81.7898 73 90.6598 73 108.25V109.59L65.83 110.08L65.73 121.28L72.97 121.14C72.97 130.38 72.89 140.14 72.86 146.98C66.75 146.85 60.72 146.72 55.86 146.72C37.55 146.72 32.58 135.89 32.58 122.12C32.58 108.35 32.85 93.1198 32.85 87.8998C32.85 72.4298 39.7 63.8398 56.68 63.8398C62.96 63.8398 86.58 63.7798 94.62 63.7798C110.07 63.7798 117.48 70.1598 117.48 88.8398C117.48 93.4498 117.14 102.08 117.14 126.01C117.11 141.06 110 147.24 90.62 147.24Z" />
+                              <SVGPath content="M90.62 147.24H88.87C88.68 139.97 88.44 129.53 88.31 120.85L99.97 120.62L102.19 107.62L88.25 108.62C88.5 97.9998 90.47 95.9998 97.37 95.9998C99.53 95.9998 101.75 95.9998 103.22 95.9998V82.4798C99.3782 81.9721 95.5049 81.7415 91.63 81.7898C77.43 81.7898 73 90.6598 73 108.25V109.59L65.83 110.08L65.73 121.28L72.97 121.14C72.97 130.38 72.89 140.14 72.86 146.98C66.75 146.85 60.72 146.72 55.86 146.72C37.55 146.72 32.58 135.89 32.58 122.12C32.58 108.35 32.85 93.1198 32.85 87.8998C32.85 72.4298 39.7 63.8398 56.68 63.8398C62.96 63.8398 86.58 63.7798 94.62 63.7798C110.07 63.7798 117.48 70.1598 117.48 88.8398C117.48 93.4498 117.14 102.08 117.14 126.01C117.11 141.06 110 147.24 90.62 147.24Z" scaleX="0.3" scaleY="0.3" />
                            </graphic>
                         </Button>
                      </children>
                   </HBox>
                   <Label fx:id="login_error_message" textFill="RED" />
-                  <TextField fx:id="login_email" promptText="Email" style="-fx-border-color: transparent; -fx-background-color: #eeeeee;">
+                  <TextField fx:id="login_email" promptText="Email" style="-fx-border-color: transparent; -fx-background-color: #eeeeee;" text="ilyes@gmail.com">
                      <VBox.margin>
                         <Insets left="40.0" right="40.0" top="20.0" />
                      </VBox.margin>
@@ -46,7 +47,7 @@
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </padding>
                   </TextField>
-                  <PasswordField fx:id="login_password" promptText="Password" style="-fx-background-color: #eeeeee;">
+                  <PasswordField fx:id="login_password" promptText="Password" style="-fx-background-color: #eeeeee;" text="11062001">
                      <VBox.margin>
                         <Insets bottom="20.0" left="40.0" right="40.0" top="20.0" />
                      </VBox.margin>
@@ -54,7 +55,10 @@
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </padding>
                   </PasswordField>
-                  <Label fx:id="show_register_form_button" onMousePressed="#show_register_form" text="dont have an account? sign up here" underline="true" />
+                  <Label fx:id="show_register_form_button" onMousePressed="#show_register_form" text="dont have an account? sign up here" textFill="#6715eb" underline="true">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></Label>
                   <Button fx:id="submit_login_button" mnemonicParsing="false" onAction="#submit_login" style="-fx-background-color: #6715eb; -fx-background-radius: 20;" text="Login" textFill="WHITE">
                      <padding>
                         <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
@@ -62,6 +66,9 @@
                      <VBox.margin>
                         <Insets top="20.0" />
                      </VBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </Button>
                </children>
             </VBox>
@@ -74,14 +81,14 @@
                   </Label>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="400.0" spacing="20.0">
                      <children>
-                        <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-radius: 100;">
+                        <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent; -fx-border-color: black; -fx-border-radius: 100; -fx-border-width: 2;">
                            <graphic>
-                              <SVGPath content="M40,60 C42,48 44,30 25,32" />
+                              <SVGPath content="M12.981 6.677c.006.122.008.243.008.366a7.991 7.991 0 0 1-8.046 8.047 8.01 8.01 0 0 1-4.335-1.271 5.805 5.805 0 0 0 .675.04 5.68 5.68 0 0 0 3.513-1.21 2.832 2.832 0 0 1-2.642-1.965 2.813 2.813 0 0 0 .531.051 2.865 2.865 0 0 0 .746-.1 2.831 2.831 0 0 1-2.269-2.772v-.037a2.805 2.805 0 0 0 1.281.354 2.828 2.828 0 0 1-.874-3.775 8.024 8.024 0 0 0 5.828 2.954 2.83 2.83 0 0 1 2.755-3.472 2.826 2.826 0 0 1 2.064.893 5.654 5.654 0 0 0 1.796-.686 2.835 2.835 0 0 1-1.244 1.564 5.642 5.642 0 0 0 1.624-.445 5.735 5.735 0 0 1-1.41 1.464z" scaleX="2.0" scaleY="2.0" />
                            </graphic>
                         </Button>
-                        <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-radius: 100; -fx-background-image: M90.62 147.24H88.87C88.68 139.97 88.44 129.53 88.31 120.85L99.97 120.62L102.19 107.62L88.25 108.62C88.5 97.9998 90.47 95.9998 97.37 95.9998C99.53 95.9998 101.75 95.9998 103.22 95.9998V82.4798C99.3782 81.9721 95.5049 81.7415 91.63 81.7898C77.43 81.7898 73 90.6598 73 108.25V109.59L65.83 110.08L65.73 121.28L72.97 121.14C72.97 130.38 72.89 140.14 72.86 146.98C66.75 146.85 60.72 146.72 55.86 146.72C37.55 146.72 32.58 135.89 32.58 122.12C32.58 108.35 32.85 93.1198 32.85 87.8998C32.85 72.4298 39.7 63.8398 56.68 63.8398C62.96 63.8398 86.58 63.7798 94.62 63.7798C110.07 63.7798 117.48 70.1598 117.48 88.8398C117.48 93.4498 117.14 102.08 117.14 126.01C117.11 141.06 110 147.24 90.62 147.24Z;">
+                        <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: transparent; -fx-border-color: black; -fx-border-radius: 100; -fx-border-width: 2;">
                            <graphic>
-                              <SVGPath content="M90.62 147.24H88.87C88.68 139.97 88.44 129.53 88.31 120.85L99.97 120.62L102.19 107.62L88.25 108.62C88.5 97.9998 90.47 95.9998 97.37 95.9998C99.53 95.9998 101.75 95.9998 103.22 95.9998V82.4798C99.3782 81.9721 95.5049 81.7415 91.63 81.7898C77.43 81.7898 73 90.6598 73 108.25V109.59L65.83 110.08L65.73 121.28L72.97 121.14C72.97 130.38 72.89 140.14 72.86 146.98C66.75 146.85 60.72 146.72 55.86 146.72C37.55 146.72 32.58 135.89 32.58 122.12C32.58 108.35 32.85 93.1198 32.85 87.8998C32.85 72.4298 39.7 63.8398 56.68 63.8398C62.96 63.8398 86.58 63.7798 94.62 63.7798C110.07 63.7798 117.48 70.1598 117.48 88.8398C117.48 93.4498 117.14 102.08 117.14 126.01C117.11 141.06 110 147.24 90.62 147.24Z" />
+                              <SVGPath content="M90.62 147.24H88.87C88.68 139.97 88.44 129.53 88.31 120.85L99.97 120.62L102.19 107.62L88.25 108.62C88.5 97.9998 90.47 95.9998 97.37 95.9998C99.53 95.9998 101.75 95.9998 103.22 95.9998V82.4798C99.3782 81.9721 95.5049 81.7415 91.63 81.7898C77.43 81.7898 73 90.6598 73 108.25V109.59L65.83 110.08L65.73 121.28L72.97 121.14C72.97 130.38 72.89 140.14 72.86 146.98C66.75 146.85 60.72 146.72 55.86 146.72C37.55 146.72 32.58 135.89 32.58 122.12C32.58 108.35 32.85 93.1198 32.85 87.8998C32.85 72.4298 39.7 63.8398 56.68 63.8398C62.96 63.8398 86.58 63.7798 94.62 63.7798C110.07 63.7798 117.48 70.1598 117.48 88.8398C117.48 93.4498 117.14 102.08 117.14 126.01C117.11 141.06 110 147.24 90.62 147.24Z" scaleX="0.3" scaleY="0.3" />
                            </graphic>
                         </Button>
                      </children>
@@ -111,7 +118,11 @@
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </padding>
                   </PasswordField>
-                  <Label fx:id="show_login_form_button" onMousePressed="#show_login_form" text="already have an account? login here" underline="true" />
+                  <Label fx:id="show_login_form_button" onMousePressed="#show_login_form" text="already have an account? login here" textFill="#6715eb" underline="true">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Label>
                   <Button fx:id="submit_register_button" mnemonicParsing="false" onAction="#submit_register" style="-fx-background-color: #6715eb; -fx-background-radius: 20;" text="Register" textFill="WHITE">
                      <padding>
                         <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
@@ -119,6 +130,9 @@
                      <VBox.margin>
                         <Insets top="20.0" />
                      </VBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </Button>
                </children>
             </VBox>
