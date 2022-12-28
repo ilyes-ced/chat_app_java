@@ -12,6 +12,7 @@ import java.io.*;
 import java.net.*;
 import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.Cursor;
 
 public class Controller  {
 	private Socket clientSocket;
@@ -23,13 +24,11 @@ public class Controller  {
 
 
 
-    public void initialize() {
+    public void set_client_socket_scene(Socket mainsocket) {
         try{
-            this.clientSocket = new Socket("localhost", 5000);
+            this.clientSocket = mainsocket;
 		    this.read_message = new DataInputStream(clientSocket.getInputStream());
 		    this.write_message = new DataOutputStream(clientSocket.getOutputStream());
-		    //chatLog = FXCollections.observableArrayList();
-		    this.name = name;
 		    this.write_message.writeUTF(name);
 
             Thread clientThread = new Thread( new Runnable() {
@@ -105,13 +104,22 @@ public class Controller  {
 
     @FXML
     void submit_event_click(ActionEvent event) throws IOException {
-        send_message_to_server(message_content.getText());
+        if(!message_content.getText().equals("")){
+            send_message_to_server(message_content.getText());
+            message_content.setText("";)
+        }
     }
 
        @FXML
     void submit_event(KeyEvent event) throws IOException {
         if(event.getCode().toString().equals("ENTER")){
             send_message_to_server(message_content.getText());
+        }
+        if(!message_content.getText().equals("")){
+            submit_message.setStyle("-fx-background-color: linear-gradient(to right bottom, rgba(143,10,228,1) 6%, rgba(103,21,235,1) 55%, rgba(143,10,228,1) 100%);");
+            submit_message.setCursor(Cursor.HAND);
+        }else{
+            submit_message.setStyle("-fx-background-color: transparent;");
         }
     }
 

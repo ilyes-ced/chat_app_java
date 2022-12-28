@@ -9,40 +9,62 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.SVGPath?>
+<?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
-   <top>
-      <AnchorPane prefHeight="40.0" prefWidth="600.0" style="-fx-background-color: #6715eb;" BorderPane.alignment="CENTER" />
-   </top>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
    <center>
       <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <center>
             <BorderPane prefHeight="200.0" prefWidth="717.0" style="-fx-background-color: #1a1d21;" BorderPane.alignment="CENTER">
-               <bottom>
-                  <AnchorPane prefHeight="70.0" prefWidth="390.0" style="-fx-background-color: #222529; -fx-border-color: rgb(150,150,150); -fx-border-radius: 10; -fx-background-radius: 10;" BorderPane.alignment="CENTER">
-                     <BorderPane.margin>
-                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-                     </BorderPane.margin>
-                     <children>
-                        <TextField fx:id="message_content" layoutX="14.0" layoutY="14.0" onKeyPressed="#submit_event" prefHeight="31.0" prefWidth="242.0" />
-                        <Button fx:id="submit_message" layoutX="278.0" layoutY="18.0" mnemonicParsing="false" onAction="#submit_event_click" text="Button" />
-                     </children>
-                  </AnchorPane>
-               </bottom>
                <top>
-                  <HBox prefHeight="40.0" prefWidth="430.0" style="-fx-border-color: transparent transparent gray transparent;" BorderPane.alignment="CENTER" />
+                  <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="430.0" style="-fx-border-color: transparent transparent gray transparent;" BorderPane.alignment="CENTER">
+                     <children>
+                        <Label text="general chat room" textFill="WHITE">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                     <padding>
+                        <Insets left="20.0" right="20.0" />
+                     </padding></HBox>
                </top>
                <center>
-                  <ScrollPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                  <ScrollPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #1a1d21;" BorderPane.alignment="CENTER">
                     <content>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0">
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="386.0" prefWidth="828.0">
                            <children>
-                              <VBox fx:id="scroll_pane_inside" layoutX="90.0" layoutY="14.0" prefHeight="222.0" prefWidth="120.0" />
+                              <VBox fx:id="scroll_pane_inside" prefHeight="329.0" prefWidth="828.0" style="-fx-background-color: #1a1d21;" />
                            </children>
                         </AnchorPane>
                     </content>
                   </ScrollPane>
                </center>
+               <bottom>
+                  <BorderPane prefHeight="50.0" prefWidth="830.0" style="-fx-background-color: #1a1d21; -fx-border-color: rgba(200,200,200,0.4); -fx-background-radius: 10; -fx-border-radius: 10;" BorderPane.alignment="CENTER">
+                     <BorderPane.margin>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                     </BorderPane.margin>
+                     <center>
+                        <TextField fx:id="message_content" onKeyPressed="#submit_event" prefHeight="50.0" prefWidth="242.0" promptText="Send message ...." style="-fx-background-color: transparent;" BorderPane.alignment="CENTER">
+                           <padding>
+                              <Insets left="20.0" right="20.0" />
+                           </padding>
+                        </TextField>
+                     </center>
+                     <right>
+                        <Button fx:id="submit_message" contentDisplay="RIGHT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#submit_event_click" prefHeight="30.0" style="-fx-background-color: transparent; -fx-border-radius: 10;" text="send" textFill="WHITE" BorderPane.alignment="CENTER">
+                           <BorderPane.margin>
+                              <Insets left="20.0" right="20.0" />
+                           </BorderPane.margin>
+                           <graphic>
+                              <SVGPath content="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083l6-15Zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471-.47 1.178Z" fill="#ffffffe0" scaleX="1.2" scaleY="1.2" />
+                           </graphic>
+                        </Button>
+                     </right>
+                  </BorderPane>
+               </bottom>
             </BorderPane>
          </center>
       </BorderPane>
@@ -52,7 +74,10 @@
          <children>
             <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="170.0" style="-fx-border-color: transparent transparent gray transparent;">
                <children>
-                  <Label text="chat group name" textFill="WHITE" />
+                  <Label text="chat group name" textFill="WHITE">
+                     <font>
+                        <Font size="18.0" />
+                     </font></Label>
                </children>
                <padding>
                   <Insets left="10.0" />
@@ -171,4 +196,23 @@
          </children>
       </VBox>
    </left>
+   <top>
+      <BorderPane prefHeight="40.0" prefWidth="1000.0" style="-fx-background-color: #6715eb;" BorderPane.alignment="CENTER">
+         <padding>
+            <Insets left="40.0" right="40.0" />
+         </padding>
+         <right>
+            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="20.0" BorderPane.alignment="CENTER_RIGHT">
+               <children>
+                  <SVGPath content="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" fill="WHITE" scaleX="2.0" scaleY="2.0" />
+                  <Label text="username" textFill="WHITE" />
+                  <SVGPath content="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" fill="WHITE" scaleX="1.5" scaleY="1.5" />
+               </children>
+            </HBox>
+         </right>
+         <left>
+            <TextField prefHeight="24.0" prefWidth="469.0" style="-fx-background-color: #8544ef; -fx-border-color: rgba(200,200,200,0.4); -fx-border-radius: 5;" BorderPane.alignment="CENTER" />
+         </left>
+      </BorderPane>
+   </top>
 </BorderPane>

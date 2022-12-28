@@ -131,12 +131,15 @@ public class Controller  {
                                         synchronized(outputs) {
                                             outputs.add(new DataOutputStream(clientSocket.getOutputStream()));
                                         }
+
+                                        
                                         new Thread( new Runnable() {
                                             public void run() {
                                                 try (DataInputStream incomingMessageReader = new DataInputStream(clientSocket.getInputStream())) {
+                                                    System.out.println(incomingMessageReader+" \n");
 		                                        	while (true) {
+                                                        System.out.println("test \n");
 		                                        		String message_to_server = incomingMessageReader.readUTF();
-                                                        System.out.println("Number of active threads from the given thread: " + Thread.activeCount()+"\n");
                                                         Platform.runLater(new Runnable() {
 	                		                            	@Override
 	                		                            	public void run() {
@@ -158,7 +161,6 @@ public class Controller  {
 		                                        }
                                             }
                                         }).start();
-                                        //here we start main thread
                                     }else{
                                         System.out.println("passwird error \n");
                                         login_output.writeUTF("password_error");
@@ -183,7 +185,7 @@ public class Controller  {
             }).start();
 
             
-            //new Thread( new Runnable() {
+            //Thread pp = new Thread( new Runnable() {
             //    public void run() {
 	        //        try {
 	        //        	while (true) {
@@ -231,8 +233,8 @@ public class Controller  {
 	        //        }
             //
 	        //    }
-            //}).start();
-            
+            //});
+            //pp.start();
         }catch (Exception ex) {
             ex.printStackTrace();
         }

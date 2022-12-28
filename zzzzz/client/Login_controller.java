@@ -17,6 +17,11 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.animation.TranslateTransition;
 import javafx.util.Duration;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.animation.KeyValue;
@@ -155,22 +160,20 @@ public class Login_controller  {
         //cover.setStyle("-fx-background-radius: 10 10 10 10"); 
         //cover.setStyle("-fx-border-radius: 10 10 10 10"); 
         //cover.setStyle("-fx-background-color: #6715eb"); 
-        TranslateTransition openNav=new TranslateTransition(new Duration(350), cover);
+        TranslateTransition transition = new TranslateTransition(new Duration(350), cover);
         if(co == 0){
             //cover.setStyle("-fx-background-radius: 10px");
-            System.out.println("test" + co +"\n");
             //cover.getTransforms().add(new Rotate(0, 1, 0, 180));
+            transition.setToX(-800);
+            transition.play();
             this.co = co + 1;
-            openNav.setToX(-800);
-            openNav.play();
         }else{
             //cover.setVisible();
             //cover.setStyle("-fx-background-radius: 10 0 0 10;");
             //cover.setStyle("-fx-background-radius: 10px");
-            System.out.println("test" + co +"\n");
             //cover.getTransforms().add(new Rotate(0, 1, 0, 180));
-            openNav.setToX(-400);
-            openNav.play();
+            transition.setToX(-400);
+            transition.play();
             this.co = co - 1;
         }
     }
@@ -187,16 +190,20 @@ public class Login_controller  {
             Socket client_socket = new Socket("localhost", 6000);
             DataInputStream read_message = new DataInputStream(client_socket.getInputStream());
             DataOutputStream write_message = new DataOutputStream(client_socket.getOutputStream());
-            System.out.println("sendt");
             write_message.writeUTF(login_email.getText());
             write_message.writeUTF(login_password.getText());
-            System.out.println("test \n");
             String response = read_message.readUTF();
-            System.out.println("test \n");
-            System.out.println(response);
             if(response.equals("success")){
-                Stage primaryStage = (Stage)((Node)event.getSource()).getScene().getWindow();
-                primaryStage.setScene(main);
+                //Stage primaryStage = (Stage)((Node)event.getSource()).getScene().getWindow();
+                //primaryStage.setScene(main);
+
+                FXMLLoader main_page_loader = new FXMLLoader(getClass().getResource("new_client_ui.fxml"));
+                Parent main_pane = main_page_loader.load();
+                Scene main_scene = new Scene(main_pane);
+                Controller main_controller = (Controller) main_page_loader.getController();
+                main_controller.set_client_socket_scene(client_socket);
+                Stage primaryStage = (Stage)((Node)event.getSource()).getScene().getWindow(); 
+                primaryStage.setScene(main_scene);
             }else if(response.equals("password_error")){
                 login_error_message.setText("wrong password");
             }else if(response.equals("email_error")){
@@ -217,12 +224,10 @@ public class Login_controller  {
             Socket client_socket = new Socket("localhost", 7000);
             DataInputStream read_message = new DataInputStream(client_socket.getInputStream());
             DataOutputStream write_message = new DataOutputStream(client_socket.getOutputStream());
-            System.out.println("sendt");
             write_message.writeUTF(register_username.getText());
             write_message.writeUTF(register_email.getText());
             write_message.writeUTF(register_password.getText());
             String response = read_message.readUTF();
-            System.out.println(response);
             if(response.equals("success")){
                 register_error_message.setStyle("-fx-text-fill: green;");
                 register_error_message.setText("registration successful, you can login now");
