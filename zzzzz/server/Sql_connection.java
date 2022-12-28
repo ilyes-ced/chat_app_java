@@ -9,7 +9,6 @@ public class Sql_connection {
     private final String database_username = "root";
     private final String database_password = "11062001";
     private Connection connect;
-    private PreparedStatement sql_statement;
 
     
     public Connection connect() throws SQLException, ClassNotFoundException {

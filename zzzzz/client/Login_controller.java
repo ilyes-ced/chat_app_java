@@ -15,12 +15,21 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
-
-
+import javafx.animation.TranslateTransition;
+import javafx.util.Duration;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.animation.KeyValue;
+import javafx.scene.paint.Color;
+import javafx.scene.effect.DropShadow;
+import javafx.animation.Animation;
+import javafx.scene.transform.Rotate;
+import javafx.scene.effect.Bloom;
 public class Login_controller  {
     private Scene main;
     private Scene register;
 	private Socket login_client_socket;
+    private int co = 0;
 
 
 
@@ -80,19 +89,104 @@ public class Login_controller  {
     private Button submit_register_button;
 
 
+    @FXML
+    void login_button_hover(MouseEvent event) {
+        DropShadow shadow = new DropShadow();
+        shadow.setColor(Color.rgb(103,21,235, 0.2));
+        shadow.setSpread(0.75);
+        Timeline shadowAnimation = new Timeline(
+            new KeyFrame(Duration.ZERO, new KeyValue(shadow.radiusProperty(), 0d)),
+            new KeyFrame(Duration.seconds(0.15), new KeyValue(shadow.radiusProperty(), 20d))
+        );
+        shadowAnimation.setAutoReverse(true);
+        shadowAnimation.setCycleCount(2);
+
+
+        Bloom bloom = new Bloom();
+        bloom.setThreshold(0.3);
+        submit_login_button.setEffect(shadow);
+        shadowAnimation.setOnFinished(evt -> submit_login_button.setEffect(bloom));
+        shadowAnimation.play();
+              
+        //Bloom bloom = new Bloom();
+        //bloom.setThreshold(0.3);
+        //submit_login_button.setEffect(bloom);
+        
+    }
+    @FXML
+    void login_button_hover_stop(MouseEvent event) {
+        submit_login_button.setEffect(null);
+    }
+    @FXML
+    void register_button_hover(MouseEvent event) {
+        DropShadow shadow = new DropShadow();
+        shadow.setColor(Color.rgb(103,21,235, 0.2));
+        shadow.setSpread(0.75);
+        Timeline shadowAnimation = new Timeline(
+            new KeyFrame(Duration.ZERO, new KeyValue(shadow.radiusProperty(), 0d)),
+            new KeyFrame(Duration.seconds(0.15), new KeyValue(shadow.radiusProperty(), 20d))
+        );
+        shadowAnimation.setAutoReverse(true);
+        shadowAnimation.setCycleCount(2);
+
+
+        Bloom bloom = new Bloom();
+        bloom.setThreshold(0.3);
+        submit_register_button.setEffect(shadow);
+        shadowAnimation.setOnFinished(evt -> submit_register_button.setEffect(bloom));
+        shadowAnimation.play();
+              
+        //Bloom bloom = new Bloom();
+        //bloom.setThreshold(0.3);
+        //submit_login_button.setEffect(bloom);
+        
+    }
+    @FXML
+    void register_button_hover_stop(MouseEvent event) {
+        submit_register_button.setEffect(null);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
     
 
     @FXML
-    void show_register_form(MouseEvent event) {
-        System.out.println("username");
-        if(cover.getLayoutX() == 800){
-            for (int i = 0; i < 10; i++) {
-                cover.setLayoutX(cover.getLayoutX() - 40);
-            }
+    void toggle_forms(MouseEvent event) {
+
+        //cover.setStyle("-fx-translate-x: 200;");
+        //cover.setVisible(true);
+        //cover.setLayoutX(cover.getLayoutX() - 200);
+        //-fx-background-radius
+        //cover.setStyle("-fx-background-radius: 10 10 10 10"); 
+        //cover.setStyle("-fx-border-radius: 10 10 10 10"); 
+        //cover.setStyle("-fx-background-color: #6715eb"); 
+        TranslateTransition openNav=new TranslateTransition(new Duration(350), cover);
+        if(co == 0){
+            //cover.setStyle("-fx-background-radius: 10px");
+            System.out.println("test" + co +"\n");
+            //cover.getTransforms().add(new Rotate(0, 1, 0, 180));
+            this.co = co + 1;
+            openNav.setToX(-800);
+            openNav.play();
         }else{
-            for (int i = 0; i < 10; i++) {
-                cover.setLayoutX(cover.getLayoutX() + 40);
-            }
+            //cover.setVisible();
+            //cover.setStyle("-fx-background-radius: 10 0 0 10;");
+            //cover.setStyle("-fx-background-radius: 10px");
+            System.out.println("test" + co +"\n");
+            //cover.getTransforms().add(new Rotate(0, 1, 0, 180));
+            openNav.setToX(-400);
+            openNav.play();
+            this.co = co - 1;
         }
     }
 
