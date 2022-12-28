@@ -31,7 +31,23 @@ public class Login_controller  {
 	private Socket login_client_socket;
     private int co = 0;
 
-
+    public void animate_button (Button btn) {
+        DropShadow shadow = new DropShadow();
+        shadow.setColor(Color.rgb(103,21,235, 0.5));
+        shadow.setSpread(0.75);
+        Timeline shadowAnimation = new Timeline(
+            new KeyFrame(Duration.ZERO, new KeyValue(shadow.radiusProperty(), 0d)),
+            new KeyFrame(Duration.seconds(0.15), new KeyValue(shadow.radiusProperty(), 20d))
+        );
+        shadowAnimation.setAutoReverse(true);
+        shadowAnimation.setCycleCount(2);
+        Bloom bloom = new Bloom();
+        bloom.setThreshold(0.3);
+        btn.setEffect(shadow);
+        btn.setEffect(bloom);
+        shadowAnimation.setOnFinished(evt -> btn.setEffect(bloom));
+        //shadowAnimation.play();
+    }
 
 
     public void initialize() throws IOException {
@@ -89,57 +105,26 @@ public class Login_controller  {
     private Button submit_register_button;
 
 
+
+
+
+
+
     @FXML
     void login_button_hover(MouseEvent event) {
-        DropShadow shadow = new DropShadow();
-        shadow.setColor(Color.rgb(103,21,235, 0.2));
-        shadow.setSpread(0.75);
-        Timeline shadowAnimation = new Timeline(
-            new KeyFrame(Duration.ZERO, new KeyValue(shadow.radiusProperty(), 0d)),
-            new KeyFrame(Duration.seconds(0.15), new KeyValue(shadow.radiusProperty(), 20d))
-        );
-        shadowAnimation.setAutoReverse(true);
-        shadowAnimation.setCycleCount(2);
-
-
-        Bloom bloom = new Bloom();
-        bloom.setThreshold(0.3);
-        submit_login_button.setEffect(shadow);
-        shadowAnimation.setOnFinished(evt -> submit_login_button.setEffect(bloom));
-        shadowAnimation.play();
-              
+        animate_button(submit_login_button);
         //Bloom bloom = new Bloom();
         //bloom.setThreshold(0.3);
         //submit_login_button.setEffect(bloom);
-        
     }
     @FXML
     void login_button_hover_stop(MouseEvent event) {
         submit_login_button.setEffect(null);
     }
+
     @FXML
     void register_button_hover(MouseEvent event) {
-        DropShadow shadow = new DropShadow();
-        shadow.setColor(Color.rgb(103,21,235, 0.2));
-        shadow.setSpread(0.75);
-        Timeline shadowAnimation = new Timeline(
-            new KeyFrame(Duration.ZERO, new KeyValue(shadow.radiusProperty(), 0d)),
-            new KeyFrame(Duration.seconds(0.15), new KeyValue(shadow.radiusProperty(), 20d))
-        );
-        shadowAnimation.setAutoReverse(true);
-        shadowAnimation.setCycleCount(2);
-
-
-        Bloom bloom = new Bloom();
-        bloom.setThreshold(0.3);
-        submit_register_button.setEffect(shadow);
-        shadowAnimation.setOnFinished(evt -> submit_register_button.setEffect(bloom));
-        shadowAnimation.play();
-              
-        //Bloom bloom = new Bloom();
-        //bloom.setThreshold(0.3);
-        //submit_login_button.setEffect(bloom);
-        
+        animate_button(submit_register_button);
     }
     @FXML
     void register_button_hover_stop(MouseEvent event) {

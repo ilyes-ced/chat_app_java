@@ -7,6 +7,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -171,6 +172,9 @@
                            </children>
                         </HBox>
                      </children>
+                     <effect>
+                        <DropShadow height="35.83" radius="38.17" width="118.85" />
+                     </effect>
                   </AnchorPane>
                </center>
             </BorderPane>
