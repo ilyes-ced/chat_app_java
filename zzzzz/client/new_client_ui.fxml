@@ -54,7 +54,7 @@
                         </TextField>
                      </center>
                      <right>
-                        <Button fx:id="submit_message" contentDisplay="RIGHT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#submit_event_click" prefHeight="30.0" style="-fx-background-color: transparent; -fx-border-radius: 10;" text="send" textFill="WHITE" BorderPane.alignment="CENTER">
+                        <Button fx:id="submit_message" contentDisplay="RIGHT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#submit_event_click" prefHeight="30.0" style="-fx-background-color: transparent; -fx-background-radius: 10;" text="send" textFill="WHITE" BorderPane.alignment="CENTER">
                            <BorderPane.margin>
                               <Insets left="20.0" right="20.0" />
                            </BorderPane.margin>
