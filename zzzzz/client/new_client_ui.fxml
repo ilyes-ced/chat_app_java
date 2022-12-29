@@ -30,9 +30,49 @@
                      </padding></HBox>
                </top>
                <center>
-                  <ScrollPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #1a1d21;" BorderPane.alignment="CENTER">
+                  <ScrollPane fx:id="main_scroll_pane" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #1a1d21;" BorderPane.alignment="CENTER">
                      <content>
-                        <VBox fx:id="main_message_box" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="428.0" prefWidth="828.0" style="-fx-background-color: #1a1d21;" />
+                        <VBox fx:id="main_message_box" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="428.0" prefWidth="828.0" style="-fx-background-color: #1a1d21;">
+                           <children>
+                              <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+                                 <padding>
+                                    <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                                 </padding>
+                                 <children>
+                                    <SVGPath content="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" fill="WHITE" scaleX="2.0" scaleY="2.0" />
+                                    <VBox prefHeight="60.0" prefWidth="884.0" style="-fx-background-color: #8544ef; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: rgba(200,200,200,0.4);">
+                                       <children>
+                                          <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="749.0" spacing="10.0">
+                                             <children>
+                                                <Label text="username" textFill="WHITE">
+                                                   <font>
+                                                      <Font name="System Bold" size="15.0" />
+                                                   </font>
+                                                </Label>
+                                                <Label text="8:30" textFill="#bfb9b9">
+                                                   <font>
+                                                      <Font size="15.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                             <padding>
+                                                <Insets left="20.0" />
+                                             </padding>
+                                          </HBox>
+                                          <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="749.0">
+                                             <children>
+                                                <Label text="Label" textFill="WHITE" />
+                                             </children>
+                                             <padding>
+                                                <Insets left="20.0" right="20.0" />
+                                             </padding>
+                                          </HBox>
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
                      </content>
                   </ScrollPane>
                </center>

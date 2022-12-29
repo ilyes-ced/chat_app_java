@@ -1,6 +1,7 @@
 import javafx.fxml.FXML;
 import javafx.event.ActionEvent;
 import javafx.scene.layout.VBox;
+import javafx.scene.layout.HBox;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Button;
@@ -15,6 +16,10 @@ import java.net.*;
 import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.Cursor;
+import javafx.scene.control.Control;
+import javafx.scene.Parent;
+import javafx.geometry.Insets;
+import javafx.scene.paint.Color;
 
 public class Controller  {
 	private Socket clientSocket;
@@ -23,6 +28,38 @@ public class Controller  {
 	private String username;
 	private String email;
     private Scene login;
+
+    @FXML
+    private ScrollPane main_scroll_pane;
+
+    @FXML
+    private Label username_label;
+    @FXML
+    private TextField message_content;
+
+    @FXML
+    private Button send_message;
+
+    @FXML
+    private VBox add_messages;
+    
+    @FXML
+    //private AnchorPane main_message_box;
+    private VBox main_message_box;
+
+    @FXML
+    private Button submit_message;
+
+
+    public void send_message_to_server(String input) throws IOException {
+		write_message.writeUTF(input);
+	}
+
+
+    public void set_login_scene(Scene scene){
+        login = scene;
+    }
+ 
     //
 
 
@@ -36,12 +73,23 @@ public class Controller  {
     //    
     //}
         
-        main_scroll_pane.widthProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                if (newValue.floatValue()!=oldValue.floatValue()) resizeKids(newValue);
-            }
+        //main_scroll_pane.widthProperty().addListener(new ChangeListener<Number>() {
+        //    @Override
+        //    public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+        //        if (newValue.floatValue()!=oldValue.floatValue()) resizeKids(newValue);
+        //    }
+        //});
+        main_scroll_pane.widthProperty().addListener((obs, oldVal, newVal) -> {
+            System.out.println("hi man  im resized to "+newVal);
+            main_message_box.setPrefWidth(newVal.doubleValue() - 2.0);
         });
+        main_scroll_pane.heightProperty().addListener((obs, oldVal, newVal) -> {
+            System.out.println("hi man  im resized to "+newVal);
+            main_message_box.setPrefHeight(newVal.doubleValue() - 2.0);
+        });
+        //main_message_box.prefWidthProperty().bind(<parentControl>.USE_PREF_SIZE);
+        //System.out.println(parentControl.USE_PREF_SIZE);
+        //main_message_box.setPrefWidth(Control.USE_PREF_SIZE);
     }
     public void set_client_socket(Socket mainsocket, String username, String email) {
         try{
@@ -63,7 +111,21 @@ public class Controller  {
 		    	        		public void run() {
                                     //add it to ui
                                     main_message_box.getChildren().add(new Label(recieved_message_username +" : "+recieved_message));
-		    	        			System.out.print(recieved_message_username +" : "+recieved_message+"\n");
+		    	        			HBox main_message = new HBox();
+		    	        			VBox message = new VBox();
+		    	        			HBox message_username = new HBox(new Label("username"));
+		    	        			HBox message_time = new HBox(new Label("8:30"));
+
+
+
+                                    message.getChildren().addAll(message_username, message_time);
+                                    
+                                    main_message.setStyle("-fx-background-color:  #8544ef"); 
+                                    main_message.setPrefWidth(200.0);
+                                    main_message.setPrefHeight(200.0);
+                                    main_message.setPadding(new Insets(10, 10, 10, 10));
+                                    main_message.getChildren().add(message);
+                                    System.out.print(recieved_message_username +" : "+recieved_message+"\n");
 		    	        		}
 		    	        	});
 		    	        } catch (SocketException e) {
@@ -88,37 +150,6 @@ public class Controller  {
         }
     }
 
-    public void send_message_to_server(String input) throws IOException {
-		write_message.writeUTF(input);
-	}
-
-
-    public void set_login_scene(Scene scene){
-        login = scene;
-    }
-
-    @FXML
-    private ScrollPane main_scroll_pane;
-
-    @FXML
-    private Label username_label;
-    @FXML
-    private TextField message_content;
-
-    @FXML
-    private Button send_message;
-
-    @FXML
-    private VBox add_messages;
-    
-    @FXML
-    //private AnchorPane main_message_box;
-    private VBox main_message_box;
-
-    @FXML
-    private Button submit_message;
-
- 
 
     //@FXML
     //void submit_event(ActionEvent event) throws IOException {
