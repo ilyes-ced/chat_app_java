@@ -46,7 +46,7 @@ public class Controller  {
 		    	        	Platform.runLater(new Runnable() {
 		    	        		public void run() {
                                     //add it to ui
-		    	        			System.out.print(recieved_message_username +" : "+recieved_message);
+		    	        			System.out.print(recieved_message_username +" : "+recieved_message+"\n");
 		    	        		}
 		    	        	});
 		    	        } catch (SocketException e) {
