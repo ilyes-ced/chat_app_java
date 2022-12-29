@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.control.Label;
 import java.io.*;
+import javafx.scene.control.ScrollPane;
 import java.net.*;
 import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
@@ -26,7 +27,22 @@ public class Controller  {
 
 
 
-
+    public void initialize(){
+            //@FXML
+    //void submit_event(ActionEvent event) throws IOException {
+    //    send_message_to_server("hello this is fixed test string ");
+    //    //Stage primaryStage = (Stage)((Node)event.getSource()).getScene().getWindow();
+    //    //primaryStage.setScene(login);
+    //    
+    //}
+        
+        main_scroll_pane.widthProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                if (newValue.floatValue()!=oldValue.floatValue()) resizeKids(newValue);
+            }
+        });
+    }
     public void set_client_socket(Socket mainsocket, String username, String email) {
         try{
             this.username = username;
@@ -46,6 +62,7 @@ public class Controller  {
 		    	        	Platform.runLater(new Runnable() {
 		    	        		public void run() {
                                     //add it to ui
+                                    main_message_box.getChildren().add(new Label(recieved_message_username +" : "+recieved_message));
 		    	        			System.out.print(recieved_message_username +" : "+recieved_message+"\n");
 		    	        		}
 		    	        	});
@@ -80,7 +97,9 @@ public class Controller  {
         login = scene;
     }
 
- 
+    @FXML
+    private ScrollPane main_scroll_pane;
+
     @FXML
     private Label username_label;
     @FXML
@@ -93,8 +112,8 @@ public class Controller  {
     private VBox add_messages;
     
     @FXML
-    //private AnchorPane scroll_pane_inside;
-    private VBox scroll_pane_inside;
+    //private AnchorPane main_message_box;
+    private VBox main_message_box;
 
     @FXML
     private Button submit_message;
@@ -108,6 +127,8 @@ public class Controller  {
     //    //primaryStage.setScene(login);
     //    
     //}
+    
+    
 
     @FXML
     void submit_event_click(ActionEvent event) throws IOException {
