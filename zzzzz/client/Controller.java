@@ -8,6 +8,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.scene.control.Label;
 import java.io.*;
 import java.net.*;
 import javafx.scene.Node;
@@ -18,28 +19,34 @@ public class Controller  {
 	private Socket clientSocket;
 	private DataInputStream read_message;
 	private DataOutputStream write_message;
-	private String name = "starter name";
+	private String username;
+	private String email;
     private Scene login;
+    //
 
 
 
 
-    public void set_client_socket_scene(Socket mainsocket) {
+    public void set_client_socket(Socket mainsocket, String username, String email) {
         try{
+            this.username = username;
+            this.email = email;
+            username_label.setText(username);
             this.clientSocket = mainsocket;
 		    this.read_message = new DataInputStream(clientSocket.getInputStream());
 		    this.write_message = new DataOutputStream(clientSocket.getOutputStream());
-		    this.write_message.writeUTF(name);
+		    this.write_message.writeUTF(username);
 
             Thread clientThread = new Thread( new Runnable() {
                 public void run() {
                     while (true) {
 		    	        try {
-		    	        	final String inputFromServer = read_message.readUTF();
+		    	        	final String recieved_message_username = read_message.readUTF();
+		    	        	final String recieved_message = read_message.readUTF();
 		    	        	Platform.runLater(new Runnable() {
 		    	        		public void run() {
                                     //add it to ui
-		    	        			System.out.print(inputFromServer);
+		    	        			System.out.print(recieved_message_username +" : "+recieved_message);
 		    	        		}
 		    	        	});
 		    	        } catch (SocketException e) {
@@ -65,8 +72,7 @@ public class Controller  {
     }
 
     public void send_message_to_server(String input) throws IOException {
-        System.out.print("sent messafe \n");
-		write_message.writeUTF(name + " : " + input);
+		write_message.writeUTF(input);
 	}
 
 
@@ -75,7 +81,8 @@ public class Controller  {
     }
 
  
-
+    @FXML
+    private Label username_label;
     @FXML
     private TextField message_content;
 
@@ -106,7 +113,7 @@ public class Controller  {
     void submit_event_click(ActionEvent event) throws IOException {
         if(!message_content.getText().equals("")){
             send_message_to_server(message_content.getText());
-            message_content.setText("";)
+            message_content.setText("");
         }
     }
 

@@ -193,15 +193,16 @@ public class Login_controller  {
             write_message.writeUTF(login_email.getText());
             write_message.writeUTF(login_password.getText());
             String response = read_message.readUTF();
+            String username = read_message.readUTF();
+            System.out.println(response + "\n");
+            System.out.println(username + "\n");
+            //ffffffffffffffffffffffffffffffffff
             if(response.equals("success")){
-                //Stage primaryStage = (Stage)((Node)event.getSource()).getScene().getWindow();
-                //primaryStage.setScene(main);
-
                 FXMLLoader main_page_loader = new FXMLLoader(getClass().getResource("new_client_ui.fxml"));
                 Parent main_pane = main_page_loader.load();
                 Scene main_scene = new Scene(main_pane);
                 Controller main_controller = (Controller) main_page_loader.getController();
-                main_controller.set_client_socket_scene(client_socket);
+                main_controller.set_client_socket(client_socket,username ,login_email.getText());
                 Stage primaryStage = (Stage)((Node)event.getSource()).getScene().getWindow(); 
                 primaryStage.setScene(main_scene);
             }else if(response.equals("password_error")){
@@ -228,6 +229,7 @@ public class Login_controller  {
             write_message.writeUTF(register_email.getText());
             write_message.writeUTF(register_password.getText());
             String response = read_message.readUTF();
+            System.out.println(response+"\n");
             if(response.equals("success")){
                 register_error_message.setStyle("-fx-text-fill: green;");
                 register_error_message.setText("registration successful, you can login now");
