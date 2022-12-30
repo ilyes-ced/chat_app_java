@@ -143,15 +143,14 @@ public class Controller  {
                                         new Thread( new Runnable() {
                                             public void run() {
                                                 try (DataInputStream incomingMessageReader = new DataInputStream(clientSocket.getInputStream())) {
-                                                    System.out.println(incomingMessageReader+" \n");
 		                                        	while (true) {
-                                                        System.out.println("test \n");
 		                                        		String message_to_server = incomingMessageReader.readUTF();
+                                                        //insert message in database
                                                         Platform.runLater(new Runnable() {
 	                		                            	@Override
 	                		                            	public void run() {
                                                                 scroll_pane_inside.getChildren().add(new Label("client "+clientSocket.getRemoteSocketAddress()+" sent : "+message_to_server));
-                                                                scroll_pane_inside.getChildren().add(new Label(clientSocket.getRemoteSocketAddress().getClass().getName()));
+                                                                //scroll_pane_inside.getChildren().add(new Label(clientSocket.getRemoteSocketAddress().getClass().getName()));
                                                             }
 	                		                            });
                                                         System.out.println("test \n");

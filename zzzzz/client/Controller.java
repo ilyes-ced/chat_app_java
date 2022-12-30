@@ -20,6 +20,11 @@ import javafx.scene.control.Control;
 import javafx.scene.Parent;
 import javafx.geometry.Insets;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.SVGPath;
+import javafx.geometry.Pos;
+//import javafx.scene.Scene.setFill;
+
+
 
 public class Controller  {
 	private Socket clientSocket;
@@ -29,6 +34,7 @@ public class Controller  {
 	private String email;
     private Scene login;
 
+    
     @FXML
     private ScrollPane main_scroll_pane;
 
@@ -65,6 +71,8 @@ public class Controller  {
 
 
     public void initialize(){
+
+
             //@FXML
     //void submit_event(ActionEvent event) throws IOException {
     //    send_message_to_server("hello this is fixed test string ");
@@ -109,23 +117,49 @@ public class Controller  {
 		    	        	final String recieved_message = read_message.readUTF();
 		    	        	Platform.runLater(new Runnable() {
 		    	        		public void run() {
-                                    //add it to ui
-                                    main_message_box.getChildren().add(new Label(recieved_message_username +" : "+recieved_message));
-		    	        			HBox main_message = new HBox();
-		    	        			VBox message = new VBox();
-		    	        			HBox message_username = new HBox(new Label("username"));
-		    	        			HBox message_time = new HBox(new Label("8:30"));
-
-
-
-                                    message.getChildren().addAll(message_username, message_time);
                                     
-                                    main_message.setStyle("-fx-background-color:  #8544ef"); 
-                                    main_message.setPrefWidth(200.0);
-                                    main_message.setPrefHeight(200.0);
-                                    main_message.setPadding(new Insets(10, 10, 10, 10));
-                                    main_message.getChildren().add(message);
-                                    System.out.print(recieved_message_username +" : "+recieved_message+"\n");
+                                    SVGPath svg = new SVGPath();
+                                    String path = "M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z";
+                                    svg.setContent(path);
+                                    svg.setScaleX(2.0);
+                                    svg.setScaleY(2.0);
+                                    svg.setStyle("-fx-text-fill: white;");
+                                    svg.setFill(Color.rgb(255,255,255));
+                                    main_message_box.getChildren().add(new Label(recieved_message_username +" : "+recieved_message));
+		    	        			
+                                    Label username_label = new Label(username);
+                                    Label time_label = new Label("8:30");
+                                    Label message_label = new Label(recieved_message);
+                                    username_label.setStyle("-fx-text-fill: white; -fx-font-weight: bold");
+                                    time_label.setStyle("-fx-text-fill: white;");
+                                    message_label.setStyle("-fx-text-fill: white;");
+		    	        			VBox message = new VBox();
+		    	        			HBox message_username = new HBox(username_label, time_label );
+		    	        			HBox message_content = new HBox(message_label);
+
+
+                                    message.setStyle("-fx-background-radius: 10px; -fx-border-radius: 10px; -fx-border-color: rgba(200,200,200,0.4); -fx-background-color: #8544ef"); 
+                                    //message.setPrefWidth(200.0);
+                                    //message.setPrefHeight(60.0);
+                                    //message_username.setPrefWidth(200.0);
+                                    //message_username.setPrefHeight(30.0);
+                                    //message_username.setSpacing(10);
+                                    message_username.setPadding(new Insets(5, 20, 5, 20));
+                                    message_content.setPrefWidth(200.0);
+                                    message_content.setPrefHeight(30.0);
+                                    message_content.setPadding(new Insets(0, 20, 5, 20));
+                                    message.getChildren().addAll(message_username, message_content);
+
+
+                                    HBox main_message = new HBox();
+                                    main_message.setAlignment(Pos.CENTER_LEFT);
+                                    //main_message.setPrefWidth(200.0);
+                                    //main_message.setPrefHeight(100.0);
+                                    main_message.setPadding(new Insets(20, 20, 20, 20));
+                                    main_message.setSpacing(20);
+                                    main_message.getChildren().addAll(svg, message);
+                                    main_message_box.getChildren().add(main_message);
+                                    //System.out.print(recieved_message_username +" : "+recieved_message+"\n");
 		    	        		}
 		    	        	});
 		    	        } catch (SocketException e) {
