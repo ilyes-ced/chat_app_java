@@ -47,10 +47,10 @@ CREATE TABLE groups_members(
 CREATE TABLE messages(
     id int NOT NULL AUTO_INCREMENT,
     sender int NOT NULL,
-    chat_group int NOT NULL,
+    /*chat_group int NOT NULL,*/
     message VARCHAR(255),
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (id),
+    PRIMARY KEY (id)/*,
     FOREIGN KEY (sender) REFERENCES users(id),
-    FOREIGN KEY (chat_group) REFERENCES chat_groups(id)
+    FOREIGN KEY (chat_group) REFERENCES chat_groups(id)*/
 );

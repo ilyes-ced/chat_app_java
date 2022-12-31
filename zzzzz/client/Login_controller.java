@@ -233,8 +233,12 @@ public class Login_controller  {
             if(response.equals("success")){
                 register_error_message.setStyle("-fx-text-fill: green;");
                 register_error_message.setText("registration successful, you can login now");
-            }else if(response.equals("account_duplicate")){
-                register_error_message.setText("account already exists");
+            }else if(response.equals("email_username_duplicate")){
+                register_error_message.setText("email and username already exists");
+            }else if(response.equals("email_duplicate")){
+                register_error_message.setText("email already exists");
+            }else if(response.equals("username_duplicate")){
+                register_error_message.setText("username already exists");
             }else if(response.equals("connection_error")){
                 register_error_message.setText("network erro please check your connection");
             }

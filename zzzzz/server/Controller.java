@@ -70,23 +70,31 @@ public class Controller  {
                             try{
                                 Sql_connection db = new Sql_connection();
                                 Connection con = db.connect();
-                                PreparedStatement query = con.prepareStatement("select * from users where email=?");
-                                query.setString(1, email);
-                                ResultSet result = query.executeQuery();
-                                System.out.println(result);
-                                while(result.next()){
-                                    System.out.println(result.getString("email"));
-                                }
-                                if(!result.next()){
-                                    query = con.prepareStatement("insert into  users(username, email, password) values(?, ?, ?)");
+                                PreparedStatement query_email = con.prepareStatement("select count(*) from users where email=?");
+                                PreparedStatement query_username = con.prepareStatement("select count(*) from users where username=?");
+                                query_email.setString(1, email);
+                                query_username.setString(1, username);
+                                ResultSet result_email = query_email.executeQuery();
+                                ResultSet result_username = query_username.executeQuery();
+                                result_email.next();
+                                result_username.next();
+                                System.out.println("/////////////////////////////////////////");
+                                System.out.println(result_email.getInt(1));
+                                System.out.println(result_username.getInt(1));
+
+                                if(result_email.getInt(1) == 0 & result_username.getInt(1) == 0){
+                                    PreparedStatement query = con.prepareStatement("insert into  users(username, email, password) values(?, ?, ?)");
                                     query.setString(1, username);
                                     query.setString(2, email);
                                     query.setString(3, password);
                                     System.out.println("accoutn created \n");
                                     register_output.writeUTF("success");
-                                }else{
-                                    System.out.println("accoutn account_duplicate \n");
-                                    register_output.writeUTF("account_duplicate");
+                                }else if(result_email.getInt(1) == 1 & result_username.getInt(1) == 1){
+                                    register_output.writeUTF("email_username_duplicate");
+                                }else if(result_email.getInt(1) == 1){
+                                    register_output.writeUTF("email_duplicate");
+                                }else if(result_username.getInt(1) == 1){
+                                    register_output.writeUTF("username_duplicate");
                                 }
                                 db.closeConnection();
                             } catch (Exception ex) {
@@ -145,6 +153,13 @@ public class Controller  {
                                                 try (DataInputStream incomingMessageReader = new DataInputStream(clientSocket.getInputStream())) {
 		                                        	while (true) {
 		                                        		String message_to_server = incomingMessageReader.readUTF();
+
+                                                        Sql_connection db = new Sql_connection();
+                                                        Connection con = db.connect();
+                                                        PreparedStatement insert_message = con.prepareStatement("insert into messages(sender, message) values(?, ?)");
+                                                        insert_message.setString(1, clients_usernames.get(clientSocket.getRemoteSocketAddress()));
+                                                        insert_message.setString(1, message_to_server);
+                                                        insert_message.executeUpdate();
                                                         //insert message in database
                                                         Platform.runLater(new Runnable() {
 	                		                            	@Override
