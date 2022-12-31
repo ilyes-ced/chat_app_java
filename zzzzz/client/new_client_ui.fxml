@@ -30,9 +30,9 @@
                      </padding></HBox>
                </top>
                <center>
-                  <ScrollPane fx:id="main_scroll_pane" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #1a1d21;" BorderPane.alignment="CENTER">
+                  <ScrollPane fx:id="main_scroll_pane" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #1a1d21;" BorderPane.alignment="CENTER">
                      <content>
-                        <VBox fx:id="main_message_box" minHeight="-Infinity" minWidth="-Infinity" prefHeight="428.0" prefWidth="828.0" style="-fx-background-color: #1a1d21;">
+                        <VBox fx:id="main_message_box" minWidth="-Infinity" prefHeight="428.0" prefWidth="828.0" style="-fx-background-color: #1a1d21;">
                            <children>
                               <HBox alignment="CENTER_LEFT" prefWidth="828.0" spacing="20.0">
                                  <padding>
@@ -76,6 +76,9 @@
                                  </children>
                               </HBox>
                            </children>
+                           <padding>
+                              <Insets right="10.0" />
+                           </padding>
                         </VBox>
                      </content>
                   </ScrollPane>
