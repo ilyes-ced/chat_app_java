@@ -11,7 +11,7 @@ import java.io.*;
 import java.net.*;
 import java.util.*;
 import java.sql.*;
-
+import java.text.SimpleDateFormat;
 public class Controller {
 
     private int port = 5555;
@@ -136,14 +136,17 @@ public class Controller {
                                         while (result.next()) {
                                             current_output.writeUTF(result.getString("sender"));
                                             current_output.writeUTF(result.getString("message"));
+                                            current_output.writeUTF(result.getString("created_at"));
                                         }
                                         
                                         synchronized (outputs) {
                                             System.out.println("///////////////////////////////////////////////////");
                                             System.out.println(clientSocket.getRemoteSocketAddress() + " has joined the chat");
+                                            System.out.println(new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime()));
                                             for (DataOutputStream output : outputs) {
                                                 output.writeUTF("&B3#aVEyvj#@WqKCTpPfu5d+yneVycy*qhkCh94kqg#3#@Sz66vHn)FA#shFfPpJ&B3#aVEyvj#@WqKCTpPfu5d+yneVycy*qhkCh94kqg#3#@Sz66vHn)FA#shFfPpJ");
                                                 output.writeUTF(clients_usernames.get(clientSocket.getRemoteSocketAddress()));
+                                                output.writeUTF(new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime()));
                                             }
                                         }
                                         synchronized (outputs) {

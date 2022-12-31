@@ -48,7 +48,7 @@ CREATE TABLE messages(
     id int NOT NULL AUTO_INCREMENT,
     sender VARCHAR(255) NOT NULL,
     /*chat_group int NOT NULL,*/
-    message VARCHAR(255),
+    message longtext,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (id)/*,
     FOREIGN KEY (sender) REFERENCES users(id),

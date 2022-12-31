@@ -105,6 +105,7 @@ public class Controller  {
 		    	        try {
 		    	        	String recieved_message_username = read_message.readUTF();
 		    	        	String recieved_message = read_message.readUTF();
+		    	        	String recieved_message_time = read_message.readUTF();
                             if( recieved_message_username.equals("&B3#aVEyvj#@WqKCTpPfu5d+yneVycy*qhkCh94kqg#3#@Sz66vHn)FA#shFfPpJ&B3#aVEyvj#@WqKCTpPfu5d+yneVycy*qhkCh94kqg#3#@Sz66vHn)FA#shFfPpJ")){
                                  Platform.runLater(new Runnable() {
 		    	        	    	public void run() {
@@ -122,11 +123,13 @@ public class Controller  {
                                         svg.setScaleY(2.0);
                                         svg.setStyle("-fx-text-fill: white;");
                                         svg.setFill(Color.rgb(255,255,255));
-                                        main_message_box.getChildren().add(new Label(recieved_message_username +" : "+recieved_message));
+                                        //main_message_box.getChildren().add(new Label(recieved_message_username +" : "+recieved_message));
     
-                                        Label username_label = new Label(username);
-                                        Label time_label = new Label("8:30");
+                                        Label username_label = new Label(recieved_message_username);
+                                        Label time_label = new Label(recieved_message_time);
                                         Label message_label = new Label(recieved_message);
+                                        time_label.setPadding(new Insets(0, 10, 0, 0));
+
                                         message_label.setPrefWidth(Control.USE_COMPUTED_SIZE);
                                         message_label.setPrefHeight(Control.USE_COMPUTED_SIZE);
                                         username_label.setStyle("-fx-text-fill: white; -fx-font-weight: bold");
