@@ -46,7 +46,7 @@ CREATE TABLE groups_members(
 
 CREATE TABLE messages(
     id int NOT NULL AUTO_INCREMENT,
-    sender int NOT NULL,
+    sender VARCHAR(255) NOT NULL,
     /*chat_group int NOT NULL,*/
     message VARCHAR(255),
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,

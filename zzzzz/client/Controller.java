@@ -107,7 +107,7 @@ public class Controller  {
             this.clientSocket = mainsocket;
 		    this.read_message = new DataInputStream(clientSocket.getInputStream());
 		    this.write_message = new DataOutputStream(clientSocket.getOutputStream());
-		    this.write_message.writeUTF(username);
+		    //this.write_message.writeUTF(username);
 
             Thread clientThread = new Thread( new Runnable() {
                 public void run() {

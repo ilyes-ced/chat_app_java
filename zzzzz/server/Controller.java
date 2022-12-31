@@ -25,7 +25,6 @@ public class Controller  {
     private ServerSocket server;
     private ServerSocket login_server;
     private ServerSocket register_server;
-    private boolean is_auth = false;
     Map<SocketAddress, String> clients_usernames = new HashMap<SocketAddress, String>();
 
 
@@ -134,7 +133,6 @@ public class Controller  {
                                 if (result.next()) {
                                     if(result.getString("password").equals(password)){
                                         clients_usernames.put(clientSocket.getRemoteSocketAddress(), result.getString("username"));
-                                        is_auth = true;
                                         login_output.writeUTF("success");
                                         login_output.writeUTF(result.getString("username"));
                                         Platform.runLater(new Runnable() {
@@ -143,23 +141,46 @@ public class Controller  {
                                                 scroll_pane_inside.getChildren().add(new Label("Client "+ clientSocket.getRemoteSocketAddress()+ " connected"));
 	                		            	}
 	                		            });
+                                        DataOutputStream current_output = new DataOutputStream(clientSocket.getOutputStream());
+
+                                        
+                                        
+                                        Statement get_messages = con.createStatement();
+                                        result = get_messages.executeQuery("select * from messages limit 20");
+                                        while(result.next()){
+                                            current_output.writeUTF(result.getString("sender"));
+                                            current_output.writeUTF(result.getString("message"));
+                                        }
                                         synchronized(outputs) {
-                                            outputs.add(new DataOutputStream(clientSocket.getOutputStream()));
+                                            outputs.add(current_output);
                                         }
 
                                         
                                         new Thread( new Runnable() {
                                             public void run() {
                                                 try (DataInputStream incomingMessageReader = new DataInputStream(clientSocket.getInputStream())) {
+                                                    synchronized (outputs) {
+                                                        for (DataOutputStream output : outputs) {
+                                                            output.writeUTF("server");
+                                                            output.writeUTF(clients_usernames.get(clientSocket.getRemoteSocketAddress()));
+                                                        }
+                                                    }
+		                                        	//String joined = incomingMessageReader.readUTF();
+                                                    //System.out.println("///////////////////////////////////////////////////");
+                                                    //System.out.println(joined + " has joined the chat");
 		                                        	while (true) {
 		                                        		String message_to_server = incomingMessageReader.readUTF();
-
-                                                        Sql_connection db = new Sql_connection();
-                                                        Connection con = db.connect();
-                                                        PreparedStatement insert_message = con.prepareStatement("insert into messages(sender, message) values(?, ?)");
-                                                        insert_message.setString(1, clients_usernames.get(clientSocket.getRemoteSocketAddress()));
-                                                        insert_message.setString(1, message_to_server);
-                                                        insert_message.executeUpdate();
+                                                        try{
+                                                            Sql_connection db = new Sql_connection();
+                                                            Connection con = db.connect();
+                                                            PreparedStatement insert_message = con.prepareStatement("insert into messages(sender, message) values(?, ?)");
+                                                            insert_message.setString(1, clients_usernames.get(clientSocket.getRemoteSocketAddress()));
+                                                            insert_message.setString(2, message_to_server);
+                                                            insert_message.executeUpdate();
+                                                            db.closeConnection();
+                                                        } catch (Exception ex) {
+                                                            ex.printStackTrace();
+                                                        }
                                                         //insert message in database
                                                         Platform.runLater(new Runnable() {
 	                		                            	@Override
@@ -168,7 +189,6 @@ public class Controller  {
                                                                 //scroll_pane_inside.getChildren().add(new Label(clientSocket.getRemoteSocketAddress().getClass().getName()));
                                                             }
 	                		                            });
-                                                        System.out.println("test \n");
                                                         synchronized (outputs) {
 		                                                    for (DataOutputStream output : outputs) {
                                                                 output.writeUTF(clients_usernames.get(clientSocket.getRemoteSocketAddress()));
