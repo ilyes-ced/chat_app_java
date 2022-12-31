@@ -48,13 +48,16 @@ public class Controller  {
 
     @FXML
     private VBox add_messages;
+
+    @FXML
+    private VBox list_of_users;
     
     @FXML
-    //private AnchorPane main_message_box;
     private VBox main_message_box;
 
     @FXML
     private Button submit_message;
+    
 
 
     public void send_message_to_server(String input) throws IOException {
@@ -109,7 +112,13 @@ public class Controller  {
                             if( recieved_message_username.equals("&B3#aVEyvj#@WqKCTpPfu5d+yneVycy*qhkCh94kqg#3#@Sz66vHn)FA#shFfPpJ&B3#aVEyvj#@WqKCTpPfu5d+yneVycy*qhkCh94kqg#3#@Sz66vHn)FA#shFfPpJ")){
                                  Platform.runLater(new Runnable() {
 		    	        	    	public void run() {
-                                        main_message_box.getChildren().add(new Label(recieved_message +"has joined the chat"));
+                                        Label new_user_label = new Label(recieved_message);
+                                        new_user_label.setStyle("-fx-text-fill: white;");
+		    	        	    		HBox new_user = new HBox(new_user_label);
+                                        new_user.setPadding(new Insets(0, 0, 0, 10));
+                                        new_user.setPrefWidth(30.0);
+                                        new_user.setPrefHeight(Control.USE_COMPUTED_SIZE);
+                                        list_of_users.getChildren().add(new_user);
                                     }
                                 });
                             }else{
@@ -128,10 +137,9 @@ public class Controller  {
                                         Label username_label = new Label(recieved_message_username);
                                         Label time_label = new Label(recieved_message_time);
                                         Label message_label = new Label(recieved_message);
-                                        time_label.setPadding(new Insets(0, 10, 0, 0));
+                                        time_label.setPadding(new Insets(0, 0, 0, 10));
 
-                                        message_label.setPrefWidth(Control.USE_COMPUTED_SIZE);
-                                        message_label.setPrefHeight(Control.USE_COMPUTED_SIZE);
+
                                         username_label.setStyle("-fx-text-fill: white; -fx-font-weight: bold");
                                         time_label.setStyle("-fx-text-fill: white;");
                                         message_label.setStyle("-fx-text-fill: white;");
@@ -140,7 +148,8 @@ public class Controller  {
 		    	        	    		HBox message_content = new HBox(message_label);
 
 
-                                        message.setStyle("-fx-background-radius: 10px; -fx-border-radius: 10px; -fx-border-color: rgba(200,200,200,0.4); -fx-background-color: #8544ef"); 
+                                        message_label.setPrefWidth(Control.USE_COMPUTED_SIZE);
+                                        message_label.setPrefHeight(Control.USE_COMPUTED_SIZE);
                                         message.setPrefWidth(Control.USE_COMPUTED_SIZE);
                                         message.setPrefHeight(Control.USE_COMPUTED_SIZE);
                                         message_username.setPrefWidth(Control.USE_COMPUTED_SIZE);
@@ -148,19 +157,24 @@ public class Controller  {
                                         message_content.setPrefWidth(Control.USE_COMPUTED_SIZE);
                                         message_content.setPrefHeight(Control.USE_COMPUTED_SIZE);
                                         message_username.setPadding(new Insets(5, 20, 5, 20));
-                                        message_content.setPrefWidth(200.0);
-                                        message_content.setPrefHeight(30.0);
                                         message_content.setPadding(new Insets(0, 20, 5, 20));
                                         message.getChildren().addAll(message_username, message_content);
 
 
                                         HBox main_message = new HBox();
-                                        main_message.setAlignment(Pos.CENTER_LEFT);
                                         //main_message.setPrefWidth(200.0);
                                         //main_message.setPrefHeight(100.0);
                                         main_message.setPadding(new Insets(20, 20, 20, 20));
                                         main_message.setSpacing(20);
-                                        main_message.getChildren().addAll(svg, message);
+                                        if(recieved_message_username.equals(username)){
+                                            message.setStyle("-fx-background-radius: 10px; -fx-border-radius: 10px; -fx-border-color: rgba(200,200,200,0.4); -fx-background-color:  #14101a"); 
+                                            main_message.setAlignment(Pos.CENTER_RIGHT);
+                                            main_message.getChildren().addAll(message, svg);
+                                        }else{
+                                            message.setStyle("-fx-background-radius: 10px; -fx-border-radius: 10px; -fx-border-color: rgba(200,200,200,0.4); -fx-background-color: #8544ef"); 
+                                            main_message.setAlignment(Pos.CENTER_LEFT);
+                                            main_message.getChildren().addAll(svg, message);
+                                        }
                                         main_message_box.getChildren().add(main_message);
                                         //System.out.print(recieved_message_username +" : "+recieved_message+"\n");
 		    	        	    	}

@@ -187,9 +187,9 @@ public class Controller {
                                                         });
                                                         synchronized (outputs) {
                                                             for (DataOutputStream output : outputs) {
-                                                                output.writeUTF(clients_usernames
-                                                                        .get(clientSocket.getRemoteSocketAddress()));
+                                                                output.writeUTF(clients_usernames.get(clientSocket.getRemoteSocketAddress()));
                                                                 output.writeUTF(message_to_server);
+                                                                output.writeUTF(new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime()));
                                                             }
                                                         }
                                                     }
