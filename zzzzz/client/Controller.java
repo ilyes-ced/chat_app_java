@@ -127,7 +127,8 @@ public class Controller  {
                                         Label username_label = new Label(username);
                                         Label time_label = new Label("8:30");
                                         Label message_label = new Label(recieved_message);
-                                        message_label.setPadding(new Insets(0, 20, 0, 20));
+                                        message_label.setPrefWidth(Control.USE_COMPUTED_SIZE);
+                                        message_label.setPrefHeight(Control.USE_COMPUTED_SIZE);
                                         username_label.setStyle("-fx-text-fill: white; -fx-font-weight: bold");
                                         time_label.setStyle("-fx-text-fill: white;");
                                         message_label.setStyle("-fx-text-fill: white;");
@@ -137,11 +138,12 @@ public class Controller  {
 
 
                                         message.setStyle("-fx-background-radius: 10px; -fx-border-radius: 10px; -fx-border-color: rgba(200,200,200,0.4); -fx-background-color: #8544ef"); 
-                                        //message.setPrefWidth(200.0);
-                                        //message.setPrefHeight(60.0);
-                                        //message_username.setPrefWidth(200.0);
-                                        //message_username.setPrefHeight(30.0);
-                                        //message_username.setSpacing(10);
+                                        message.setPrefWidth(Control.USE_COMPUTED_SIZE);
+                                        message.setPrefHeight(Control.USE_COMPUTED_SIZE);
+                                        message_username.setPrefWidth(Control.USE_COMPUTED_SIZE);
+                                        message_username.setPrefHeight(Control.USE_COMPUTED_SIZE);
+                                        message_content.setPrefWidth(Control.USE_COMPUTED_SIZE);
+                                        message_content.setPrefHeight(Control.USE_COMPUTED_SIZE);
                                         message_username.setPadding(new Insets(5, 20, 5, 20));
                                         message_content.setPrefWidth(200.0);
                                         message_content.setPrefHeight(30.0);

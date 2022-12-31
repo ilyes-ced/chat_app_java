@@ -162,10 +162,8 @@ public class Controller {
                                                         try {
                                                             Sql_connection db = new Sql_connection();
                                                             Connection con = db.connect();
-                                                            PreparedStatement insert_message = con.prepareStatement(
-                                                                    "insert into messages(sender, message) values(?, ?)");
-                                                            insert_message.setString(1, clients_usernames
-                                                                    .get(clientSocket.getRemoteSocketAddress()));
+                                                            PreparedStatement insert_message = con.prepareStatement("insert into messages(sender, message) values(?, ?)");
+                                                            insert_message.setString(1, clients_usernames.get(clientSocket.getRemoteSocketAddress()));
                                                             insert_message.setString(2, message_to_server);
                                                             insert_message.executeUpdate();
                                                             db.closeConnection();
