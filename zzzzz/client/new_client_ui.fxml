@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuButton?>
@@ -21,7 +22,7 @@
                <top>
                   <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="430.0" style="-fx-border-color: transparent transparent gray transparent;" BorderPane.alignment="CENTER">
                      <children>
-                        <Label text="general chat room" textFill="WHITE">
+                        <Label text="general" textFill="WHITE">
                            <font>
                               <Font size="18.0" />
                            </font>
@@ -47,6 +48,9 @@
                                                    <font>
                                                       <Font name="System Bold" size="15.0" />
                                                    </font>
+                                                   <cursor>
+                                                      <Cursor fx:constant="HAND" />
+                                                   </cursor>
                                                 </Label>
                                                 <Label text="8:30" textFill="#bfb9b9">
                                                    <font>
@@ -121,31 +125,34 @@
          <children>
             <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="170.0" style="-fx-border-color: transparent transparent gray transparent;">
                <children>
-                  <Label text="chat group name" textFill="WHITE">
+                  <Label prefHeight="21.0" prefWidth="106.0" text="Java" textFill="WHITE">
                      <font>
                         <Font size="18.0" />
                      </font></Label>
+                  <Button mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" style="-fx-background-color: #1a1d21; -fx-background-radius: 100%; -fx-border-radius: 100%;" textFill="WHITE">
+                     <graphic>
+                        <SVGPath content="M16.707 3.268a1 1 0 0 0-1.414 0l-.482.482 1.439 1.44.482-.483a1 1 0 0 0 0-1.414l-.025-.025ZM15.19 6.25l-1.44-1.44-5.068 5.069-.431 1.871 1.87-.431L15.19 6.25Zm-.957-4.043a2.5 2.5 0 0 1 3.536 0l.025.025a2.5 2.5 0 0 1 0 3.536L11.03 12.53a.75.75 0 0 1-.361.2l-3.25.75a.75.75 0 0 1-.9-.899l.75-3.25a.75.75 0 0 1 .2-.361l6.763-6.763ZM5.25 4A2.25 2.25 0 0 0 3 6.25v8.5A2.25 2.25 0 0 0 5.25 17h8.5A2.25 2.25 0 0 0 16 14.75v-4.5a.75.75 0 1 1 1.5 0v4.5a3.75 3.75 0 0 1-3.75 3.75h-8.5a3.75 3.75 0 0 1-3.75-3.75v-8.5A3.75 3.75 0 0 1 5.25 2.5h4.5a.75.75 0 0 1 0 1.5h-4.5Z" fill="WHITE" />
+                     </graphic>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
                </children>
                <padding>
                   <Insets left="10.0" />
                </padding>
             </HBox>
-            <ScrollPane prefHeight="320.0" prefWidth="170.0" style="-fx-background-color: transparent;">
+            <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="200.0" style="-fx-border-color: transparent transparent gray transparent;">
+               <children>
+                  <Label text="list of users" textFill="WHITE" />
+               </children>
+               <padding>
+                  <Insets left="10.0" />
+               </padding>
+            </HBox>
+            <ScrollPane prefHeight="490.0" prefWidth="170.0" style="-fx-background-color: transparent;">
                <content>
-                  <VBox fx:id="list_of_users" prefHeight="318.0" prefWidth="168.0" style="-fx-background-color: #14101a;">
-                     <children>
-                        <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="168.0" style="-fx-background-color: transparent;">
-                           <children>
-                              <Label text="username" textFill="WHITE" />
-                           </children>
-                           <VBox.margin>
-                              <Insets />
-                           </VBox.margin>
-                           <padding>
-                              <Insets left="10.0" />
-                           </padding>
-                        </HBox>
-                     </children>
+                  <VBox fx:id="list_of_users" prefHeight="488.0" prefWidth="168.0" style="-fx-background-color: #14101a;">
                      <padding>
                         <Insets bottom="10.0" top="10.0" />
                      </padding>
@@ -158,25 +165,36 @@
    <top>
       <BorderPane prefHeight="40.0" prefWidth="1000.0" style="-fx-background-color: #6715eb;" BorderPane.alignment="CENTER">
          <padding>
-            <Insets left="10.0" right="10.0" />
+            <Insets left="20.0" right="10.0" />
          </padding>
          <right>
-            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="20.0" BorderPane.alignment="CENTER_RIGHT">
+            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER_RIGHT">
                <children>
-                  <SVGPath content="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" fill="WHITE" scaleX="2.0" scaleY="2.0" />
+                  <SVGPath content="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" fill="WHITE" scaleX="2.0" scaleY="2.0">
+                     <HBox.margin>
+                        <Insets right="20.0" />
+                     </HBox.margin>
+                  </SVGPath>
                   <Label fx:id="username_label" text="username" textFill="WHITE">
                      <font>
-                        <Font name="System Bold Italic" size="13.0" />
+                        <Font name="System Bold" size="13.0" />
                      </font>
                   </Label>
                   <MenuButton contentDisplay="CENTER" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" style="-fx-background-color: transparent; -fx-shape: M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z;" textFill="WHITE">
                     <items>
-                      <MenuItem mnemonicParsing="false" text="Action 1" />
+                      <MenuItem mnemonicParsing="false" text="logout">
+                           <graphic>
+                              <SVGPath content="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z" />
+                           </graphic>
+                        </MenuItem>
                       <MenuItem mnemonicParsing="false" text="Action 2" />
                     </items>
                      <padding>
                         <Insets right="10.0" />
                      </padding>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </MenuButton>
                </children>
             </HBox>

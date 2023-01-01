@@ -82,7 +82,9 @@ public class Controller  {
             System.out.println("hi man  im resized to "+newVal);
             main_message_box.setPrefHeight(newVal.doubleValue() - 2.0);
         });
+        main_message_box.heightProperty().addListener(observable -> main_scroll_pane.setVvalue(1D));
         main_scroll_pane.getStylesheets().add(this.getClass().getResource("style.css").toExternalForm());
+        message_content.setStyle("-fx-text-fill: white;"+message_content.getStyle());
     }
 
 
@@ -116,8 +118,9 @@ public class Controller  {
                                         new_user_label.setStyle("-fx-text-fill: white;");
 		    	        	    		HBox new_user = new HBox(new_user_label);
                                         new_user.setPadding(new Insets(0, 0, 0, 10));
-                                        new_user.setPrefWidth(30.0);
-                                        new_user.setPrefHeight(Control.USE_COMPUTED_SIZE);
+                                        new_user.setPrefHeight(30.0);
+                                        new_user.setPrefWidth(Control.USE_COMPUTED_SIZE);
+                                        new_user.setAlignment(Pos.CENTER_LEFT);
                                         list_of_users.getChildren().add(new_user);
                                     }
                                 });

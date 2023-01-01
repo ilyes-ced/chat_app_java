@@ -152,29 +152,17 @@ public class Login_controller  {
 
     @FXML
     void toggle_forms(MouseEvent event) {
-
-        //cover.setStyle("-fx-translate-x: 200;");
-        //cover.setVisible(true);
-        //cover.setLayoutX(cover.getLayoutX() - 200);
-        //-fx-background-radius
-        //cover.setStyle("-fx-background-radius: 10 10 10 10"); 
-        //cover.setStyle("-fx-border-radius: 10 10 10 10"); 
-        //cover.setStyle("-fx-background-color: #6715eb"); 
         TranslateTransition transition = new TranslateTransition(new Duration(350), cover);
         if(co == 0){
-            //cover.setStyle("-fx-background-radius: 10px");
-            //cover.getTransforms().add(new Rotate(0, 1, 0, 180));
             transition.setToX(-800);
             transition.play();
             this.co = co + 1;
+            //cover.setStyle("-fx-background-radius: 0 10 10 0;"+cover.getStyle());
         }else{
-            //cover.setVisible();
-            //cover.setStyle("-fx-background-radius: 10 0 0 10;");
-            //cover.setStyle("-fx-background-radius: 10px");
-            //cover.getTransforms().add(new Rotate(0, 1, 0, 180));
             transition.setToX(-400);
             transition.play();
             this.co = co - 1;
+            //cover.setStyle("-fx-background-radius: 10 0 0 10;"+cover.getStyle());
         }
     }
 
