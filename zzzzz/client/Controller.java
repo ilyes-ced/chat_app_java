@@ -112,6 +112,7 @@ public class Controller  {
 		    	        	String recieved_message = read_message.readUTF();
 		    	        	String recieved_message_time = read_message.readUTF();
                             if( recieved_message_username.equals("&B3#aVEyvj#@WqKCTpPfu5d+yneVycy*qhkCh94kqg#3#@Sz66vHn)FA#shFfPpJ&B3#aVEyvj#@WqKCTpPfu5d+yneVycy*qhkCh94kqg#3#@Sz66vHn)FA#shFfPpJ")){
+                                System.out.print("helooooooooooooooooooooooooooooooooooooooooooooo");
                                 Platform.runLater(new Runnable() {
 		    	        	    	public void run() {
                                         Label new_user_label = new Label(recieved_message);
