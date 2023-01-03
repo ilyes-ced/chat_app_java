@@ -17,7 +17,7 @@ import java.util.Scanner;
 public class App extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
-        FXMLLoader login_page_loader = new FXMLLoader(App.class.getResource("login.fxml"));
+        FXMLLoader login_page_loader = new FXMLLoader(App.class.getResource("fxml/login.fxml"));
         Parent login_pane = login_page_loader.load();
         Scene login_scene = new Scene(login_pane);
         
