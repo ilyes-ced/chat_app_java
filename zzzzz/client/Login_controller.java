@@ -30,6 +30,11 @@ import javafx.scene.effect.DropShadow;
 import javafx.animation.Animation;
 import javafx.scene.transform.Rotate;
 import javafx.scene.effect.Bloom;
+
+
+
+
+
 public class Login_controller  {
     private Scene main;
     private Scene register;
@@ -172,37 +177,43 @@ public class Login_controller  {
     }
 
     @FXML
-    void submit_login(ActionEvent event) throws IOException {
-        if (!login_email.getText().trim().isEmpty() && !login_password.getText().trim().isEmpty()) {
-            login_error_message.setText("");
-            Socket client_socket = new Socket("localhost", 6000);
-            DataInputStream read_message = new DataInputStream(client_socket.getInputStream());
-            DataOutputStream write_message = new DataOutputStream(client_socket.getOutputStream());
-            write_message.writeUTF(login_email.getText());
-            write_message.writeUTF(login_password.getText());
-            String response = read_message.readUTF();
-            String username = read_message.readUTF();
-            System.out.println(response + "\n");
-            System.out.println(username + "\n");
-            //ffffffffffffffffffffffffffffffffff
-            if(response.equals("success")){
-                FXMLLoader main_page_loader = new FXMLLoader(getClass().getResource("new_client_ui.fxml"));
-                Parent main_pane = main_page_loader.load();
-                Scene main_scene = new Scene(main_pane);
-                Controller main_controller = (Controller) main_page_loader.getController();
-                main_controller.set_client_socket(client_socket,username ,login_email.getText());
-                Stage primaryStage = (Stage)((Node)event.getSource()).getScene().getWindow(); 
-                primaryStage.setScene(main_scene);
-            }else if(response.equals("password_error")){
-                login_error_message.setText("wrong password");
-            }else if(response.equals("email_error")){
-                login_error_message.setText("this account does not exist");
-            }else if(response.equals("connection_error")){
-                login_error_message.setText("network erro please check your connection");
+    void submit_login(ActionEvent event) {
+        try{
+            if (!login_email.getText().trim().isEmpty() && !login_password.getText().trim().isEmpty()) {
+                login_error_message.setText("");
+                Socket client_socket = new Socket("localhost", 6000);
+                DataInputStream read_message = new DataInputStream(client_socket.getInputStream());
+                DataOutputStream write_message = new DataOutputStream(client_socket.getOutputStream());
+                write_message.writeUTF(login_email.getText());
+                write_message.writeUTF(login_password.getText());
+                String response = read_message.readUTF();
+                String username = read_message.readUTF();
+                System.out.println(response + "\n");
+                System.out.println(username + "\n");
+                //ffffffffffffffffffffffffffffffffff
+                if(response.equals("success")){
+                    FXMLLoader main_page_loader = new FXMLLoader(getClass().getResource("new_client_ui.fxml"));
+                    Parent main_pane = main_page_loader.load();
+                    Scene main_scene = new Scene(main_pane);
+                    Controller main_controller = (Controller) main_page_loader.getController();
+                    main_controller.set_client_socket(client_socket,username ,login_email.getText());
+                    Stage primaryStage = (Stage)((Node)event.getSource()).getScene().getWindow(); 
+                    primaryStage.setScene(main_scene);
+                    
+                }else if(response.equals("password_error")){
+                    login_error_message.setText("wrong password");
+                }else if(response.equals("email_error")){
+                    login_error_message.setText("this account does not exist");
+                }else if(response.equals("connection_error")){
+                    login_error_message.setText("network erro please check your connection");
+                }
+            }else{
+                login_error_message.setText("email and password required");
             }
-       }else{
-            login_error_message.setText("email and password required");
-       }
+        }catch( IOException e ){
+            login_error_message.setText("network erro please check your connection");
+        }
+
     }
 
     @FXML

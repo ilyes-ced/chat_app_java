@@ -103,6 +103,7 @@ public class Controller {
 
             new Thread(new Runnable() {
                 public void run() {
+                    //socket.isConnected() && !socket.isClosed();
                     while (true) {
                         try {
                             final Socket clientSocket = login_server.accept();
@@ -160,7 +161,7 @@ public class Controller {
                                                     // String joined = incomingMessageReader.readUTF();
                                                     // System.out.println("///////////////////////////////////////////////////");
                                                     // System.out.println(joined + " has joined the chat");
-                                                    while (true) {
+                                                    while (clientSocket.isConnected() && !clientSocket.isClosed()) {
                                                         String message_to_server = incomingMessageReader.readUTF();
                                                         try {
                                                             Sql_connection db = new Sql_connection();
@@ -177,10 +178,7 @@ public class Controller {
                                                         Platform.runLater(new Runnable() {
                                                             @Override
                                                             public void run() {
-                                                                scroll_pane_inside.getChildren()
-                                                                        .add(new Label("client "
-                                                                                + clientSocket.getRemoteSocketAddress()
-                                                                                + " sent : " + message_to_server));
+                                                                scroll_pane_inside.getChildren().add(new Label("client "+ clientSocket.getRemoteSocketAddress()+ " sent : " + message_to_server));
                                                                 // scroll_pane_inside.getChildren().add(new
                                                                 // Label(clientSocket.getRemoteSocketAddress().getClass().getName()));
                                                             }
@@ -193,9 +191,14 @@ public class Controller {
                                                             }
                                                         }
                                                     }
+                                                        System.out.println("outzide disconnected /////////////////////////");
+
+                                                    if(clientSocket.isClosed()){
+                                                        System.out.println("disconnected /////////////////////////");
+
+                                                    }
                                                 } catch (SocketException e) {
                                                     e.printStackTrace();
-                                                    // baseServer.clientDisconnected(this);
                                                 } catch (IOException e) {
                                                     e.printStackTrace();
                                                 }

@@ -207,14 +207,7 @@ public class Controller  {
     }
 
 
-    //@FXML
-    //void submit_event(ActionEvent event) throws IOException {
-    //    send_message_to_server("hello this is fixed test string ");
-    //    //Stage primaryStage = (Stage)((Node)event.getSource()).getScene().getWindow();
-    //    //primaryStage.setScene(login);
-    //    
-    //}
-    
+
     
 
     @FXML
