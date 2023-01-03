@@ -18,7 +18,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("server_ui.fxml"));
+        FXMLLoader loader = new FXMLLoader(getResource("server_ui.fxml"));
         Parent root = loader.load();
         Controller controller = (Controller) loader.getController();
 
