@@ -5,22 +5,18 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
-
 import java.io.*;
 import java.net.*;
 import java.util.*;
-
-
-
 
 public class App extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        FXMLLoader loader = new FXMLLoader(getResource("server_ui.fxml"));
+        FXMLLoader loader = new FXMLLoader(App.class.getResource("server_ui.fxml"));
         Parent root = loader.load();
-        Controller controller = (Controller) loader.getController();
+        
+        //Controller controller = (Controller) loader.getController();
 
 
         primaryStage.setTitle("Registration Form FXML Application");

@@ -1,1 +1,5 @@
+org/openjfx/App.class
+org/openjfx/SystemInfo.class
+org/openjfx/Sql_connection.class
+org/openjfx/Controller.class
 module-info.class

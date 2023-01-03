@@ -1,3 +1,5 @@
+package org.openjfx;
+
 import javafx.fxml.FXML;
 import javafx.event.ActionEvent;
 import javafx.scene.layout.VBox;
@@ -12,6 +14,8 @@ import java.net.*;
 import java.util.*;
 import java.sql.*;
 import java.text.SimpleDateFormat;
+
+
 public class Controller {
 
     private int port = 5555;
@@ -45,7 +49,7 @@ public class Controller {
                 e.printStackTrace();
             }
 
-            new Thread(new Runnable() {
+            /*new Thread(new Runnable() {
                 public void run() {
                     while (true) {
                         try {
@@ -157,10 +161,7 @@ public class Controller {
                                         new Thread(new Runnable() {
                                             public void run() {
                                                 try (DataInputStream incomingMessageReader = new DataInputStream(
-                                                        clientSocket.getInputStream())) {
-                                                    // String joined = incomingMessageReader.readUTF();
-                                                    // System.out.println("///////////////////////////////////////////////////");
-                                                    // System.out.println(joined + " has joined the chat");
+                                                    clientSocket.getInputStream())) {
                                                     while (clientSocket.isConnected() && !clientSocket.isClosed()) {
                                                         String message_to_server = incomingMessageReader.readUTF();
                                                         try {
@@ -174,13 +175,10 @@ public class Controller {
                                                         } catch (Exception ex) {
                                                             ex.printStackTrace();
                                                         }
-                                                        // insert message in database
                                                         Platform.runLater(new Runnable() {
                                                             @Override
                                                             public void run() {
                                                                 scroll_pane_inside.getChildren().add(new Label("client "+ clientSocket.getRemoteSocketAddress()+ " sent : " + message_to_server));
-                                                                // scroll_pane_inside.getChildren().add(new
-                                                                // Label(clientSocket.getRemoteSocketAddress().getClass().getName()));
                                                             }
                                                         });
                                                         synchronized (outputs) {
@@ -191,10 +189,7 @@ public class Controller {
                                                             }
                                                         }
                                                     }
-                                                        System.out.println("outzide disconnected /////////////////////////");
-
                                                     if(clientSocket.isClosed()){
-                                                        System.out.println("disconnected /////////////////////////");
 
                                                     }
                                                 } catch (SocketException e) {
@@ -207,12 +202,10 @@ public class Controller {
                                     } else {
                                         System.out.println("passwird error \n");
                                         login_output.writeUTF("password_error");
-                                        // send passwod error message
                                     }
                                 } else {
                                     System.out.println("email err error \n");
                                     login_output.writeUTF("email_error");
-                                    // send error message
                                 }
                                 db.closeConnection();
                             } catch (Exception ex) {
@@ -225,62 +218,9 @@ public class Controller {
                         }
                     }
                 }
-            }).start();
+            }).start(); */
 
-            // Thread pp = new Thread( new Runnable() {
-            // public void run() {
-            // try {
-            // while (true) {
-            // //scroll_pane_inside.getChildren().add(new Label("started server"));
-            // final Socket clientSocket = server.accept();
-            // Platform.runLater(new Runnable() {
-            // @Override
-            // public void run() {
-            // scroll_pane_inside.getChildren().add(new Label("Client "+
-            // clientSocket.getRemoteSocketAddress()+ " connected"));
-            // }
-            // });
-            // synchronized(outputs) {
-            // outputs.add(new DataOutputStream(clientSocket.getOutputStream()));
-            // }
-            //
-            // new Thread( new Runnable() {
-            // public void run() {
-            // try (DataInputStream incomingMessageReader = new
-            // DataInputStream(clientSocket.getInputStream())) {
-            // while (true) {
-            // String message_to_server = incomingMessageReader.readUTF();
-            // System.out.println("Number of active threads from the given thread: " +
-            // Thread.activeCount()+"\n");
-            // Platform.runLater(new Runnable() {
-            // @Override
-            // public void run() {
-            // scroll_pane_inside.getChildren().add(new Label("client
-            // "+clientSocket.getRemoteSocketAddress()+" sent : "+message_to_server));
-            // }
-            // });
-            //
-            // synchronized (outputs) {
-            // for (DataOutputStream output : outputs) {
-            // output.writeUTF(message_to_server);
-            // }
-            // }
-            // }
-            // } catch (SocketException e) {
-            // //baseServer.clientDisconnected(this);
-            // } catch (IOException e) {
-            // e.printStackTrace();
-            // }
-            // }
-            // }).start();
-            // }
-            // } catch (IOException e) {
-            // e.printStackTrace();
-            // }
-            //
-            // }
-            // });
-            // pp.start();
+
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -312,27 +252,3 @@ public class Controller {
 
 }
 
-/**
- * @FXML
- *       void clicked(ActionEvent event) {
- *       System.out.print(message_content.getText());
- *       try{
- *       dos.writeUTF(message_content.getText());
- *       }catch (Exception ex) {
- *       ex.printStackTrace();
- *       }
- *       }
- * 
- * 
- * @FXML
- *       void enter_message(KeyEvent event) {
- *       if(event.getCode().toString().equals("ENTER")){
- *       System.out.print("test \n");
- *       try{
- *       dos.writeUTF(message_content.getText());
- *       }catch (Exception ex) {
- *       ex.printStackTrace();
- *       }
- *       }
- *       }
- */
