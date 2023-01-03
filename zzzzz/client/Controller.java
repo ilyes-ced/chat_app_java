@@ -166,8 +166,6 @@ public class Controller  {
 
 
                                         HBox main_message = new HBox();
-                                        //main_message.setPrefWidth(200.0);
-                                        //main_message.setPrefHeight(100.0);
                                         main_message.setPadding(new Insets(20, 20, 20, 20));
                                         main_message.setSpacing(20);
                                         if(recieved_message_username.equals(username)){
@@ -180,7 +178,6 @@ public class Controller  {
                                             main_message.getChildren().addAll(svg, message);
                                         }
                                         main_message_box.getChildren().add(main_message);
-                                        //System.out.print(recieved_message_username +" : "+recieved_message+"\n");
 		    	        	    	}
 		    	        	    });
                             }
