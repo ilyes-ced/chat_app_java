@@ -1,291 +1,47 @@
+package org.openjfx;
+
 import javafx.fxml.FXML;
 import javafx.event.ActionEvent;
 import javafx.scene.layout.VBox;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Label;
 import javafx.scene.control.Button;
+import javafx.scene.input.KeyEvent;
 import javafx.application.Platform;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+import javafx.scene.control.Label;
 import java.io.*;
+import javafx.scene.control.ScrollPane;
 import java.net.*;
-import java.util.*;
-import java.sql.*;
-import java.text.SimpleDateFormat;
-public class Controller {
+import javafx.scene.Node;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.Cursor;
+import javafx.scene.control.Control;
+import javafx.scene.Parent;
+import javafx.geometry.Insets;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.SVGPath;
+import javafx.geometry.Pos;
+//import javafx.scene.Scene.setFill;
 
-    private int port = 5555;
-    private ServerSocket socket;
-    private ArrayList<Socket> clients = new ArrayList<Socket>();
-    private List<DataOutputStream> outputs = new ArrayList<>();
-    private DataOutputStream outgoingMessageWriter;
-    private ServerSocket server;
-    private ServerSocket login_server;
-    private ServerSocket register_server;
-    Map<SocketAddress, String> clients_usernames = new HashMap<SocketAddress, String>();
 
-    public void initialize() {
-        try {
 
-            try {
-                server = new ServerSocket(5000);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+public class Controller  {
+	private Socket clientSocket;
+	private DataInputStream read_message;
+	private DataOutputStream write_message;
+	private String username;
+	private String email;
+    private Scene login;
 
-            try {
-                login_server = new ServerSocket(6000);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+    
+    @FXML
+    private ScrollPane main_scroll_pane;
 
-            try {
-                register_server = new ServerSocket(7000);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            new Thread(new Runnable() {
-                public void run() {
-                    while (true) {
-                        try {
-                            System.out.println("started register thread \n");
-                            final Socket clientSocket = register_server.accept();
-                            System.out.println("accepted register thread \n");
-
-                            DataOutputStream register_output = new DataOutputStream(clientSocket.getOutputStream());
-                            DataInputStream register_input = new DataInputStream(clientSocket.getInputStream());
-                            String username = register_input.readUTF();
-                            String email = register_input.readUTF();
-                            String password = register_input.readUTF();
-
-                            try {
-                                Sql_connection db = new Sql_connection();
-                                Connection con = db.connect();
-                                PreparedStatement query_email = con.prepareStatement("select count(*) from users where email=?");
-                                PreparedStatement query_username = con.prepareStatement("select count(*) from users where username=?");
-                                query_email.setString(1, email);
-                                query_username.setString(1, username);
-                                ResultSet result_email = query_email.executeQuery();
-                                ResultSet result_username = query_username.executeQuery();
-                                result_email.next();
-                                result_username.next();
-                                System.out.println("/////////////////////////////////////////");
-                                System.out.println(result_email.getInt(1));
-                                System.out.println(result_username.getInt(1));
-
-                                if (result_email.getInt(1) == 0 & result_username.getInt(1) == 0) {
-                                    PreparedStatement query = con.prepareStatement("insert into  users(username, email, password) values(?, ?, ?)");
-                                    query.setString(1, username);
-                                    query.setString(2, email);
-                                    query.setString(3, password);
-                                    System.out.println("accoutn created \n");
-                                    register_output.writeUTF("success");
-                                } else if (result_email.getInt(1) == 1 & result_username.getInt(1) == 1) {
-                                    register_output.writeUTF("email_username_duplicate");
-                                } else if (result_email.getInt(1) == 1) {
-                                    register_output.writeUTF("email_duplicate");
-                                } else if (result_username.getInt(1) == 1) {
-                                    register_output.writeUTF("username_duplicate");
-                                }
-                                db.closeConnection();
-                            } catch (Exception ex) {
-                                register_output.writeUTF("connection_error");
-                                ex.printStackTrace();
-                            }
-
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-            }).start();
-
-            new Thread(new Runnable() {
-                public void run() {
-                    //socket.isConnected() && !socket.isClosed();
-                    while (true) {
-                        try {
-                            final Socket clientSocket = login_server.accept();
-
-                            DataOutputStream login_output = new DataOutputStream(clientSocket.getOutputStream());
-                            DataInputStream login_input = new DataInputStream(clientSocket.getInputStream());
-
-                            String email = login_input.readUTF();
-                            String password = login_input.readUTF();
-
-                            try {
-                                Sql_connection db = new Sql_connection();
-                                Connection con = db.connect();
-                                PreparedStatement query = con.prepareStatement("select * from users where email =?");
-                                query.setString(1, email);
-                                ResultSet result = query.executeQuery();
-                                if (result.next()) {
-                                    if (result.getString("password").equals(password)) {
-                                        clients_usernames.put(clientSocket.getRemoteSocketAddress(), result.getString("username"));
-                                        login_output.writeUTF("success");
-                                        login_output.writeUTF(result.getString("username"));
-                                        Platform.runLater(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                scroll_pane_inside.getChildren().add(new Label("Client "+ clientSocket.getRemoteSocketAddress() + " connected"));
-                                            }
-                                        });
-                                        DataOutputStream current_output = new DataOutputStream(clientSocket.getOutputStream());
-                                        Statement get_messages = con.createStatement();
-                                        result = get_messages.executeQuery("select * from messages limit 20");
-                                        while (result.next()) {
-                                            current_output.writeUTF(result.getString("sender"));
-                                            current_output.writeUTF(result.getString("message"));
-                                            current_output.writeUTF(result.getString("created_at"));
-                                        }
-                                        
-                                        synchronized (outputs) {
-                                            System.out.println("///////////////////////////////////////////////////");
-                                            System.out.println(clientSocket.getRemoteSocketAddress() + " has joined the chat");
-                                            System.out.println(new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime()));
-                                            for (DataOutputStream output : outputs) {
-                                                output.writeUTF("&B3#aVEyvj#@WqKCTpPfu5d+yneVycy*qhkCh94kqg#3#@Sz66vHn)FA#shFfPpJ&B3#aVEyvj#@WqKCTpPfu5d+yneVycy*qhkCh94kqg#3#@Sz66vHn)FA#shFfPpJ");
-                                                output.writeUTF(clients_usernames.get(clientSocket.getRemoteSocketAddress()));
-                                                output.writeUTF(new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime()));
-                                            }
-                                        }
-                                        synchronized (outputs) {
-                                            outputs.add(current_output);
-                                        }
-
-                                        new Thread(new Runnable() {
-                                            public void run() {
-                                                try (DataInputStream incomingMessageReader = new DataInputStream(
-                                                        clientSocket.getInputStream())) {
-                                                    // String joined = incomingMessageReader.readUTF();
-                                                    // System.out.println("///////////////////////////////////////////////////");
-                                                    // System.out.println(joined + " has joined the chat");
-                                                    while (clientSocket.isConnected() && !clientSocket.isClosed()) {
-                                                        String message_to_server = incomingMessageReader.readUTF();
-                                                        try {
-                                                            Sql_connection db = new Sql_connection();
-                                                            Connection con = db.connect();
-                                                            PreparedStatement insert_message = con.prepareStatement("insert into messages(sender, message) values(?, ?)");
-                                                            insert_message.setString(1, clients_usernames.get(clientSocket.getRemoteSocketAddress()));
-                                                            insert_message.setString(2, message_to_server);
-                                                            insert_message.executeUpdate();
-                                                            db.closeConnection();
-                                                        } catch (Exception ex) {
-                                                            ex.printStackTrace();
-                                                        }
-                                                        // insert message in database
-                                                        Platform.runLater(new Runnable() {
-                                                            @Override
-                                                            public void run() {
-                                                                scroll_pane_inside.getChildren().add(new Label("client "+ clientSocket.getRemoteSocketAddress()+ " sent : " + message_to_server));
-                                                                // scroll_pane_inside.getChildren().add(new
-                                                                // Label(clientSocket.getRemoteSocketAddress().getClass().getName()));
-                                                            }
-                                                        });
-                                                        synchronized (outputs) {
-                                                            for (DataOutputStream output : outputs) {
-                                                                output.writeUTF(clients_usernames.get(clientSocket.getRemoteSocketAddress()));
-                                                                output.writeUTF(message_to_server);
-                                                                output.writeUTF(new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime()));
-                                                            }
-                                                        }
-                                                    }
-                                                        System.out.println("outzide disconnected /////////////////////////");
-
-                                                    if(clientSocket.isClosed()){
-                                                        System.out.println("disconnected /////////////////////////");
-
-                                                    }
-                                                } catch (SocketException e) {
-                                                    e.printStackTrace();
-                                                } catch (IOException e) {
-                                                    e.printStackTrace();
-                                                }
-                                            }
-                                        }).start();
-                                    } else {
-                                        System.out.println("passwird error \n");
-                                        login_output.writeUTF("password_error");
-                                        // send passwod error message
-                                    }
-                                } else {
-                                    System.out.println("email err error \n");
-                                    login_output.writeUTF("email_error");
-                                    // send error message
-                                }
-                                db.closeConnection();
-                            } catch (Exception ex) {
-                                login_output.writeUTF("connection_error");
-                                ex.printStackTrace();
-                            }
-
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-            }).start();
-
-            // Thread pp = new Thread( new Runnable() {
-            // public void run() {
-            // try {
-            // while (true) {
-            // //scroll_pane_inside.getChildren().add(new Label("started server"));
-            // final Socket clientSocket = server.accept();
-            // Platform.runLater(new Runnable() {
-            // @Override
-            // public void run() {
-            // scroll_pane_inside.getChildren().add(new Label("Client "+
-            // clientSocket.getRemoteSocketAddress()+ " connected"));
-            // }
-            // });
-            // synchronized(outputs) {
-            // outputs.add(new DataOutputStream(clientSocket.getOutputStream()));
-            // }
-            //
-            // new Thread( new Runnable() {
-            // public void run() {
-            // try (DataInputStream incomingMessageReader = new
-            // DataInputStream(clientSocket.getInputStream())) {
-            // while (true) {
-            // String message_to_server = incomingMessageReader.readUTF();
-            // System.out.println("Number of active threads from the given thread: " +
-            // Thread.activeCount()+"\n");
-            // Platform.runLater(new Runnable() {
-            // @Override
-            // public void run() {
-            // scroll_pane_inside.getChildren().add(new Label("client
-            // "+clientSocket.getRemoteSocketAddress()+" sent : "+message_to_server));
-            // }
-            // });
-            //
-            // synchronized (outputs) {
-            // for (DataOutputStream output : outputs) {
-            // output.writeUTF(message_to_server);
-            // }
-            // }
-            // }
-            // } catch (SocketException e) {
-            // //baseServer.clientDisconnected(this);
-            // } catch (IOException e) {
-            // e.printStackTrace();
-            // }
-            // }
-            // }).start();
-            // }
-            // } catch (IOException e) {
-            // e.printStackTrace();
-            // }
-            //
-            // }
-            // });
-            // pp.start();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
-
+    @FXML
+    private Label username_label;
     @FXML
     private TextField message_content;
 
@@ -296,43 +52,184 @@ public class Controller {
     private VBox add_messages;
 
     @FXML
-    private VBox scroll_pane_inside;
+    private VBox list_of_users;
+    
+    @FXML
+    private VBox main_message_box;
 
     @FXML
-    void clicked(ActionEvent event) throws IOException {
-        // dos.writeUTF(message_content.getText());
+    private Button submit_message;
+    
+
+
+    public void send_message_to_server(String input) throws IOException {
+		write_message.writeUTF(input);
+	}
+
+
+    public void set_login_scene(Scene scene){
+        login = scene;
+    }
+ 
+    
+
+
+
+    public void initialize(){
+        main_scroll_pane.widthProperty().addListener((obs, oldVal, newVal) -> {
+            System.out.println("hi man  im resized to "+newVal);
+            main_message_box.setPrefWidth(newVal.doubleValue() - 2.0);
+        });
+        main_scroll_pane.heightProperty().addListener((obs, oldVal, newVal) -> {
+            System.out.println("hi man  im resized to "+newVal);
+            main_message_box.setPrefHeight(newVal.doubleValue() - 2.0);
+        });
+        main_message_box.heightProperty().addListener(observable -> main_scroll_pane.setVvalue(1D));
+        main_scroll_pane.getStylesheets().add(this.getClass().getResource("style.css").toExternalForm());
+        message_content.setStyle("-fx-text-fill: white;"+message_content.getStyle());
     }
 
+
+
+
+
+
+
+
+    public void set_client_socket(Socket mainsocket, String username, String email) {
+        try{
+            this.username = username;
+            this.email = email;
+            username_label.setText(username);
+            this.clientSocket = mainsocket;
+		    this.read_message = new DataInputStream(clientSocket.getInputStream());
+		    this.write_message = new DataOutputStream(clientSocket.getOutputStream());
+		    //this.write_message.writeUTF(username);
+
+            Thread clientThread = new Thread( new Runnable() {
+                public void run() {
+                    while (true) {
+		    	        try {
+		    	        	String recieved_message_username = read_message.readUTF();
+		    	        	String recieved_message = read_message.readUTF();
+		    	        	String recieved_message_time = read_message.readUTF();
+                            if( recieved_message_username.equals("&B3#aVEyvj#@WqKCTpPfu5d+yneVycy*qhkCh94kqg#3#@Sz66vHn)FA#shFfPpJ&B3#aVEyvj#@WqKCTpPfu5d+yneVycy*qhkCh94kqg#3#@Sz66vHn)FA#shFfPpJ")){
+                                System.out.print("helooooooooooooooooooooooooooooooooooooooooooooo");
+                                Platform.runLater(new Runnable() {
+		    	        	    	public void run() {
+                                        Label new_user_label = new Label(recieved_message);
+                                        new_user_label.setStyle("-fx-text-fill: white;");
+		    	        	    		HBox new_user = new HBox(new_user_label);
+                                        new_user.setPadding(new Insets(0, 0, 0, 10));
+                                        new_user.setPrefHeight(30.0);
+                                        new_user.setPrefWidth(Control.USE_COMPUTED_SIZE);
+                                        new_user.setAlignment(Pos.CENTER_LEFT);
+                                        list_of_users.getChildren().add(new_user);
+                                    }
+                                });
+                            }else{
+		    	        	    Platform.runLater(new Runnable() {
+		    	        	    	public void run() {
+
+                                        SVGPath svg = new SVGPath();
+                                        String path = "M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z";
+                                        svg.setContent(path);
+                                        svg.setScaleX(2.0);
+                                        svg.setScaleY(2.0);
+                                        svg.setStyle("-fx-text-fill: white;");
+                                        svg.setFill(Color.rgb(255,255,255));
+                                        //main_message_box.getChildren().add(new Label(recieved_message_username +" : "+recieved_message));
+    
+                                        Label username_label = new Label(recieved_message_username);
+                                        Label time_label = new Label(recieved_message_time);
+                                        Label message_label = new Label(recieved_message);
+                                        time_label.setPadding(new Insets(0, 0, 0, 10));
+
+
+                                        username_label.setStyle("-fx-text-fill: white; -fx-font-weight: bold");
+                                        time_label.setStyle("-fx-text-fill: white;");
+                                        message_label.setStyle("-fx-text-fill: white;");
+		    	        	    		VBox message = new VBox();
+		    	        	    		HBox message_username = new HBox(username_label, time_label );
+		    	        	    		HBox message_content = new HBox(message_label);
+
+
+                                        message_label.setPrefWidth(Control.USE_COMPUTED_SIZE);
+                                        message_label.setPrefHeight(Control.USE_COMPUTED_SIZE);
+                                        message.setPrefWidth(Control.USE_COMPUTED_SIZE);
+                                        message.setPrefHeight(Control.USE_COMPUTED_SIZE);
+                                        message_username.setPrefWidth(Control.USE_COMPUTED_SIZE);
+                                        message_username.setPrefHeight(Control.USE_COMPUTED_SIZE);
+                                        message_content.setPrefWidth(Control.USE_COMPUTED_SIZE);
+                                        message_content.setPrefHeight(Control.USE_COMPUTED_SIZE);
+                                        message_username.setPadding(new Insets(5, 20, 5, 20));
+                                        message_content.setPadding(new Insets(0, 20, 5, 20));
+                                        message.getChildren().addAll(message_username, message_content);
+
+
+                                        HBox main_message = new HBox();
+                                        main_message.setPadding(new Insets(20, 20, 20, 20));
+                                        main_message.setSpacing(20);
+                                        if(recieved_message_username.equals(username)){
+                                            message.setStyle("-fx-background-radius: 10px; -fx-border-radius: 10px; -fx-border-color: rgba(200,200,200,0.4); -fx-background-color:  #14101a"); 
+                                            main_message.setAlignment(Pos.CENTER_RIGHT);
+                                            main_message.getChildren().addAll(message, svg);
+                                        }else{
+                                            message.setStyle("-fx-background-radius: 10px; -fx-border-radius: 10px; -fx-border-color: rgba(200,200,200,0.4); -fx-background-color: #8544ef"); 
+                                            main_message.setAlignment(Pos.CENTER_LEFT);
+                                            main_message.getChildren().addAll(svg, message);
+                                        }
+                                        main_message_box.getChildren().add(main_message);
+		    	        	    	}
+		    	        	    });
+                            }
+		    	        } catch (SocketException e) {
+		    	        	Platform.runLater(new Runnable() {
+		    	        		public void run() {
+                                    //add to ui err
+		    	        			System.out.print("Error in server");
+		    	        		}
+		    	        	});
+		    	        	break;
+		    	        } catch (IOException e) {
+		    	        	e.printStackTrace();
+		    	        }
+		            }
+                }
+
+            });
+		    //clientThread.setDaemon(true);
+		    clientThread.start();
+        }catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+
+
+    
+
     @FXML
-    void enter_message(KeyEvent event) throws IOException {
-        if (event.getCode().toString().equals("ENTER")) {
-            // dos.writeUTF(message_content.getText());
+    void submit_event_click(ActionEvent event) throws IOException {
+        if(!message_content.getText().equals("")){
+            send_message_to_server(message_content.getText());
+            message_content.setText("");
+        }
+    }
+
+       @FXML
+    void submit_event(KeyEvent event) throws IOException {
+        if(event.getCode().toString().equals("ENTER")){
+            send_message_to_server(message_content.getText());
+            submit_message.setStyle("-fx-background-color: transparent;");
+        }
+        if(!message_content.getText().equals("")){
+            submit_message.setStyle("-fx-background-color: linear-gradient(to right bottom, rgba(143,10,228,1) 6%, rgba(103,21,235,1) 55%, rgba(143,10,228,1) 100%);");
+            submit_message.setCursor(Cursor.HAND);
+        }else{
+            submit_message.setStyle("-fx-background-color: transparent;");
         }
     }
 
 }
 
-/**
- * @FXML
- *       void clicked(ActionEvent event) {
- *       System.out.print(message_content.getText());
- *       try{
- *       dos.writeUTF(message_content.getText());
- *       }catch (Exception ex) {
- *       ex.printStackTrace();
- *       }
- *       }
- * 
- * 
- * @FXML
- *       void enter_message(KeyEvent event) {
- *       if(event.getCode().toString().equals("ENTER")){
- *       System.out.print("test \n");
- *       try{
- *       dos.writeUTF(message_content.getText());
- *       }catch (Exception ex) {
- *       ex.printStackTrace();
- *       }
- *       }
- *       }
- */

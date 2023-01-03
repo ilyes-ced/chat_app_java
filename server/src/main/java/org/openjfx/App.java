@@ -14,9 +14,9 @@ public class App extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         FXMLLoader loader = new FXMLLoader(App.class.getResource("server_ui.fxml"));
-        Parent root = loader.load();
+        Parent root = (Parent) loader.load();
         
-        //Controller controller = (Controller) loader.getController();
+        Controller controller = (Controller) loader.getController();
 
 
         primaryStage.setTitle("Registration Form FXML Application");

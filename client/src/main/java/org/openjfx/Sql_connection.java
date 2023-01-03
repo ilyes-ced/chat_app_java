@@ -1,5 +1,6 @@
-import java.sql.*;
+package org.openjfx;
 
+import java.sql.*;
 
 public class Sql_connection {
 
