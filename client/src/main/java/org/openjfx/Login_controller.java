@@ -194,7 +194,11 @@ public class Login_controller  {
                 System.out.println(username + "\n");
                 //ffffffffffffffffffffffffffffffffff
                 if(response.equals("success")){
-                    FXMLLoader main_page_loader = new FXMLLoader(getClass().getResource("new_client_ui.fxml"));
+
+                    URL fxmlLocation = App.class.getResource("fxml/new_client_ui.fxml");
+                    System.out.println(fxmlLocation);
+                    
+                    FXMLLoader main_page_loader = new FXMLLoader(App.class.getResource("fxml/new_client_ui.fxml"));
                     Parent main_pane = main_page_loader.load();
                     Scene main_scene = new Scene(main_pane);
                     Controller main_controller = (Controller) main_page_loader.getController();
@@ -207,12 +211,13 @@ public class Login_controller  {
                 }else if(response.equals("email_error")){
                     login_error_message.setText("this account does not exist");
                 }else if(response.equals("connection_error")){
-                    login_error_message.setText("network erro please check your connection");
+                    login_error_message.setText("database error");
                 }
             }else{
                 login_error_message.setText("email and password required");
             }
         }catch( IOException e ){
+            e.printStackTrace();
             login_error_message.setText("network erro please check your connection");
         }
 

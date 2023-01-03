@@ -49,7 +49,7 @@ public class Controller {
                 e.printStackTrace();
             }
 
-            /*new Thread(new Runnable() {
+            new Thread(new Runnable() {
                 public void run() {
                     while (true) {
                         try {
@@ -218,7 +218,7 @@ public class Controller {
                         }
                     }
                 }
-            }).start(); */
+            }).start(); 
 
 
         } catch (Exception ex) {
