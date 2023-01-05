@@ -17,12 +17,14 @@ import java.util.Scanner;
 public class App extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
-        FXMLLoader login_page_loader = new FXMLLoader(App.class.getResource("fxml/login.fxml"));
+
+        URL fxmlLocation = App.class.getResource("fxml/new_client_ui.fxml");
+        System.out.println(fxmlLocation);
+        FXMLLoader login_page_loader = new FXMLLoader(App.class.getResource("fxml/new_client_ui.fxml"));
         Parent login_pane = login_page_loader.load();
         Scene login_scene = new Scene(login_pane);
         
         Login_controller login_controller = (Login_controller) login_page_loader.getController();
-
 
         primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             public void handle(WindowEvent we) {

@@ -46,3 +46,6 @@
         </plugins>
     </build>
 </project>
+<!--
+    mvn clean javafx:run
+-->
