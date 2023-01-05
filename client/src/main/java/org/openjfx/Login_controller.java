@@ -195,10 +195,10 @@ public class Login_controller  {
                 //ffffffffffffffffffffffffffffffffff
                 if(response.equals("success")){
 
-                    URL fxmlLocation = App.class.getResource("fxml/new_client_ui.fxml");
+                    URL fxmlLocation = App.class.getResource("fxml/client.fxml");
                     System.out.println(fxmlLocation);
                     
-                    FXMLLoader main_page_loader = new FXMLLoader(App.class.getResource("fxml/new_client_ui.fxml"));
+                    FXMLLoader main_page_loader = new FXMLLoader(App.class.getResource("fxml/client.fxml"));
                     Parent main_pane = main_page_loader.load();
                     Scene main_scene = new Scene(main_pane);
                     Controller main_controller = (Controller) main_page_loader.getController();
