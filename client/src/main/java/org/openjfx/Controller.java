@@ -29,7 +29,7 @@ import javafx.geometry.Pos;
 
 
 public class Controller  {
-	private Socket clientSocket;
+	private Socket client_socket;
 	private DataInputStream read_message;
 	private DataOutputStream write_message;
 	private String username;
@@ -62,6 +62,10 @@ public class Controller  {
     
 
 
+    public void close_connection() {
+        System.out.println("closedd inside th controller methid");
+    }
+
     public void send_message_to_server(String input) throws IOException {
 		write_message.writeUTF(input);
 	}
@@ -85,7 +89,7 @@ public class Controller  {
             main_message_box.setPrefHeight(newVal.doubleValue() - 2.0);
         });
         main_message_box.heightProperty().addListener(observable -> main_scroll_pane.setVvalue(1D));
-        main_scroll_pane.getStylesheets().add(this.getClass().getResource("style.css").toExternalForm());
+        main_scroll_pane.getStylesheets().add(App.class.getResource("css/style.css").toExternalForm());
         message_content.setStyle("-fx-text-fill: white;"+message_content.getStyle());
     }
 
@@ -96,14 +100,14 @@ public class Controller  {
 
 
 
-    public void set_client_socket(Socket mainsocket, String username, String email) {
+    public void set_client_socket(Socket main_socket, String username, String email) {
         try{
             this.username = username;
             this.email = email;
             username_label.setText(username);
-            this.clientSocket = mainsocket;
-		    this.read_message = new DataInputStream(clientSocket.getInputStream());
-		    this.write_message = new DataOutputStream(clientSocket.getOutputStream());
+            this.client_socket = main_socket;
+		    this.read_message = new DataInputStream(client_socket.getInputStream());
+		    this.write_message = new DataOutputStream(client_socket.getOutputStream());
 		    //this.write_message.writeUTF(username);
 
             Thread clientThread = new Thread( new Runnable() {

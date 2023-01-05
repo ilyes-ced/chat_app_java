@@ -6,8 +6,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
-import javafx.event.EventHandler;
 import java.io.*;
 import java.net.*;
 import java.util.Scanner;
@@ -26,11 +24,6 @@ public class App extends Application {
         
         Login_controller login_controller = (Login_controller) login_page_loader.getController();
 
-        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-            public void handle(WindowEvent we) {
-                System.out.println("Stage is closing");
-            }
-        }); 
         primaryStage.setTitle("java chat group application");
         primaryStage.setScene(login_scene);
         primaryStage.show();

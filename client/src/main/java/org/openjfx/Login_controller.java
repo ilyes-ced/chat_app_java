@@ -32,6 +32,8 @@ import javafx.scene.effect.DropShadow;
 import javafx.animation.Animation;
 import javafx.scene.transform.Rotate;
 import javafx.scene.effect.Bloom;
+import javafx.stage.WindowEvent;
+import javafx.event.EventHandler;
 
 
 
@@ -194,7 +196,6 @@ public class Login_controller  {
                 System.out.println(username + "\n");
                 //ffffffffffffffffffffffffffffffffff
                 if(response.equals("success")){
-
                     URL fxmlLocation = App.class.getResource("fxml/client.fxml");
                     System.out.println(fxmlLocation);
                     
@@ -205,6 +206,12 @@ public class Login_controller  {
                     main_controller.set_client_socket(client_socket,username ,login_email.getText());
                     Stage primaryStage = (Stage)((Node)event.getSource()).getScene().getWindow(); 
                     primaryStage.setScene(main_scene);
+                    primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                        public void handle(WindowEvent we) {
+                            main_controller.close_connection();
+                            System.out.println("Stage is closing");
+                        }
+                    }); 
                     
                 }else if(response.equals("password_error")){
                     login_error_message.setText("wrong password");

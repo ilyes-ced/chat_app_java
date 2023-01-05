@@ -160,9 +160,9 @@ public class Controller {
 
                                         new Thread(new Runnable() {
                                             public void run() {
-                                                try (DataInputStream incomingMessageReader = new DataInputStream(
-                                                    clientSocket.getInputStream())) {
+                                                try (DataInputStream incomingMessageReader = new DataInputStream(clientSocket.getInputStream())) {
                                                     while (clientSocket.isConnected() && !clientSocket.isClosed()) {
+                                                        incomingMessageReader.available();
                                                         String message_to_server = incomingMessageReader.readUTF();
                                                         try {
                                                             Sql_connection db = new Sql_connection();
@@ -190,9 +190,9 @@ public class Controller {
                                                         }
                                                     }
                                                     if(clientSocket.isClosed()){
-
                                                     }
                                                 } catch (SocketException e) {
+                                                        System.out.println("connection probably lost");
                                                     e.printStackTrace();
                                                 } catch (IOException e) {
                                                     e.printStackTrace();
