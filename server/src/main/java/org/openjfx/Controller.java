@@ -20,7 +20,7 @@ public class Controller {
 
     private int port = 5555;
     private ServerSocket socket;
-    private ArrayList<Socket> clients = new ArrayList<Socket>();
+    //private ArrayList<Socket> clients = new ArrayList<Socket>();
     private List<DataOutputStream> outputs = new ArrayList<>();
     private DataOutputStream outgoingMessageWriter;
     private ServerSocket server;
@@ -161,6 +161,9 @@ public class Controller {
                                         new Thread(new Runnable() {
                                             public void run() {
                                                 try (DataInputStream incomingMessageReader = new DataInputStream(clientSocket.getInputStream())) {
+
+                                                    System.out.println(clientSocket.isClosed());
+                                                    System.out.println(clientSocket.isConnected());
                                                     while (clientSocket.isConnected() && !clientSocket.isClosed()) {
                                                         incomingMessageReader.available();
                                                         String message_to_server = incomingMessageReader.readUTF();
@@ -189,12 +192,25 @@ public class Controller {
                                                             }
                                                         }
                                                     }
-                                                    if(clientSocket.isClosed()){
-                                                    }
+                                                    System.out.println(clientSocket.isClosed());
+                                                    System.out.println(clientSocket.isConnected());
+                                                    System.out.println("connection probably lost");
                                                 } catch (SocketException e) {
-                                                        System.out.println("connection probably lost");
+                                                    System.out.println("connection probably lost");
                                                     e.printStackTrace();
                                                 } catch (IOException e) {
+                                                    try{
+                                                        synchronized (outputs) {
+                                                            for (DataOutputStream output : outputs) {
+                                                                output.writeUTF("&B3#aVEyvj#@WqKCTpPfu5d+yneVycy*qhkCh94kqg#3#@Sz66vHn)FA#shFfPpJ&B3#aVEyvj#@WqKCTpPfu5d+yneVycy*qhkCh94kqg#3#@Sz66vHn)FA#shFfPpJ");
+                                                                output.writeUTF("QHX)w+#T4WatEZHyaL(8kzdRFS$ezJ2DLWnzT&wy*n*bhLFAE!heC2+YL%2jaP(d4IEsEm$cPye^aqVUs6G85e$z$L)ue+fv9U+WpYG)@U93a^jN*z)+bPstFvPSVVXM");
+                                                                output.writeUTF(clients_usernames.get(clientSocket.getRemoteSocketAddress()));
+                                                            }
+                                                        }
+                                                        //hash_map.remove(20);
+                                                    }catch (IOException ef) {
+                                                        ef.printStackTrace();
+                                                    }
                                                     e.printStackTrace();
                                                 }
                                             }

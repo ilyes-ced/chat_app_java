@@ -64,6 +64,11 @@ public class Controller  {
 
     public void close_connection() {
         System.out.println("closedd inside th controller methid");
+        try{
+            this.client_socket.close();
+        }catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     public void send_message_to_server(String input) throws IOException {
@@ -118,19 +123,40 @@ public class Controller  {
 		    	        	String recieved_message = read_message.readUTF();
 		    	        	String recieved_message_time = read_message.readUTF();
                             if( recieved_message_username.equals("&B3#aVEyvj#@WqKCTpPfu5d+yneVycy*qhkCh94kqg#3#@Sz66vHn)FA#shFfPpJ&B3#aVEyvj#@WqKCTpPfu5d+yneVycy*qhkCh94kqg#3#@Sz66vHn)FA#shFfPpJ")){
-                                System.out.print("helooooooooooooooooooooooooooooooooooooooooooooo");
-                                Platform.runLater(new Runnable() {
-		    	        	    	public void run() {
-                                        Label new_user_label = new Label(recieved_message);
-                                        new_user_label.setStyle("-fx-text-fill: white;");
-		    	        	    		HBox new_user = new HBox(new_user_label);
-                                        new_user.setPadding(new Insets(0, 0, 0, 10));
-                                        new_user.setPrefHeight(30.0);
-                                        new_user.setPrefWidth(Control.USE_COMPUTED_SIZE);
-                                        new_user.setAlignment(Pos.CENTER_LEFT);
-                                        list_of_users.getChildren().add(new_user);
-                                    }
-                                });
+                                if(recieved_message.equals("QHX)w+#T4WatEZHyaL(8kzdRFS$ezJ2DLWnzT&wy*n*bhLFAE!heC2+YL%2jaP(d4IEsEm$cPye^aqVUs6G85e$z$L)ue+fv9U+WpYG)@U93a^jN*z)+bPstFvPSVVXM")){
+                                    Platform.runLater(new Runnable() {
+		    	        	            public void run() {
+                                            HBox new_user_notification = new HBox( new Label(recieved_message_time + " left the chat"));
+                                            new_user_notification.setPadding(new Insets(10, 10, 10, 10));
+                                            new_user_notification.setAlignment(Pos.CENTER);
+                                            new_user_notification.setStyle(" -fx-background-color: #8544ef; -fx-border-color: rgba(200,200,200,0.4);");
+                                            new_user_notification.setPrefHeight(30.0);
+                                            new_user_notification.setPrefWidth(Control.USE_COMPUTED_SIZE);
+                                            main_message_box.getChildren().add(new_user_notification);
+                                        }
+                                    });
+                                }else{
+                                    Platform.runLater(new Runnable() {
+		    	        	            public void run() {
+                                            Label new_user_label = new Label(recieved_message);
+                                            new_user_label.setStyle("-fx-text-fill: white;");
+		    	        	            	HBox new_user = new HBox(new_user_label);
+                                            new_user.setPadding(new Insets(0, 0, 0, 10));
+                                            new_user.setPrefHeight(30.0);
+                                            new_user.setPrefWidth(Control.USE_COMPUTED_SIZE);
+                                            new_user.setAlignment(Pos.CENTER_LEFT);
+                                            list_of_users.getChildren().add(new_user);
+
+                                            HBox new_user_notification = new HBox( new Label(recieved_message + " joined the chat"));
+                                            new_user_notification.setPadding(new Insets(10, 10, 10, 10));
+                                            new_user_notification.setAlignment(Pos.CENTER);
+                                            new_user_notification.setStyle(" -fx-background-color: #8544ef; -fx-border-color: rgba(200,200,200,0.4);");
+                                            new_user_notification.setPrefHeight(30.0);
+                                            new_user_notification.setPrefWidth(Control.USE_COMPUTED_SIZE);
+                                            main_message_box.getChildren().add(new_user_notification);
+                                        }
+                                    });
+                                }
                             }else{
 		    	        	    Platform.runLater(new Runnable() {
 		    	        	    	public void run() {
