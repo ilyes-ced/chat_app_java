@@ -105,7 +105,7 @@
                         </TextField>
                      </center>
                      <right>
-                        <Button fx:id="submit_message" contentDisplay="RIGHT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#submit_event_click" prefHeight="30.0" style="-fx-background-color: transparent; -fx-background-radius: 10;" text="send" textFill="WHITE" BorderPane.alignment="CENTER">
+                        <Button fx:id="submit_message" contentDisplay="RIGHT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#submit_event_click" prefHeight="30.0" style="-fx-background-color: transparent; -fx-background-radius: 10; -fx-border-radius: 10;" text="send" textFill="WHITE" BorderPane.alignment="CENTER">
                            <BorderPane.margin>
                               <Insets left="20.0" right="20.0" />
                            </BorderPane.margin>
@@ -178,19 +178,18 @@
                   </Label>
                   <MenuButton contentDisplay="CENTER" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" style="-fx-background-color: transparent; -fx-shape: M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z;" textFill="WHITE">
                     <items>
-                      <MenuItem mnemonicParsing="false" text="logout">
+                      <MenuItem mnemonicParsing="false" text="logout" />
+                      <MenuItem mnemonicParsing="false" text="Action 2">
                            <graphic>
                               <SVGPath content="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z" />
-                           </graphic>
-                        </MenuItem>
-                      <MenuItem mnemonicParsing="false" text="Action 2" />
+                           </graphic></MenuItem>
                     </items>
-                     <padding>
-                        <Insets right="10.0" />
-                     </padding>
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
+                     <padding>
+                        <Insets right="10.0" />
+                     </padding>
                   </MenuButton>
                </children>
             </HBox>

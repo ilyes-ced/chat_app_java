@@ -14,7 +14,21 @@ import java.net.*;
 import java.util.*;
 import java.sql.*;
 import java.text.SimpleDateFormat;
+import javafx.scene.Node;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.Cursor;
+import javafx.scene.control.Control;
+import javafx.scene.Parent;
+import javafx.geometry.Insets;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.SVGPath;
+import javafx.geometry.Pos;
+import javafx.scene.layout.HBox;
+import javafx.scene.control.TextField;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
+import javafx.scene.control.ScrollPane;
 
 public class Controller {
 
@@ -29,6 +43,8 @@ public class Controller {
     Map<SocketAddress, String> clients_usernames = new HashMap<SocketAddress, String>();
 
     public void initialize() {
+
+        main_scroll_pane.getStylesheets().add(App.class.getResource("css/style.css").toExternalForm());
         try {
 
             try {
@@ -132,7 +148,7 @@ public class Controller {
                                         Platform.runLater(new Runnable() {
                                             @Override
                                             public void run() {
-                                                scroll_pane_inside.getChildren().add(new Label("Client "+ clientSocket.getRemoteSocketAddress() + " connected"));
+                                                main_message_box.getChildren().add(new Label("Client "+ clientSocket.getRemoteSocketAddress() + " connected"));
                                             }
                                         });
                                         DataOutputStream current_output = new DataOutputStream(clientSocket.getOutputStream());
@@ -141,20 +157,21 @@ public class Controller {
                                         while (result.next()) {
                                             current_output.writeUTF(result.getString("sender"));
                                             current_output.writeUTF(result.getString("message"));
-                                            current_output.writeUTF(result.getString("created_at"));
+                                            current_output.writeUTF(result.getString("created_at").substring(11));
                                         }
                                         
                                         synchronized (outputs) {
                                             System.out.println("///////////////////////////////////////////////////");
                                             System.out.println(clientSocket.getRemoteSocketAddress() + " has joined the chat");
                                             System.out.println(new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime()));
-                                            //for (DataOutputStream output : outputs) {
-                                            //    output.writeUTF("&B3#aVEyvj#@WqKCTpPfu5d+yneVycy*qhkCh94kqg#3#@Sz66vHn)FA#shFfPpJ&B3#aVEyvj#@WqKCTpPfu5d+yneVycy*qhkCh94kqg#3#@Sz66vHn)FA#shFfPpJ");
-                                            //    output.writeUTF(clients_usernames.get(clientSocket.getRemoteSocketAddress()));
-                                            //    output.writeUTF(new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime()));
-                                            //}
+                                            for (DataOutputStream output : outputs) {
+                                                output.writeUTF("&B3#aVEyvj#@WqKCTpPfu5d+yneVycy*qhkCh94kqg#3#@Sz66vHn)FA#shFfPpJ&B3#aVEyvj#@WqKCTpPfu5d+yneVycy*qhkCh94kqg#3#@Sz66vHn)FA#shFfPpJ");
+                                                output.writeUTF(clients_usernames.get(clientSocket.getRemoteSocketAddress()));
+                                                output.writeUTF(new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime()));
+                                            }
                                         }
                                         synchronized (outputs) {
+                                            System.out.print(current_output);
                                             outputs.add(current_output);
                                         }
 
@@ -181,7 +198,7 @@ public class Controller {
                                                         Platform.runLater(new Runnable() {
                                                             @Override
                                                             public void run() {
-                                                                scroll_pane_inside.getChildren().add(new Label("client "+ clientSocket.getRemoteSocketAddress()+ " sent : " + message_to_server));
+                                                                main_message_box.getChildren().add(new Label("client "+ clientSocket.getRemoteSocketAddress()+ " sent : " + message_to_server));
                                                             }
                                                         });
                                                         synchronized (outputs) {
@@ -196,9 +213,16 @@ public class Controller {
                                                     System.out.println(clientSocket.isConnected());
                                                     System.out.println("connection probably lost");
                                                 } catch (SocketException e) {
-                                                    System.out.println("connection probably lost");
                                                     e.printStackTrace();
                                                 } catch (IOException e) {
+                                                    //outputs.remove(current_output+"\n");
+                                                    outputs.remove(current_output);
+                                                    
+                                                    System.out.print(outputs+"\n");
+                                                    System.out.println("777777777777777777777777777777777777777777777");
+                                                    for (DataOutputStream output : outputs) {
+                                                        System.out.print(output+"\n");
+                                                    }
                                                     try{
                                                         synchronized (outputs) {
                                                             for (DataOutputStream output : outputs) {
@@ -243,6 +267,11 @@ public class Controller {
     }
 
     @FXML
+    private ScrollPane main_scroll_pane;
+
+    @FXML
+    private Label username_label;
+    @FXML
     private TextField message_content;
 
     @FXML
@@ -252,8 +281,14 @@ public class Controller {
     private VBox add_messages;
 
     @FXML
-    private VBox scroll_pane_inside;
+    private VBox list_of_users;
+    
+    @FXML
+    private VBox main_message_box;
 
+    @FXML
+    private Button submit_message;
+    
     @FXML
     void clicked(ActionEvent event) throws IOException {
         // dos.writeUTF(message_content.getText());

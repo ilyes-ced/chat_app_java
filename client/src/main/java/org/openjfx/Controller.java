@@ -7,7 +7,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Button;
-import javafx.scene.input.KeyEvent;
 import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -254,10 +253,11 @@ public class Controller  {
             submit_message.setStyle("-fx-background-color: transparent;");
         }
         if(!message_content.getText().equals("")){
-            submit_message.setStyle("-fx-background-color: linear-gradient(to right bottom, rgba(143,10,228,1) 6%, rgba(103,21,235,1) 55%, rgba(143,10,228,1) 100%);");
+            submit_message.setStyle("-fx-background-color: linear-gradient(to right bottom, rgba(143,10,228,1) 6%, rgba(103,21,235,1) 55%, rgba(143,10,228,1) 100%);-fx-border-radius: 10; -fx-background-radius: 10;");
             submit_message.setCursor(Cursor.HAND);
         }else{
             submit_message.setStyle("-fx-background-color: transparent;");
+            submit_message.setCursor(Cursor.DEFAULT);
         }
     }
 

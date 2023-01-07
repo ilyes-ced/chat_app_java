@@ -192,13 +192,7 @@ public class Login_controller  {
                 write_message.writeUTF(login_password.getText());
                 String response = read_message.readUTF();
                 String username = read_message.readUTF();
-                System.out.println(response + "\n");
-                System.out.println(username + "\n");
-                //ffffffffffffffffffffffffffffffffff
                 if(response.equals("success")){
-                    URL fxmlLocation = App.class.getResource("fxml/client.fxml");
-                    System.out.println(fxmlLocation);
-                    
                     FXMLLoader main_page_loader = new FXMLLoader(App.class.getResource("fxml/client.fxml"));
                     Parent main_pane = main_page_loader.load();
                     Scene main_scene = new Scene(main_pane);
@@ -209,10 +203,8 @@ public class Login_controller  {
                     primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
                         public void handle(WindowEvent we) {
                             main_controller.close_connection();
-                            System.out.println("Stage is closing");
                         }
                     }); 
-                    
                 }else if(response.equals("password_error")){
                     login_error_message.setText("wrong password");
                 }else if(response.equals("email_error")){
@@ -225,7 +217,7 @@ public class Login_controller  {
             }
         }catch( IOException e ){
             e.printStackTrace();
-            login_error_message.setText("network erro please check your connection");
+            login_error_message.setText("network error please check your connection");
         }
 
     }
@@ -242,7 +234,6 @@ public class Login_controller  {
             write_message.writeUTF(register_email.getText());
             write_message.writeUTF(register_password.getText());
             String response = read_message.readUTF();
-            System.out.println(response+"\n");
             if(response.equals("success")){
                 register_error_message.setStyle("-fx-text-fill: green;");
                 register_error_message.setText("registration successful, you can login now");
