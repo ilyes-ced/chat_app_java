@@ -64,7 +64,7 @@ public class Controller {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
+            //register thread socket
             new Thread(new Runnable() {
                 public void run() {
                     while (true) {
@@ -121,6 +121,7 @@ public class Controller {
                 }
             }).start();
 
+            //login+messaging thread socket
             new Thread(new Runnable() {
                 public void run() {
                     //socket.isConnected() && !socket.isClosed();

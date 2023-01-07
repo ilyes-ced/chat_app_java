@@ -15,6 +15,7 @@ import java.io.*;
 import javafx.scene.control.ScrollPane;
 import java.net.*;
 import javafx.scene.Node;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.Cursor;
 import javafx.scene.control.Control;
@@ -23,6 +24,8 @@ import javafx.geometry.Insets;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.SVGPath;
 import javafx.geometry.Pos;
+import javafx.scene.control.MenuButton;
+import javafx.scene.control.MenuItem;
 //import javafx.scene.Scene.setFill;
 
 
@@ -58,8 +61,10 @@ public class Controller  {
 
     @FXML
     private Button submit_message;
+    @FXML
+    private MenuItem logout_item;
     
-
+ 
 
     public void close_connection() {
         System.out.println("closedd inside th controller methid");
@@ -227,7 +232,6 @@ public class Controller  {
                 }
 
             });
-		    //clientThread.setDaemon(true);
 		    clientThread.start();
         }catch (Exception ex) {
             ex.printStackTrace();
@@ -237,6 +241,17 @@ public class Controller  {
 
 
     
+    @FXML
+    void logout(ActionEvent event) throws IOException {
+        close_connection();
+        FXMLLoader login_loader = new FXMLLoader(App.class.getResource("fxml/login.fxml"));
+        Parent login_pane = login_loader.load();
+        Scene login_scene = new Scene (login_pane);
+        Login_controller login_controller = (Login_controller) login_loader.getController();
+        Stage primaryStage = (Stage)((Node)event.getSource()).getScene().getWindow(); 
+        primaryStage.setScene(login_scene);
+    }
+
 
     @FXML
     void submit_event_click(ActionEvent event) throws IOException {
@@ -246,7 +261,7 @@ public class Controller  {
         }
     }
 
-       @FXML
+    @FXML
     void submit_event(KeyEvent event) throws IOException {
         if(event.getCode().toString().equals("ENTER")){
             send_message_to_server(message_content.getText());
