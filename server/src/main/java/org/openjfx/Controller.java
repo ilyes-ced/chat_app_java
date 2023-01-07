@@ -124,7 +124,6 @@ public class Controller {
             //login+messaging thread socket
             new Thread(new Runnable() {
                 public void run() {
-                    //socket.isConnected() && !socket.isClosed();
                     while (true) {
                         try {
                             final Socket clientSocket = login_server.accept();
@@ -149,7 +148,21 @@ public class Controller {
                                         Platform.runLater(new Runnable() {
                                             @Override
                                             public void run() {
-                                                main_message_box.getChildren().add(new Label("Client "+ clientSocket.getRemoteSocketAddress() + " connected"));
+                                                Label new_user_label = new Label(clients_usernames.get(clientSocket.getRemoteSocketAddress()));
+                                                new_user_label.setStyle("-fx-text-fill: white;");
+		    	        	                    HBox new_user = new HBox(new_user_label);
+                                                new_user.setPadding(new Insets(0, 0, 0, 10));
+                                                new_user.setPrefHeight(30.0);
+                                                new_user.setPrefWidth(Control.USE_COMPUTED_SIZE);
+                                                new_user.setAlignment(Pos.CENTER_LEFT);
+                                                list_of_users.getChildren().add(new_user);
+                                                HBox new_user_notification = new HBox( new Label(clientSocket.getRemoteSocketAddress() + "/" + clients_usernames.get(clientSocket.getRemoteSocketAddress() ) +" joined the chat"));
+                                                new_user_notification.setPadding(new Insets(10, 10, 10, 10));
+                                                new_user_notification.setAlignment(Pos.CENTER);
+                                                new_user_notification.setStyle(" -fx-background-color: #8544ef; -fx-border-color: rgba(200,200,200,0.4);");
+                                                new_user_notification.setPrefHeight(30.0);
+                                                new_user_notification.setPrefWidth(Control.USE_COMPUTED_SIZE);
+                                                main_message_box.getChildren().add(new_user_notification);
                                             }
                                         });
                                         DataOutputStream current_output = new DataOutputStream(clientSocket.getOutputStream());
@@ -179,9 +192,6 @@ public class Controller {
                                         new Thread(new Runnable() {
                                             public void run() {
                                                 try (DataInputStream incomingMessageReader = new DataInputStream(clientSocket.getInputStream())) {
-
-                                                    System.out.println(clientSocket.isClosed());
-                                                    System.out.println(clientSocket.isConnected());
                                                     while (clientSocket.isConnected() && !clientSocket.isClosed()) {
                                                         incomingMessageReader.available();
                                                         String message_to_server = incomingMessageReader.readUTF();
@@ -245,7 +255,7 @@ public class Controller {
                                                 } catch (IOException e) {
                                                     Platform.runLater(new Runnable() {
 		    	        	                            public void run() {
-                                                            HBox new_user_notification = new HBox( new Label(clients_usernames.get(clientSocket.getRemoteSocketAddress() + " left the chat"));
+                                                            HBox new_user_notification = new HBox( new Label(clients_usernames.get(clientSocket.getRemoteSocketAddress() + " left the chat")) );
                                                             new_user_notification.setPadding(new Insets(10, 10, 10, 10));
                                                             new_user_notification.setAlignment(Pos.CENTER);
                                                             new_user_notification.setStyle(" -fx-background-color: #8544ef; -fx-border-color: rgba(200,200,200,0.4);");
