@@ -117,8 +117,6 @@ public class Controller  {
             this.client_socket = main_socket;
 		    this.read_message = new DataInputStream(client_socket.getInputStream());
 		    this.write_message = new DataOutputStream(client_socket.getOutputStream());
-		    //this.write_message.writeUTF(username);
-
             Thread clientThread = new Thread( new Runnable() {
                 public void run() {
                     while (true) {
@@ -130,7 +128,23 @@ public class Controller  {
                                 if(recieved_message.equals("QHX)w+#T4WatEZHyaL(8kzdRFS$ezJ2DLWnzT&wy*n*bhLFAE!heC2+YL%2jaP(d4IEsEm$cPye^aqVUs6G85e$z$L)ue+fv9U+WpYG)@U93a^jN*z)+bPstFvPSVVXM")){
                                     Platform.runLater(new Runnable() {
 		    	        	            public void run() {
-                                            HBox new_user_notification = new HBox( new Label(recieved_message_time + " left the chat"));
+                                            //removec from list
+                                            
+                                            System.out.println(list_of_users.getChildren().get(0).getChildren());
+                                         
+                                            Node nodeOut = group.getChildren().get(0);
+                                            if(nodeOut instanceof VBox){
+                                                for(Node nodeIn:((VBox)nodeOut).getChildren()){
+                                                    if(nodeIn instanceof Slider){
+                                                        label.setText("Slider value: "+((Slider)nodeIn).getValue());
+                                                    }
+                                                }
+
+                                            }  
+                                         
+                                            Label username_ll = new Label(recieved_message_time + " left the chat");
+                                            username_ll.setStyle("-fx-text-fill: white;");
+                                            HBox new_user_notification = new HBox(username_ll );
                                             new_user_notification.setPadding(new Insets(10, 10, 10, 10));
                                             new_user_notification.setAlignment(Pos.CENTER);
                                             new_user_notification.setStyle(" -fx-background-color: #8544ef; -fx-border-color: rgba(200,200,200,0.4);");
@@ -139,6 +153,16 @@ public class Controller  {
                                             main_message_box.getChildren().add(new_user_notification);
                                         }
                                     });
+                                }else if(recieved_message.equals("UmlOcZueqgpO89ecoH232na5GrHKEP6Kr8uipTSjS9HVTBEpkAQRGJBvi7X50WDpkLkWtaQ0gik1voPxBBphbh0eSKuZAJuBlYpWB9jGKzYsU5uB3AVU5A5L95ugeHBp")){
+                                    System.out.print("//////////////////////////////////////////////////");
+                                    Label new_user_label = new Label(recieved_message_time);
+                                    new_user_label.setStyle("-fx-text-fill: white;");
+		    	        	        HBox new_user = new HBox(new_user_label);
+                                    new_user.setPadding(new Insets(0, 0, 0, 10));
+                                    new_user.setPrefHeight(30.0);
+                                    new_user.setPrefWidth(Control.USE_COMPUTED_SIZE);
+                                    new_user.setAlignment(Pos.CENTER_LEFT);
+                                    list_of_users.getChildren().add(new_user);
                                 }else{
                                     Platform.runLater(new Runnable() {
 		    	        	            public void run() {
@@ -150,7 +174,10 @@ public class Controller  {
                                             new_user.setPrefWidth(Control.USE_COMPUTED_SIZE);
                                             new_user.setAlignment(Pos.CENTER_LEFT);
                                             list_of_users.getChildren().add(new_user);
-                                            HBox new_user_notification = new HBox( new Label(recieved_message + " joined the chat"));
+
+                                            Label username_ll = new Label(recieved_message + " joined the chat");
+                                            username_ll.setStyle("-fx-text-fill: white;");
+                                            HBox new_user_notification = new HBox(username_ll );
                                             new_user_notification.setPadding(new Insets(10, 10, 10, 10));
                                             new_user_notification.setAlignment(Pos.CENTER);
                                             new_user_notification.setStyle(" -fx-background-color: #8544ef; -fx-border-color: rgba(200,200,200,0.4);");

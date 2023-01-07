@@ -174,18 +174,24 @@ public class Controller {
                                             current_output.writeUTF(result.getString("created_at").substring(11));
                                         }
                                         
+
                                         synchronized (outputs) {
-                                            System.out.println("///////////////////////////////////////////////////");
-                                            System.out.println(clientSocket.getRemoteSocketAddress() + " has joined the chat");
-                                            System.out.println(new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime()));
                                             for (DataOutputStream output : outputs) {
                                                 output.writeUTF("&B3#aVEyvj#@WqKCTpPfu5d+yneVycy*qhkCh94kqg#3#@Sz66vHn)FA#shFfPpJ&B3#aVEyvj#@WqKCTpPfu5d+yneVycy*qhkCh94kqg#3#@Sz66vHn)FA#shFfPpJ");
                                                 output.writeUTF(clients_usernames.get(clientSocket.getRemoteSocketAddress()));
                                                 output.writeUTF(new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime()));
                                             }
                                         }
+
+
+                                        for (Map.Entry<SocketAddress, String> set : clients_usernames.entrySet()) {
+                                            current_output.writeUTF("&B3#aVEyvj#@WqKCTpPfu5d+yneVycy*qhkCh94kqg#3#@Sz66vHn)FA#shFfPpJ&B3#aVEyvj#@WqKCTpPfu5d+yneVycy*qhkCh94kqg#3#@Sz66vHn)FA#shFfPpJ");
+                                            current_output.writeUTF("UmlOcZueqgpO89ecoH232na5GrHKEP6Kr8uipTSjS9HVTBEpkAQRGJBvi7X50WDpkLkWtaQ0gik1voPxBBphbh0eSKuZAJuBlYpWB9jGKzYsU5uB3AVU5A5L95ugeHBp");
+                                            current_output.writeUTF(set.getValue());
+                                        }
+
+
                                         synchronized (outputs) {
-                                            System.out.print(current_output);
                                             outputs.add(current_output);
                                         }
 
