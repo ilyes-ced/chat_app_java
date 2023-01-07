@@ -271,6 +271,7 @@ public class Controller {
                                                         }
                                                     });
                                                     outputs.remove(current_output);
+                                                    clients_usernames.remove(clientSocket.getRemoteSocketAddress());
                                                     System.out.print(outputs+"\n");
                                                     System.out.println("777777777777777777777777777777777777777777777");
                                                     for (DataOutputStream output : outputs) {
