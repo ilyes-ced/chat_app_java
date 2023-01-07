@@ -148,11 +148,11 @@ public class Controller {
                                             System.out.println("///////////////////////////////////////////////////");
                                             System.out.println(clientSocket.getRemoteSocketAddress() + " has joined the chat");
                                             System.out.println(new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime()));
-                                            for (DataOutputStream output : outputs) {
-                                                output.writeUTF("&B3#aVEyvj#@WqKCTpPfu5d+yneVycy*qhkCh94kqg#3#@Sz66vHn)FA#shFfPpJ&B3#aVEyvj#@WqKCTpPfu5d+yneVycy*qhkCh94kqg#3#@Sz66vHn)FA#shFfPpJ");
-                                                output.writeUTF(clients_usernames.get(clientSocket.getRemoteSocketAddress()));
-                                                output.writeUTF(new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime()));
-                                            }
+                                            //for (DataOutputStream output : outputs) {
+                                            //    output.writeUTF("&B3#aVEyvj#@WqKCTpPfu5d+yneVycy*qhkCh94kqg#3#@Sz66vHn)FA#shFfPpJ&B3#aVEyvj#@WqKCTpPfu5d+yneVycy*qhkCh94kqg#3#@Sz66vHn)FA#shFfPpJ");
+                                            //    output.writeUTF(clients_usernames.get(clientSocket.getRemoteSocketAddress()));
+                                            //    output.writeUTF(new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime()));
+                                            //}
                                         }
                                         synchronized (outputs) {
                                             outputs.add(current_output);
