@@ -199,7 +199,34 @@ public class Controller {
                                                         Platform.runLater(new Runnable() {
                                                             @Override
                                                             public void run() {
-                                                                main_message_box.getChildren().add(new Label("client "+ clientSocket.getRemoteSocketAddress()+ " sent : " + message_to_server));
+                                                                Label username_label = new Label(clients_usernames.get(clientSocket.getRemoteSocketAddress()));
+                                                                Label time_label = new Label(message_to_server);
+                                                                Label message_label = new Label(new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime()));
+                                                                time_label.setPadding(new Insets(0, 0, 0, 10));
+                                                                username_label.setStyle("-fx-text-fill: white; -fx-font-weight: bold");
+                                                                time_label.setStyle("-fx-text-fill: white;");
+                                                                message_label.setStyle("-fx-text-fill: white;");
+		    	        	    	                            VBox message = new VBox();
+		    	        	    	                            HBox message_username = new HBox(username_label, time_label );
+		    	        	    	                            HBox message_content = new HBox(message_label);
+                                                                message_label.setPrefWidth(Control.USE_COMPUTED_SIZE);
+                                                                message_label.setPrefHeight(Control.USE_COMPUTED_SIZE);
+                                                                message.setPrefWidth(Control.USE_COMPUTED_SIZE);
+                                                                message.setPrefHeight(Control.USE_COMPUTED_SIZE);
+                                                                message_username.setPrefWidth(Control.USE_COMPUTED_SIZE);
+                                                                message_username.setPrefHeight(Control.USE_COMPUTED_SIZE);
+                                                                message_content.setPrefWidth(Control.USE_COMPUTED_SIZE);
+                                                                message_content.setPrefHeight(Control.USE_COMPUTED_SIZE);
+                                                                message_username.setPadding(new Insets(5, 20, 5, 20));
+                                                                message_content.setPadding(new Insets(0, 20, 5, 20));
+                                                                message.getChildren().addAll(message_username, message_content);
+                                                                HBox main_message = new HBox();
+                                                                main_message.setPadding(new Insets(20, 20, 20, 20));
+                                                                main_message.setSpacing(20);
+                                                                message.setStyle("-fx-background-radius: 10px; -fx-border-radius: 10px; -fx-border-color: rgba(200,200,200,0.4); -fx-background-color: #8544ef"); 
+                                                                main_message.setAlignment(Pos.CENTER_LEFT);
+                                                                main_message.getChildren().addAll(message);
+                                                                main_message_box.getChildren().add(main_message); 
                                                             }
                                                         });
                                                         synchronized (outputs) {
@@ -216,9 +243,18 @@ public class Controller {
                                                 } catch (SocketException e) {
                                                     e.printStackTrace();
                                                 } catch (IOException e) {
-                                                    //outputs.remove(current_output+"\n");
+                                                    Platform.runLater(new Runnable() {
+		    	        	                            public void run() {
+                                                            HBox new_user_notification = new HBox( new Label(clients_usernames.get(clientSocket.getRemoteSocketAddress() + " left the chat"));
+                                                            new_user_notification.setPadding(new Insets(10, 10, 10, 10));
+                                                            new_user_notification.setAlignment(Pos.CENTER);
+                                                            new_user_notification.setStyle(" -fx-background-color: #8544ef; -fx-border-color: rgba(200,200,200,0.4);");
+                                                            new_user_notification.setPrefHeight(30.0);
+                                                            new_user_notification.setPrefWidth(Control.USE_COMPUTED_SIZE);
+                                                            main_message_box.getChildren().add(new_user_notification);
+                                                        }
+                                                    });
                                                     outputs.remove(current_output);
-                                                    
                                                     System.out.print(outputs+"\n");
                                                     System.out.println("777777777777777777777777777777777777777777777");
                                                     for (DataOutputStream output : outputs) {

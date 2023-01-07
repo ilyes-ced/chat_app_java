@@ -43,7 +43,7 @@ public class Controller  {
     private ScrollPane main_scroll_pane;
 
     @FXML
-    private Label username_label;
+    private MenuButton username_label;
     @FXML
     private TextField message_content;
 
@@ -150,7 +150,6 @@ public class Controller  {
                                             new_user.setPrefWidth(Control.USE_COMPUTED_SIZE);
                                             new_user.setAlignment(Pos.CENTER_LEFT);
                                             list_of_users.getChildren().add(new_user);
-
                                             HBox new_user_notification = new HBox( new Label(recieved_message + " joined the chat"));
                                             new_user_notification.setPadding(new Insets(10, 10, 10, 10));
                                             new_user_notification.setAlignment(Pos.CENTER);
@@ -248,7 +247,7 @@ public class Controller  {
         Parent login_pane = login_loader.load();
         Scene login_scene = new Scene (login_pane);
         Login_controller login_controller = (Login_controller) login_loader.getController();
-        Stage primaryStage = (Stage)((Node)event.getSource()).getScene().getWindow(); 
+        Stage primaryStage = (Stage)logout_item.getParentPopup().getOwnerWindow().getScene().getWindow(); 
         primaryStage.setScene(login_scene);
     }
 
