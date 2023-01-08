@@ -44,6 +44,16 @@ public class Controller {
 
     public void initialize() {
 
+        main_scroll_pane.widthProperty().addListener((obs, oldVal, newVal) -> {
+            System.out.println("hi man  im resized to "+newVal);
+            main_message_box.setPrefWidth(newVal.doubleValue() - 2.0);
+        });
+        main_scroll_pane.heightProperty().addListener((obs, oldVal, newVal) -> {
+            System.out.println("hi man  im resized to "+newVal);
+            main_message_box.setPrefHeight(newVal.doubleValue() - 2.0);
+        });
+        main_message_box.heightProperty().addListener(observable -> main_scroll_pane.setVvalue(1D));
+        //message_content.setStyle("-fx-text-fill: white;"+message_content.getStyle());
         main_scroll_pane.getStylesheets().add(App.class.getResource("css/style.css").toExternalForm());
         try {
 
@@ -107,6 +117,8 @@ public class Controller {
                                     register_output.writeUTF("email_duplicate");
                                 } else if (result_username.getInt(1) == 1) {
                                     register_output.writeUTF("username_duplicate");
+                                }else{
+                                    register_output.writeUTF("no_account");
                                 }
                                 db.closeConnection();
                             } catch (Exception ex) {

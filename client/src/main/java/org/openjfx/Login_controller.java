@@ -234,6 +234,7 @@ public class Login_controller  {
             write_message.writeUTF(register_email.getText());
             write_message.writeUTF(register_password.getText());
             String response = read_message.readUTF();
+            System.out.print(response);
             if(response.equals("success")){
                 register_error_message.setStyle("-fx-text-fill: green;");
                 register_error_message.setText("registration successful, you can login now");
@@ -245,6 +246,8 @@ public class Login_controller  {
                 register_error_message.setText("username already exists");
             }else if(response.equals("connection_error")){
                 register_error_message.setText("network erro please check your connection");
+            }else if(response.equals("no_account") || response.equals("email_error")){
+                register_error_message.setText("account doesnt exist");
             }
         }else{
             register_error_message.setText("username, email and password required");
