@@ -100,15 +100,12 @@ public class Controller {
                                 ResultSet result_username = query_username.executeQuery();
                                 result_email.next();
                                 result_username.next();
-                                System.out.println("/////////////////////////////////////////");
-                                System.out.println(result_email.getInt(1));
-                                System.out.println(result_username.getInt(1));
-
                                 if (result_email.getInt(1) == 0 & result_username.getInt(1) == 0) {
-                                    PreparedStatement query = con.prepareStatement("insert into  users(username, email, password) values(?, ?, ?)");
+                                    PreparedStatement query = con.prepareStatement("insert into  users(username, email, password) values(?, ?, ?);");
                                     query.setString(1, username);
                                     query.setString(2, email);
                                     query.setString(3, password);
+                                    query.executeUpdate();
                                     System.out.println("accoutn created \n");
                                     register_output.writeUTF("success");
                                 } else if (result_email.getInt(1) == 1 & result_username.getInt(1) == 1) {
@@ -297,7 +294,6 @@ public class Controller {
                                                                 output.writeUTF(clients_usernames.get(clientSocket.getRemoteSocketAddress()));
                                                             }
                                                         }
-                                                        //hash_map.remove(20);
                                                     }catch (IOException ef) {
                                                         ef.printStackTrace();
                                                     }
@@ -311,7 +307,10 @@ public class Controller {
                                     }
                                 } else {
                                     System.out.println("email err error \n");
+                                    System.out.println(login_output);
+                                    System.out.println();
                                     login_output.writeUTF("email_error");
+                                    login_output.writeUTF("");
                                 }
                                 db.closeConnection();
                             } catch (Exception ex) {
