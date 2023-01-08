@@ -130,17 +130,9 @@ public class Controller  {
 		    	        	            public void run() {
                                             //removec from list
                                             
-                                            System.out.println(list_of_users.getChildren().get(0).getChildren());
+                                            System.out.println(list_of_users.getChildren().get(0));
                                          
-                                            Node nodeOut = group.getChildren().get(0);
-                                            if(nodeOut instanceof VBox){
-                                                for(Node nodeIn:((VBox)nodeOut).getChildren()){
-                                                    if(nodeIn instanceof Slider){
-                                                        label.setText("Slider value: "+((Slider)nodeIn).getValue());
-                                                    }
-                                                }
-
-                                            }  
+                                            
                                          
                                             Label username_ll = new Label(recieved_message_time + " left the chat");
                                             username_ll.setStyle("-fx-text-fill: white;");
