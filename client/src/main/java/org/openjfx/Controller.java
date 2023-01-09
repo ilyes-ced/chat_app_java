@@ -136,11 +136,6 @@ public class Controller  {
                                                     }
                                                 }
                                             }
-
-
-
-
-                                         
                                             Label username_ll = new Label(recieved_message_time + " left the chat");
                                             username_ll.setStyle("-fx-text-fill: white;");
                                             HBox new_user_notification = new HBox(username_ll );
@@ -198,21 +193,16 @@ public class Controller  {
                                         svg.setStyle("-fx-text-fill: white;");
                                         svg.setFill(Color.rgb(255,255,255));
                                         //main_message_box.getChildren().add(new Label(recieved_message_username +" : "+recieved_message));
-    
                                         Label username_label = new Label(recieved_message_username);
                                         Label time_label = new Label(recieved_message_time);
                                         Label message_label = new Label(recieved_message);
                                         time_label.setPadding(new Insets(0, 0, 0, 10));
-
-
                                         username_label.setStyle("-fx-text-fill: white; -fx-font-weight: bold");
                                         time_label.setStyle("-fx-text-fill: white;");
                                         message_label.setStyle("-fx-text-fill: white;");
 		    	        	    		VBox message = new VBox();
 		    	        	    		HBox message_username = new HBox(username_label, time_label );
 		    	        	    		HBox message_content = new HBox(message_label);
-
-
                                         message_label.setPrefWidth(Control.USE_COMPUTED_SIZE);
                                         message_label.setPrefHeight(Control.USE_COMPUTED_SIZE);
                                         message.setPrefWidth(Control.USE_COMPUTED_SIZE);
@@ -224,8 +214,6 @@ public class Controller  {
                                         message_username.setPadding(new Insets(5, 20, 5, 20));
                                         message_content.setPadding(new Insets(0, 20, 5, 20));
                                         message.getChildren().addAll(message_username, message_content);
-
-
                                         HBox main_message = new HBox();
                                         main_message.setPadding(new Insets(20, 20, 20, 20));
                                         main_message.setSpacing(20);
@@ -255,7 +243,6 @@ public class Controller  {
 		    	        }
 		            }
                 }
-
             });
 		    clientThread.start();
         }catch (Exception ex) {
