@@ -61,6 +61,7 @@ public class Controller  {
 
     @FXML
     private Button submit_message;
+    
     @FXML
     private MenuItem logout_item;
     
@@ -268,6 +269,7 @@ public class Controller  {
             submit_message.setStyle("-fx-background-color: transparent;-fx-border-radius: 10; -fx-background-radius: 10");
             submit_message.setCursor(Cursor.DEFAULT);
         }
+        submit_message.requestFocus();
     }
 
     @FXML

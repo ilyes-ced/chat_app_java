@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Button;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.control.CheckBox;
 import java.net.*;
 import java.io.*;
@@ -127,9 +128,6 @@ public class Login_controller  {
     @FXML
     void login_button_hover(MouseEvent event) {
         animate_button(submit_login_button);
-        //Bloom bloom = new Bloom();
-        //bloom.setThreshold(0.3);
-        //submit_login_button.setEffect(bloom);
     }
     @FXML
     void login_button_hover_stop(MouseEvent event) {
@@ -154,34 +152,7 @@ public class Login_controller  {
 
 
 
-
-
-
-    
-
-    @FXML
-    void toggle_forms(MouseEvent event) {
-        TranslateTransition transition = new TranslateTransition(new Duration(350), cover);
-        if(co == 0){
-            transition.setToX(-800);
-            transition.play();
-            this.co = co + 1;
-            //cover.setStyle("-fx-background-radius: 0 10 10 0;"+cover.getStyle());
-        }else{
-            transition.setToX(-400);
-            transition.play();
-            this.co = co - 1;
-            //cover.setStyle("-fx-background-radius: 10 0 0 10;"+cover.getStyle());
-        }
-    }
-
-    @FXML
-    void show_login_form(MouseEvent event) {
-
-    }
-
-    @FXML
-    void submit_login(ActionEvent event) {
+    void login(){
         try{
             if (!login_email.getText().trim().isEmpty() && !login_password.getText().trim().isEmpty()) {
                 login_error_message.setText("");
@@ -198,7 +169,7 @@ public class Login_controller  {
                     Scene main_scene = new Scene(main_pane);
                     Controller main_controller = (Controller) main_page_loader.getController();
                     main_controller.set_client_socket(client_socket,username ,login_email.getText());
-                    Stage primaryStage = (Stage)((Node)event.getSource()).getScene().getWindow(); 
+                    Stage primaryStage = (Stage)login_email.getScene().getWindow(); 
                     primaryStage.setScene(main_scene);
                     primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
                         public void handle(WindowEvent we) {
@@ -221,35 +192,87 @@ public class Login_controller  {
             e.printStackTrace();
             login_error_message.setText("network error please check your connection");
         }
+    }
+    void register(){
+        try{
+            if (!register_username.getText().trim().isEmpty() && !register_email.getText().trim().isEmpty() && !register_password.getText().trim().isEmpty()) {
+                register_error_message.setText("");
+                register_error_message.setStyle("-fx-text-fill: red;");
+                Socket client_socket = new Socket("localhost", 7000);
+                DataInputStream read_message = new DataInputStream(client_socket.getInputStream());
+                DataOutputStream write_message = new DataOutputStream(client_socket.getOutputStream());
+                write_message.writeUTF(register_username.getText());
+                write_message.writeUTF(register_email.getText());
+                write_message.writeUTF(register_password.getText());
+                String response = read_message.readUTF();
+                if(response.equals("success")){
+                    register_error_message.setStyle("-fx-text-fill: green;");
+                    register_error_message.setText("registration successful, you can login now");
+                }else if(response.equals("email_username_duplicate")){
+                    register_error_message.setText("email and username already exists");
+                }else if(response.equals("email_duplicate")){
+                    register_error_message.setText("email already exists");
+                }else if(response.equals("username_duplicate")){
+                    register_error_message.setText("username already exists");
+                }else if(response.equals("connection_error")){
+                    register_error_message.setText("network erro please check your connection");
+                }
+            }else{
+                register_error_message.setText("username, email and password required");
+            }
+        }catch( IOException e ){
+            e.printStackTrace();
+            login_error_message.setText("network error please check your connection");
+        }
+    }
 
+    
+
+    @FXML
+    void toggle_forms(MouseEvent event) {
+        TranslateTransition transition = new TranslateTransition(new Duration(350), cover);
+        if(co == 0){
+            transition.setToX(-800);
+            transition.play();
+            this.co = co + 1;
+            //cover.setStyle("-fx-background-radius: 0 10 10 0;"+cover.getStyle());
+        }else{
+            transition.setToX(-400);
+            transition.play();
+            this.co = co - 1;
+            //cover.setStyle("-fx-background-radius: 10 0 0 10;"+cover.getStyle());
+        }
     }
 
     @FXML
-    void submit_register(ActionEvent event) throws IOException  {
-        if (!register_username.getText().trim().isEmpty() && !register_email.getText().trim().isEmpty() && !register_password.getText().trim().isEmpty()) {
-            register_error_message.setText("");
-            register_error_message.setStyle("-fx-text-fill: red;");
-            Socket client_socket = new Socket("localhost", 7000);
-            DataInputStream read_message = new DataInputStream(client_socket.getInputStream());
-            DataOutputStream write_message = new DataOutputStream(client_socket.getOutputStream());
-            write_message.writeUTF(register_username.getText());
-            write_message.writeUTF(register_email.getText());
-            write_message.writeUTF(register_password.getText());
-            String response = read_message.readUTF();
-            if(response.equals("success")){
-                register_error_message.setStyle("-fx-text-fill: green;");
-                register_error_message.setText("registration successful, you can login now");
-            }else if(response.equals("email_username_duplicate")){
-                register_error_message.setText("email and username already exists");
-            }else if(response.equals("email_duplicate")){
-                register_error_message.setText("email already exists");
-            }else if(response.equals("username_duplicate")){
-                register_error_message.setText("username already exists");
-            }else if(response.equals("connection_error")){
-                register_error_message.setText("network erro please check your connection");
-            }
-        }else{
-            register_error_message.setText("username, email and password required");
-       }
+    void show_login_form(MouseEvent event) {
+        //login();
     }
+
+    @FXML
+    void submit_login(ActionEvent event) {
+        login();
+    }
+
+    @FXML
+    void submit_register(ActionEvent event) {
+        register();
+    }
+
+
+    @FXML
+    void submit_login_with_enter(KeyEvent event) throws IOException {
+        if (event.getCode().toString().equals("ENTER")) {
+            login();
+        }
+    }
+
+    @FXML
+    void submit_register_with_enter(KeyEvent event) throws IOException {
+        if (event.getCode().toString().equals("ENTER")) {
+            register();
+        }
+    }
+
+
 }

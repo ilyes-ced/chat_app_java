@@ -48,7 +48,7 @@
                                  </children>
                               </HBox>
                               <Label fx:id="login_error_message" textFill="RED" />
-                              <TextField fx:id="login_email" promptText="Email" style="-fx-border-color: transparent; -fx-background-color: #eeeeee;" text="ilyes@gmail.com">
+                              <TextField fx:id="login_email" onKeyPressed="#submit_login_with_enter" promptText="Email" style="-fx-border-color: transparent; -fx-background-color: #eeeeee;">
                                  <VBox.margin>
                                     <Insets left="40.0" right="40.0" top="20.0" />
                                  </VBox.margin>
@@ -56,7 +56,7 @@
                                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                  </padding>
                               </TextField>
-                              <PasswordField fx:id="login_password" promptText="Password" style="-fx-background-color: #eeeeee;" text="11062001">
+                              <PasswordField fx:id="login_password" onKeyPressed="#submit_login_with_enter" promptText="Password" style="-fx-background-color: #eeeeee;">
                                  <VBox.margin>
                                     <Insets bottom="20.0" left="40.0" right="40.0" top="20.0" />
                                  </VBox.margin>
@@ -106,7 +106,7 @@
                                        </children>
                                     </HBox>
                                     <Label fx:id="register_error_message" textFill="RED" />
-                                    <TextField fx:id="register_username" promptText="Username" style="-fx-border-color: transparent; -fx-background-color: #eeeeee;">
+                                    <TextField fx:id="register_username" onKeyPressed="#submit_register_with_enter" promptText="Username" style="-fx-border-color: transparent; -fx-background-color: #eeeeee;">
                                        <VBox.margin>
                                           <Insets left="40.0" right="40.0" top="20.0" />
                                        </VBox.margin>
@@ -114,7 +114,7 @@
                                           <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                        </padding>
                                     </TextField>
-                                    <TextField fx:id="register_email" promptText="Email" style="-fx-background-color: #eeeeee;">
+                                    <TextField fx:id="register_email" onKeyPressed="#submit_register_with_enter" promptText="Email" style="-fx-background-color: #eeeeee;">
                                        <VBox.margin>
                                           <Insets left="40.0" right="40.0" top="20.0" />
                                        </VBox.margin>
@@ -122,7 +122,7 @@
                                           <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                        </padding>
                                     </TextField>
-                                    <PasswordField fx:id="register_password" promptText="Password" style="-fx-background-color: #eeeeee;">
+                                    <PasswordField fx:id="register_password" onKeyPressed="#submit_register_with_enter" promptText="Password" style="-fx-background-color: #eeeeee;">
                                        <VBox.margin>
                                           <Insets bottom="20.0" left="40.0" right="40.0" top="20.0" />
                                        </VBox.margin>
