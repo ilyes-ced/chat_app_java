@@ -128,22 +128,12 @@ public class Controller  {
                                 if(recieved_message.equals("QHX)w+#T4WatEZHyaL(8kzdRFS$ezJ2DLWnzT&wy*n*bhLFAE!heC2+YL%2jaP(d4IEsEm$cPye^aqVUs6G85e$z$L)ue+fv9U+WpYG)@U93a^jN*z)+bPstFvPSVVXM")){
                                     Platform.runLater(new Runnable() {
 		    	        	            public void run() {
-                                            //removec from list
-                                            
                                             Node nodeOut = list_of_users;
                                             if(nodeOut instanceof VBox){
                                                 for(Node nodeIn:((VBox)nodeOut).getChildren()){
-                                                    System.out.println(nodeIn);
-                                                    System.out.println(((Label)((HBox)nodeIn).getChildren().get(0)).getText());
                                                     if(((Label)((HBox)nodeIn).getChildren().get(0)).getText().equals(recieved_message_time)){
                                                         list_of_users.getChildren().remove(((HBox)nodeIn));
                                                     }
-                                                    //if(nodeIn instanceof Label){
-                                                    //    System.out.println("Slider value: "+((Label)nodeIn).getText());
-                                                    //    if(((Label)nodeIn).getText().equals(recieved_message_time)){
-                                                    //        list_of_users.getChildren().remove(nodeOut);
-                                                    //    }
-                                                    //}
                                                 }
                                             }
 

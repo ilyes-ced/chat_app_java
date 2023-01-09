@@ -31,7 +31,7 @@
                      </padding></HBox>
                </top>
                <center>
-                  <ScrollPane fx:id="main_scroll_pane" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #1a1d21;" BorderPane.alignment="CENTER">
+                  <ScrollPane fx:id="main_scroll_pane" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                      <content>
                         <VBox fx:id="main_message_box" minWidth="-Infinity" prefHeight="518.0" prefWidth="828.0" style="-fx-background-color: #1a1d21;">
                            <padding>
