@@ -35,7 +35,7 @@
                <center>
                   <ScrollPane fx:id="main_scroll_pane" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #1a1d21;" BorderPane.alignment="CENTER">
                      <content>
-                        <VBox fx:id="main_message_box" minWidth="-Infinity" prefHeight="428.0" prefWidth="828.0" style="-fx-background-color: #1a1d21;">
+                        <VBox fx:id="main_message_box" prefHeight="428.0" prefWidth="828.0" style="-fx-background-color: #1a1d21;">
                            <children>
                               <HBox alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="828.0" spacing="20.0">
                                  <children>

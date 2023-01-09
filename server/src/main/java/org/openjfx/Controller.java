@@ -160,7 +160,7 @@ public class Controller {
                                                 Label new_user_label = new Label(clients_usernames.get(clientSocket.getRemoteSocketAddress()));
                                                 new_user_label.setStyle("-fx-text-fill: white;");
 		    	        	                    HBox new_user = new HBox(new_user_label);
-                                                new_user.setPadding(new Insets(0, 0, 0, 10));
+                                                new_user.setPadding(new Insets(10, 10, 10, 10));
                                                 new_user.setPrefHeight(30.0);
                                                 new_user.setPrefWidth(Control.USE_COMPUTED_SIZE);
                                                 new_user.setAlignment(Pos.CENTER_LEFT);
@@ -270,7 +270,10 @@ public class Controller {
                                                 } catch (IOException e) {
                                                     Platform.runLater(new Runnable() {
 		    	        	                            public void run() {
-                                                            HBox new_user_notification = new HBox( new Label(clients_usernames.get(clientSocket.getRemoteSocketAddress() + " left the chat")) );
+                                                            Label ll = new Label(clients_usernames.get(clientSocket.getRemoteSocketAddress() + " left the chat"));
+                                                            ll.setStyle("-fx-text-fill: white;");
+                                                            HBox new_user_notification = new HBox(ll);
+                                                            //new_user_notification.setMargin(ll, new Insets(10, 10, 10, 10));
                                                             new_user_notification.setPadding(new Insets(10, 10, 10, 10));
                                                             new_user_notification.setAlignment(Pos.CENTER);
                                                             new_user_notification.setStyle(" -fx-background-color: #8544ef; -fx-border-color: rgba(200,200,200,0.4);");
@@ -280,9 +283,6 @@ public class Controller {
                                                         }
                                                     });
                                                     outputs.remove(current_output);
-                                                    clients_usernames.remove(clientSocket.getRemoteSocketAddress());
-                                                    System.out.print(outputs+"\n");
-                                                    System.out.println("777777777777777777777777777777777777777777777");
                                                     for (DataOutputStream output : outputs) {
                                                         System.out.print(output+"\n");
                                                     }
@@ -292,6 +292,7 @@ public class Controller {
                                                                 output.writeUTF("&B3#aVEyvj#@WqKCTpPfu5d+yneVycy*qhkCh94kqg#3#@Sz66vHn)FA#shFfPpJ&B3#aVEyvj#@WqKCTpPfu5d+yneVycy*qhkCh94kqg#3#@Sz66vHn)FA#shFfPpJ");
                                                                 output.writeUTF("QHX)w+#T4WatEZHyaL(8kzdRFS$ezJ2DLWnzT&wy*n*bhLFAE!heC2+YL%2jaP(d4IEsEm$cPye^aqVUs6G85e$z$L)ue+fv9U+WpYG)@U93a^jN*z)+bPstFvPSVVXM");
                                                                 output.writeUTF(clients_usernames.get(clientSocket.getRemoteSocketAddress()));
+                                                                clients_usernames.remove(clientSocket.getRemoteSocketAddress());
                                                             }
                                                         }
                                                     }catch (IOException ef) {
