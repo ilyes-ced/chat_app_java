@@ -130,19 +130,26 @@ public class Controller  {
 		    	        	            public void run() {
                                             //removec from list
                                             
-                                            System.out.println(list_of_users.getChildren().get(0));
-                                            Node nodeOut = list_of_users.getChildren();
-                                            if(nodeOut instanceof HBox){
-                                                for(Node nodeIn:((HBox)nodeOut).getChildren()){
-                                                    if(nodeIn instanceof Label){
-                                                        System.out.println("Slider value: "+((Label)nodeIn).getText());
-                                                        if(((Label)nodeIn).getText().equals(recieved_message_time)){
-                                                            list_of_users.getChildren().remove(nodeOut);
-                                                        }
+                                            Node nodeOut = list_of_users;
+                                            if(nodeOut instanceof VBox){
+                                                for(Node nodeIn:((VBox)nodeOut).getChildren()){
+                                                    System.out.println(nodeIn);
+                                                    System.out.println(((Label)((HBox)nodeIn).getChildren().get(0)).getText());
+                                                    if(((Label)((HBox)nodeIn).getChildren().get(0)).getText().equals(recieved_message_time)){
+                                                        list_of_users.getChildren().remove(((HBox)nodeIn));
                                                     }
+                                                    //if(nodeIn instanceof Label){
+                                                    //    System.out.println("Slider value: "+((Label)nodeIn).getText());
+                                                    //    if(((Label)nodeIn).getText().equals(recieved_message_time)){
+                                                    //        list_of_users.getChildren().remove(nodeOut);
+                                                    //    }
+                                                    //}
                                                 }
-                                    
                                             }
+
+
+
+
                                          
                                             Label username_ll = new Label(recieved_message_time + " left the chat");
                                             username_ll.setStyle("-fx-text-fill: white;");
