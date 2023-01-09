@@ -192,7 +192,6 @@ public class Login_controller  {
                 write_message.writeUTF(login_password.getText());
                 String response = read_message.readUTF();
                 String username = read_message.readUTF();
-                System.out.print(response);
                 if(response.equals("success")){
                     FXMLLoader main_page_loader = new FXMLLoader(App.class.getResource("fxml/client.fxml"));
                     Parent main_pane = main_page_loader.load();

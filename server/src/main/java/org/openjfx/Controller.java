@@ -45,11 +45,9 @@ public class Controller {
     public void initialize() {
 
         main_scroll_pane.widthProperty().addListener((obs, oldVal, newVal) -> {
-            System.out.println("hi man  im resized to "+newVal);
             main_message_box.setPrefWidth(newVal.doubleValue() - 2.0);
         });
         main_scroll_pane.heightProperty().addListener((obs, oldVal, newVal) -> {
-            System.out.println("hi man  im resized to "+newVal);
             main_message_box.setPrefHeight(newVal.doubleValue() - 2.0);
         });
         main_message_box.heightProperty().addListener(observable -> main_scroll_pane.setVvalue(1D));
@@ -79,9 +77,7 @@ public class Controller {
                 public void run() {
                     while (true) {
                         try {
-                            System.out.println("started register thread \n");
                             final Socket clientSocket = register_server.accept();
-                            System.out.println("accepted register thread \n");
 
                             DataOutputStream register_output = new DataOutputStream(clientSocket.getOutputStream());
                             DataInputStream register_input = new DataInputStream(clientSocket.getInputStream());
@@ -264,9 +260,6 @@ public class Controller {
                                                             }
                                                         }
                                                     }
-                                                    System.out.println(clientSocket.isClosed());
-                                                    System.out.println(clientSocket.isConnected());
-                                                    System.out.println("connection probably lost");
                                                 } catch (SocketException e) {
                                                     e.printStackTrace();
                                                 } catch (IOException e) {
@@ -276,7 +269,6 @@ public class Controller {
                                                     try{
                                                         synchronized (outputs) {
                                                             for (DataOutputStream output : outputs) {
-                                                                System.out.println("hello from the wapssssssssssssssssssssss");
                                                                 output.writeUTF("&B3#aVEyvj#@WqKCTpPfu5d+yneVycy*qhkCh94kqg#3#@Sz66vHn)FA#shFfPpJ&B3#aVEyvj#@WqKCTpPfu5d+yneVycy*qhkCh94kqg#3#@Sz66vHn)FA#shFfPpJ");
                                                                 output.writeUTF("QHX)w+#T4WatEZHyaL(8kzdRFS$ezJ2DLWnzT&wy*n*bhLFAE!heC2+YL%2jaP(d4IEsEm$cPye^aqVUs6G85e$z$L)ue+fv9U+WpYG)@U93a^jN*z)+bPstFvPSVVXM");
                                                                 output.writeUTF(user_name);
@@ -289,9 +281,7 @@ public class Controller {
 		    	        	                            public void run() {
                                                             Label ll = new Label(clientSocket.getRemoteSocketAddress() + "/" + user_name + " left the chat");
                                                             ll.setStyle("-fx-text-fill: white;");
-                                                            System.out.print(clients_usernames.get(clientSocket.getRemoteSocketAddress())+"\n");
                                                             HBox new_user_notification = new HBox(ll);
-                                                            //new_user_notification.setMargin(ll, new Insets(10, 10, 10, 10));
                                                             new_user_notification.setPadding(new Insets(10, 10, 10, 10));
                                                             new_user_notification.setAlignment(Pos.CENTER);
                                                             new_user_notification.setStyle("-fx-background-color: #8544ef; -fx-border-color: rgba(200,200,200,0.4);");
@@ -302,9 +292,6 @@ public class Controller {
                                                             Node nodeOut = list_of_users;
                                                             if(nodeOut instanceof VBox){
                                                                 for(Node nodeIn:((VBox)nodeOut).getChildren()){
-                                                                    System.out.println("hello from the inside");
-                                                                    System.out.println(user_name);
-                                                                    System.out.println(((Label)((HBox)nodeIn).getChildren().get(0)).getText());
                                                                     if(((Label)((HBox)nodeIn).getChildren().get(0)).getText().equals(user_name)){
                                                                         list_of_users.getChildren().remove(((HBox)nodeIn));
                                                                     }
@@ -317,14 +304,10 @@ public class Controller {
                                             }
                                         }).start();
                                     } else {
-                                        System.out.println("passwird error \n");
                                         login_output.writeUTF("password_error");
                                         login_output.writeUTF("");
                                     }
                                 } else {
-                                    System.out.println("email err error \n");
-                                    System.out.println(login_output);
-                                    System.out.println();
                                     login_output.writeUTF("email_error");
                                     login_output.writeUTF("");
                                 }

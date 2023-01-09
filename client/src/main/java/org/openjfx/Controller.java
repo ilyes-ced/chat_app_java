@@ -67,7 +67,6 @@ public class Controller  {
  
 
     public void close_connection() {
-        System.out.println("closedd inside th controller methid");
         try{
             this.client_socket.close();
         }catch (Exception ex) {
@@ -90,11 +89,9 @@ public class Controller  {
 
     public void initialize(){
         main_scroll_pane.widthProperty().addListener((obs, oldVal, newVal) -> {
-            System.out.println("hi man  im resized to "+newVal);
             main_message_box.setPrefWidth(newVal.doubleValue() - 2.0);
         });
         main_scroll_pane.heightProperty().addListener((obs, oldVal, newVal) -> {
-            System.out.println("hi man  im resized to "+newVal);
             main_message_box.setPrefHeight(newVal.doubleValue() - 2.0);
         });
         main_message_box.heightProperty().addListener(observable -> main_scroll_pane.setVvalue(1D));
@@ -128,8 +125,6 @@ public class Controller  {
                                 if(recieved_message.equals("QHX)w+#T4WatEZHyaL(8kzdRFS$ezJ2DLWnzT&wy*n*bhLFAE!heC2+YL%2jaP(d4IEsEm$cPye^aqVUs6G85e$z$L)ue+fv9U+WpYG)@U93a^jN*z)+bPstFvPSVVXM")){
                                     Platform.runLater(new Runnable() {
                                         public void run() {
-                                            System.out.println("///////////////////////////////////////////");
-                                            System.out.println(recieved_message_time);
                                             Label username_ll = new Label(recieved_message_time + " left the chat");
                                             username_ll.setStyle("-fx-text-fill: white;");
                                             HBox new_user_notification = new HBox(username_ll );
@@ -150,7 +145,6 @@ public class Controller  {
                                         }
                                     });
                                 }else if(recieved_message.equals("UmlOcZueqgpO89ecoH232na5GrHKEP6Kr8uipTSjS9HVTBEpkAQRGJBvi7X50WDpkLkWtaQ0gik1voPxBBphbh0eSKuZAJuBlYpWB9jGKzYsU5uB3AVU5A5L95ugeHBp")){
-                                    System.out.print("//////////////////////////////////////////////////");
                                     Label new_user_label = new Label(recieved_message_time);
                                     new_user_label.setStyle("-fx-text-fill: white;");
 		    	        	        HBox new_user = new HBox(new_user_label);
@@ -236,7 +230,6 @@ public class Controller  {
 		    	        	Platform.runLater(new Runnable() {
 		    	        		public void run() {
                                     //add to ui err
-		    	        			System.out.print("Error in server");
 		    	        		}
 		    	        	});
 		    	        	break;
