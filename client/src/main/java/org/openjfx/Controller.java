@@ -127,15 +127,9 @@ public class Controller  {
                             if( recieved_message_username.equals("&B3#aVEyvj#@WqKCTpPfu5d+yneVycy*qhkCh94kqg#3#@Sz66vHn)FA#shFfPpJ&B3#aVEyvj#@WqKCTpPfu5d+yneVycy*qhkCh94kqg#3#@Sz66vHn)FA#shFfPpJ")){
                                 if(recieved_message.equals("QHX)w+#T4WatEZHyaL(8kzdRFS$ezJ2DLWnzT&wy*n*bhLFAE!heC2+YL%2jaP(d4IEsEm$cPye^aqVUs6G85e$z$L)ue+fv9U+WpYG)@U93a^jN*z)+bPstFvPSVVXM")){
                                     Platform.runLater(new Runnable() {
-		    	        	            public void run() {
-                                            Node nodeOut = list_of_users;
-                                            if(nodeOut instanceof VBox){
-                                                for(Node nodeIn:((VBox)nodeOut).getChildren()){
-                                                    if(((Label)((HBox)nodeIn).getChildren().get(0)).getText().equals(recieved_message_time)){
-                                                        list_of_users.getChildren().remove(((HBox)nodeIn));
-                                                    }
-                                                }
-                                            }
+                                        public void run() {
+                                            System.out.println("///////////////////////////////////////////");
+                                            System.out.println(recieved_message_time);
                                             Label username_ll = new Label(recieved_message_time + " left the chat");
                                             username_ll.setStyle("-fx-text-fill: white;");
                                             HBox new_user_notification = new HBox(username_ll );
@@ -145,6 +139,14 @@ public class Controller  {
                                             new_user_notification.setPrefHeight(30.0);
                                             new_user_notification.setPrefWidth(Control.USE_COMPUTED_SIZE);
                                             main_message_box.getChildren().add(new_user_notification);
+                                            Node nodeOut = list_of_users;
+                                            if(nodeOut instanceof VBox){
+                                                for(Node nodeIn:((VBox)nodeOut).getChildren()){
+                                                    if(((Label)((HBox)nodeIn).getChildren().get(0)).getText().equals(recieved_message_time)){
+                                                        list_of_users.getChildren().remove(((HBox)nodeIn));
+                                                    }
+                                                }
+                                            }
                                         }
                                     });
                                 }else if(recieved_message.equals("UmlOcZueqgpO89ecoH232na5GrHKEP6Kr8uipTSjS9HVTBEpkAQRGJBvi7X50WDpkLkWtaQ0gik1voPxBBphbh0eSKuZAJuBlYpWB9jGKzYsU5uB3AVU5A5L95ugeHBp")){

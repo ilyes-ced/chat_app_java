@@ -272,6 +272,19 @@ public class Controller {
                                                 } catch (IOException e) {
                                                     String user_name = clients_usernames.get(clientSocket.getRemoteSocketAddress());
                                                     clients_usernames.remove(clientSocket.getRemoteSocketAddress());
+                                                    outputs.remove(current_output);
+                                                    try{
+                                                        synchronized (outputs) {
+                                                            for (DataOutputStream output : outputs) {
+                                                                System.out.println("hello from the wapssssssssssssssssssssss");
+                                                                output.writeUTF("&B3#aVEyvj#@WqKCTpPfu5d+yneVycy*qhkCh94kqg#3#@Sz66vHn)FA#shFfPpJ&B3#aVEyvj#@WqKCTpPfu5d+yneVycy*qhkCh94kqg#3#@Sz66vHn)FA#shFfPpJ");
+                                                                output.writeUTF("QHX)w+#T4WatEZHyaL(8kzdRFS$ezJ2DLWnzT&wy*n*bhLFAE!heC2+YL%2jaP(d4IEsEm$cPye^aqVUs6G85e$z$L)ue+fv9U+WpYG)@U93a^jN*z)+bPstFvPSVVXM");
+                                                                output.writeUTF(user_name);
+                                                            }
+                                                        }
+                                                    }catch (IOException ef) {
+                                                        ef.printStackTrace();
+                                                    }
                                                     Platform.runLater(new Runnable() {
 		    	        	                            public void run() {
                                                             Label ll = new Label(clientSocket.getRemoteSocketAddress() + "/" + user_name + " left the chat");
@@ -299,22 +312,6 @@ public class Controller {
                                                             }
                                                         }
                                                     });
-                                                    outputs.remove(current_output);
-                                                    //for (DataOutputStream output : outputs) {
-                                                    //    System.out.print(output+"\n");
-                                                    //}
-                                                    try{
-                                                        synchronized (outputs) {
-                                                            for (DataOutputStream output : outputs) {
-                                                                    System.out.println("hello from the wapssssssssssssssssssssss");
-                                                                output.writeUTF("&B3#aVEyvj#@WqKCTpPfu5d+yneVycy*qhkCh94kqg#3#@Sz66vHn)FA#shFfPpJ&B3#aVEyvj#@WqKCTpPfu5d+yneVycy*qhkCh94kqg#3#@Sz66vHn)FA#shFfPpJ");
-                                                                output.writeUTF("QHX)w+#T4WatEZHyaL(8kzdRFS$ezJ2DLWnzT&wy*n*bhLFAE!heC2+YL%2jaP(d4IEsEm$cPye^aqVUs6G85e$z$L)ue+fv9U+WpYG)@U93a^jN*z)+bPstFvPSVVXM");
-                                                                output.writeUTF(user_name);
-                                                            }
-                                                        }
-                                                    }catch (IOException ef) {
-                                                        ef.printStackTrace();
-                                                    }
                                                     e.printStackTrace();
                                                 }
                                             }
@@ -322,6 +319,7 @@ public class Controller {
                                     } else {
                                         System.out.println("passwird error \n");
                                         login_output.writeUTF("password_error");
+                                        login_output.writeUTF("");
                                     }
                                 } else {
                                     System.out.println("email err error \n");
@@ -333,6 +331,7 @@ public class Controller {
                                 db.closeConnection();
                             } catch (Exception ex) {
                                 login_output.writeUTF("connection_error");
+                                login_output.writeUTF("");
                                 ex.printStackTrace();
                             }
 
