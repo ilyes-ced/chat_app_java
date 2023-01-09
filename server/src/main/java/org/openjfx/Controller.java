@@ -227,8 +227,8 @@ public class Controller {
                                                             @Override
                                                             public void run() {
                                                                 Label username_label = new Label(clients_usernames.get(clientSocket.getRemoteSocketAddress()));
-                                                                Label time_label = new Label(message_to_server);
-                                                                Label message_label = new Label(new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime()));
+                                                                Label message_label = new Label(message_to_server);
+                                                                Label time_label = new Label(new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime()));
                                                                 time_label.setPadding(new Insets(0, 0, 0, 10));
                                                                 username_label.setStyle("-fx-text-fill: white; -fx-font-weight: bold");
                                                                 time_label.setStyle("-fx-text-fill: white;");
@@ -270,16 +270,18 @@ public class Controller {
                                                 } catch (SocketException e) {
                                                     e.printStackTrace();
                                                 } catch (IOException e) {
+                                                    String user_name = clients_usernames.get(clientSocket.getRemoteSocketAddress());
+                                                    clients_usernames.remove(clientSocket.getRemoteSocketAddress());
                                                     Platform.runLater(new Runnable() {
 		    	        	                            public void run() {
-                                                            Label ll = new Label(clientSocket.getRemoteSocketAddress() + "/" +clients_usernames.get(clientSocket.getRemoteSocketAddress()) + " left the chat");
+                                                            Label ll = new Label(clientSocket.getRemoteSocketAddress() + "/" + user_name + " left the chat");
                                                             ll.setStyle("-fx-text-fill: white;");
                                                             System.out.print(clients_usernames.get(clientSocket.getRemoteSocketAddress())+"\n");
                                                             HBox new_user_notification = new HBox(ll);
                                                             //new_user_notification.setMargin(ll, new Insets(10, 10, 10, 10));
                                                             new_user_notification.setPadding(new Insets(10, 10, 10, 10));
                                                             new_user_notification.setAlignment(Pos.CENTER);
-                                                            new_user_notification.setStyle(" -fx-background-color: #8544ef; -fx-border-color: rgba(200,200,200,0.4);");
+                                                            new_user_notification.setStyle("-fx-background-color: #8544ef; -fx-border-color: rgba(200,200,200,0.4);");
                                                             new_user_notification.setPrefHeight(30.0);
                                                             new_user_notification.setPrefWidth(Control.USE_COMPUTED_SIZE);
                                                             main_message_box.getChildren().add(new_user_notification);
@@ -287,7 +289,10 @@ public class Controller {
                                                             Node nodeOut = list_of_users;
                                                             if(nodeOut instanceof VBox){
                                                                 for(Node nodeIn:((VBox)nodeOut).getChildren()){
-                                                                    if(((Label)((HBox)nodeIn).getChildren().get(0)).getText().equals(clients_usernames.get(clientSocket.getRemoteSocketAddress()))){
+                                                                    System.out.println("hello from the inside");
+                                                                    System.out.println(user_name);
+                                                                    System.out.println(((Label)((HBox)nodeIn).getChildren().get(0)).getText());
+                                                                    if(((Label)((HBox)nodeIn).getChildren().get(0)).getText().equals(user_name)){
                                                                         list_of_users.getChildren().remove(((HBox)nodeIn));
                                                                     }
                                                                 }
@@ -295,18 +300,16 @@ public class Controller {
                                                         }
                                                     });
                                                     outputs.remove(current_output);
-                                                    for (DataOutputStream output : outputs) {
-                                                        System.out.print(output+"\n");
-                                                    }
+                                                    //for (DataOutputStream output : outputs) {
+                                                    //    System.out.print(output+"\n");
+                                                    //}
                                                     try{
                                                         synchronized (outputs) {
                                                             for (DataOutputStream output : outputs) {
+                                                                    System.out.println("hello from the wapssssssssssssssssssssss");
                                                                 output.writeUTF("&B3#aVEyvj#@WqKCTpPfu5d+yneVycy*qhkCh94kqg#3#@Sz66vHn)FA#shFfPpJ&B3#aVEyvj#@WqKCTpPfu5d+yneVycy*qhkCh94kqg#3#@Sz66vHn)FA#shFfPpJ");
                                                                 output.writeUTF("QHX)w+#T4WatEZHyaL(8kzdRFS$ezJ2DLWnzT&wy*n*bhLFAE!heC2+YL%2jaP(d4IEsEm$cPye^aqVUs6G85e$z$L)ue+fv9U+WpYG)@U93a^jN*z)+bPstFvPSVVXM");
-                                                                output.writeUTF(clients_usernames.get(clientSocket.getRemoteSocketAddress()));
-                                                                System.out.println(clients_usernames);
-                                                                clients_usernames.remove(clientSocket.getRemoteSocketAddress());
-                                                                System.out.println(clients_usernames); 
+                                                                output.writeUTF(user_name);
                                                             }
                                                         }
                                                     }catch (IOException ef) {

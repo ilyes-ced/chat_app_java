@@ -174,7 +174,7 @@ public class Controller  {
                                             HBox new_user_notification = new HBox(username_ll );
                                             new_user_notification.setPadding(new Insets(10, 10, 10, 10));
                                             new_user_notification.setAlignment(Pos.CENTER);
-                                            new_user_notification.setStyle(" -fx-background-color: #8544ef; -fx-border-color: rgba(200,200,200,0.4);");
+                                            new_user_notification.setStyle("-fx-background-color: #8544ef; -fx-border-color: rgba(200,200,200,0.4);");
                                             new_user_notification.setPrefHeight(30.0);
                                             new_user_notification.setPrefWidth(Control.USE_COMPUTED_SIZE);
                                             main_message_box.getChildren().add(new_user_notification);
@@ -270,6 +270,8 @@ public class Controller  {
         if(!message_content.getText().equals("")){
             send_message_to_server(message_content.getText());
             message_content.setText("");
+            submit_message.setStyle("-fx-background-color: transparent;-fx-border-radius: 10; -fx-background-radius: 10");
+            submit_message.setCursor(Cursor.DEFAULT);
         }
     }
 
@@ -277,13 +279,15 @@ public class Controller  {
     void submit_event(KeyEvent event) throws IOException {
         if(event.getCode().toString().equals("ENTER")){
             send_message_to_server(message_content.getText());
-            submit_message.setStyle("-fx-background-color: transparent;");
+            message_content.setText("");
+            submit_message.setStyle("-fx-background-color: transparent;-fx-border-radius: 10; -fx-background-radius: 10");
+            submit_message.setCursor(Cursor.DEFAULT);
         }
         if(!message_content.getText().equals("")){
             submit_message.setStyle("-fx-background-color: linear-gradient(to right bottom, rgba(143,10,228,1) 6%, rgba(103,21,235,1) 55%, rgba(143,10,228,1) 100%);-fx-border-radius: 10; -fx-background-radius: 10;");
             submit_message.setCursor(Cursor.HAND);
         }else{
-            submit_message.setStyle("-fx-background-color: transparent;");
+            submit_message.setStyle("-fx-background-color: transparent;-fx-border-radius: 10; -fx-background-radius: 10");
             submit_message.setCursor(Cursor.DEFAULT);
         }
     }

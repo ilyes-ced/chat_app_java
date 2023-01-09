@@ -20,7 +20,7 @@ public class App extends Application {
 
 
         primaryStage.setTitle("Server application");
-        primaryStage.setScene(new Scene(root, 800, 500));
+        primaryStage.setScene(new Scene(root));
         primaryStage.show();
 
         
