@@ -275,10 +275,12 @@ public class Controller  {
     @FXML
     void submit_event(KeyEvent event) throws IOException {
         if(event.getCode().toString().equals("ENTER")){
-            send_message_to_server(message_content.getText());
-            message_content.setText("");
-            submit_message.setStyle("-fx-background-color: transparent;-fx-border-radius: 10; -fx-background-radius: 10");
-            submit_message.setCursor(Cursor.DEFAULT);
+            if(!message_content.getText().equals("")){
+                send_message_to_server(message_content.getText());
+                message_content.setText("");
+                submit_message.setStyle("-fx-background-color: transparent;-fx-border-radius: 10; -fx-background-radius: 10");
+                submit_message.setCursor(Cursor.DEFAULT);
+            }
         }
         if(!message_content.getText().equals("")){
             submit_message.setStyle("-fx-background-color: linear-gradient(to right bottom, rgba(143,10,228,1) 6%, rgba(103,21,235,1) 55%, rgba(143,10,228,1) 100%);-fx-border-radius: 10; -fx-background-radius: 10;");
