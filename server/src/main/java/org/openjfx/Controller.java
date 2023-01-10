@@ -174,7 +174,8 @@ public class Controller {
                                         });
                                         DataOutputStream current_output = new DataOutputStream(clientSocket.getOutputStream());
                                         Statement get_messages = con.createStatement();
-                                        result = get_messages.executeQuery("select * from messages limit 20");
+                                        //result = get_messages.executeQuery("select * from messages limit 20");
+                                        result = get_messages.executeQuery("select t.* from (select * from messages order by id desc limit 20) as t order by t.id asc");
                                         while (result.next()) {
                                             current_output.writeUTF(result.getString("sender"));
                                             current_output.writeUTF(result.getString("message"));
