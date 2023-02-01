@@ -286,7 +286,6 @@ public class Controller  {
                 submit_message.setCursor(Cursor.DEFAULT);
             }
         }
-        System.out.println(message_content.getText());
         if(!message_content.getText().equals("")){
             submit_message.setStyle("-fx-background-color: linear-gradient(to right bottom, rgba(143,10,228,1) 6%, rgba(103,21,235,1) 55%, rgba(143,10,228,1) 100%);-fx-border-radius: 10; -fx-background-radius: 10;");
             submit_message.setCursor(Cursor.HAND);
