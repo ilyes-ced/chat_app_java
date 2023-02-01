@@ -12,7 +12,9 @@ built with javaFX with Maven as build tool with MySql database
 ### server ui
 ![image info](./images/server.png)
 ### client ui
+client 1
 ![image info](./images/client_1.png)
+client 2
 ![image info](./images/client_2.png)
 
 ## Running
